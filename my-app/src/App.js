@@ -1,25 +1,30 @@
-import logo from "./logo.svg";
+import React, { useState } from "react";
 import "./App.css";
+import Logo from "./Logo.png";
 
-function App() {
+const PhotoImport = () => {
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+
+  const handlePhotoUpload = (event) => {
+    const file = event.target.files[0];
+    // Utfør nødvendig validering av filen her
+    setSelectedPhoto(URL.createObjectURL(file));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          velkommen til den nye siden til over easy
-        </a>
-      </header>
+    <div>
+      <img id="logo-image" src={Logo} alt="Logo" />
+      <h2>Importer tegning</h2>
+      <input type="file" accept="image/*" onChange={handlePhotoUpload} />
+      {selectedPhoto && (
+        <div>
+          <h3>Valgt tegning</h3>
+          <img src={selectedPhoto} alt="Selected" className="selected-photo" />
+          {/* Her kan du legge til logikk for å tegne omrisset på bildet */}
+        </div>
+      )}
     </div>
   );
-}
+};
 
-export default App;
+export default PhotoImport;

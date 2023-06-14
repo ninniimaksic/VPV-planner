@@ -2,9 +2,15 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#logo-image {
+  /* Legg til ønsket styling her */
+  width: 200px;
+  height: auto;
+}
+
+.selected-photo {
+  width: 600px; /* Angi ønsket bredde */
+  height: 500px; /* Høyden tilpasses proporsjonalt */
 }
 
 @media (prefers-reduced-motion: no-preference) {
