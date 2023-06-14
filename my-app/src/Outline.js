@@ -64,6 +64,8 @@ const Outline = (props) => {
   // use the calculateArea function
   let area = calculateArea(roofPoints);
   console.log(area);
+
+  return <canvas id="canvas" width="500" height="500" />;
 };
 
 export default Outline;

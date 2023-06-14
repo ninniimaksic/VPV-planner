@@ -17,9 +17,9 @@ const PhotoImport = () => {
       <h2>Importer tegning</h2>
       <input type="file" accept="image/*" onChange={handlePhotoUpload} />
       {selectedPhoto && (
-        <div>
+        <div class="hasDrawing">
           <h3>Valgt tegning</h3>
-          <img src={selectedPhoto} alt="Selected" className="selected-photo" />
+          {/* <img src={selectedPhoto} alt="Selected" className="selected-photo" /> */}
           <Outline selectedPhoto={selectedPhoto} />
         </div>
       )}
