@@ -1,30 +1,13 @@
-import React, { useState } from "react";
 import "./App.css";
-import Logo from "./Logo.png";
+import React from "react";
+import PhotoImport from "./PhotoImport";
 
-const PhotoImport = () => {
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
-
-  const handlePhotoUpload = (event) => {
-    const file = event.target.files[0];
-    // Utfør nødvendig validering av filen her
-    setSelectedPhoto(URL.createObjectURL(file));
-  };
-
+const App = () => {
   return (
-    <div>
-      <img id="logo-image" src={Logo} alt="Logo" />
-      <h2>Importer tegning</h2>
-      <input type="file" accept="image/*" onChange={handlePhotoUpload} />
-      {selectedPhoto && (
-        <div>
-          <h3>Valgt tegning</h3>
-          <img src={selectedPhoto} alt="Selected" className="selected-photo" />
-          {/* Her kan du legge til logikk for å tegne omrisset på bildet */}
-        </div>
-      )}
+    <div className="App">
+      <PhotoImport />
     </div>
   );
 };
 
-export default PhotoImport;
+export default App;
