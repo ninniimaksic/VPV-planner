@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Logo from "./Logo.png";
+import Outline from "./Outline";
 
 const PhotoImport = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -19,8 +20,7 @@ const PhotoImport = () => {
         <div>
           <h3>Valgt tegning</h3>
           <img src={selectedPhoto} alt="Selected" className="selected-photo" />
-          {/* Her kan du legge til logikk for å tegne omrisset på bildet */}
-          <canvas id="canvas" width="500" height="500"></canvas>
+          <Outline selectedPhoto={selectedPhoto} />
         </div>
       )}
     </div>
