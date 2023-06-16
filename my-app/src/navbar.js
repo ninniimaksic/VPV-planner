@@ -35,7 +35,7 @@ class Navbar extends Component {
                 <a href="index.html">Modul 2 </a>
               </li>
               <li>
-                <a href="index.html">Modul 3 </a>
+                <a href="/module3">Modul 3 </a>
               </li>
             </ul>
           </div>
