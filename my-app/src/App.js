@@ -1,12 +1,17 @@
 import "./App.css";
 import React from "react";
 import PhotoImport from "./PhotoImport";
+import Navbar from "./navbar.js";
 
 const App = () => {
   return (
-    <div className="App">
-      <PhotoImport />
-    </div>
+    <>
+      <Navbar />
+
+      <div className="App">
+        <PhotoImport />
+      </div>
+    </>
   );
 };
 

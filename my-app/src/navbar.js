@@ -1,0 +1,53 @@
+import { Component } from "react";
+import Logo from "./Logo.png";
+import "./navbar.css";
+
+class Navbar extends Component {
+  state = { clicked: false };
+  handleClick = () => {
+    this.setState({ clicked: !this.state.clicked });
+  };
+
+  render() {
+    return (
+      <>
+        <nav>
+          <a href="index.html"></a>
+
+          <div>
+            <ul
+              id="navbar"
+              className={this.state.clicked ? "#navbar active" : "#navbar"}
+            >
+              <li>
+                <a classname="active" href="index.html">
+                  Home{"                    "}
+                </a>
+              </li>
+              <li>
+                {" "}
+                <a href="index.html">Modul 1 </a>
+              </li>
+              <li>
+                {" "}
+                <a href="index.html">Modul 2 </a>
+              </li>
+              <li>
+                {" "}
+                <a href="index.html">Modul 3 </a>
+              </li>
+            </ul>
+          </div>
+          <div id="mobile" on Click={this.handleClick}>
+            <i
+              id="bar"
+              className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}
+            ></i>
+          </div>
+        </nav>
+      </>
+    );
+  }
+}
+
+export default Navbar;
