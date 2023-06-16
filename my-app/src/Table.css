@@ -1,0 +1,13 @@
+table {
+  border-collapse: collapse;
+}
+
+td {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
+}
+
+td.marked {
+  background-color: blueviolet;
+}

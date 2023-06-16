@@ -1,6 +1,8 @@
 import { Component } from "react";
 import Logo from "./Logo.png";
 import "./navbar.css";
+import Modul3 from "./Modul3.js";
+import { Link } from "react-router-dom";
 
 class Navbar extends Component {
   state = { clicked: false };
@@ -33,7 +35,6 @@ class Navbar extends Component {
                 <a href="index.html">Modul 2 </a>
               </li>
               <li>
-                {" "}
                 <a href="index.html">Modul 3 </a>
               </li>
             </ul>
