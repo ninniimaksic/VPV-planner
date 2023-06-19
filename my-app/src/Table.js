@@ -4,6 +4,9 @@ import "./Table.css"; // Import CSS file for styling
 const Table = () => {
   const [markedCells, setMarkedCells] = useState([]);
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [previousMarkedCells, setPreviousMarkedCells] = useState([]);
+  const [rowCount, setRowCount] = useState(10); // State for number of rows
+  const [colCount, setColCount] = useState(10); // State for number of columns
 
   const handleCellClick = (rowIndex, colIndex) => {
     const cell = { row: rowIndex, col: colIndex };
@@ -22,10 +25,21 @@ const Table = () => {
       const newMarkedCells = [...markedCells, cell];
       setMarkedCells(newMarkedCells);
     }
+
+    setPreviousMarkedCells((prev) => [...prev, markedCells]); // Save the previous state of marked cells
   };
 
   const handleReset = () => {
     setMarkedCells([]);
+    setPreviousMarkedCells([]);
+  };
+
+  const handleUndo = () => {
+    if (previousMarkedCells.length > 0) {
+      const prevCells = previousMarkedCells.slice(0, -1); // Remove the last state
+      setMarkedCells(prevCells[prevCells.length - 1] || []); // Set the previous state as the current state
+      setPreviousMarkedCells(prevCells); // Update the previous states
+    }
   };
 
   const handleMouseDown = () => {
@@ -78,22 +92,48 @@ const Table = () => {
     return cornerCount;
   };
 
+  const handleAddRow = () => {
+    setRowCount(rowCount + 1);
+  };
+
+  const handleAddColumn = () => {
+    setColCount(colCount + 1);
+  };
+
+  const handleRemoveRow = () => {
+    if (rowCount > 0) {
+      setRowCount(rowCount - 1);
+      setMarkedCells(markedCells.filter((cell) => cell.row < rowCount - 1));
+    }
+  };
+
+  const handleRemoveColumn = () => {
+    if (colCount > 0) {
+      setColCount(colCount - 1);
+      setMarkedCells(markedCells.filter((cell) => cell.col < colCount - 1));
+    }
+  };
+
   return (
     <div>
       <table>
         <thead>
           <tr>
             <th></th>
-            {Array.from({ length: 10 }, (_, colIndex) => (
+            {Array.from({ length: colCount }, (_, colIndex) => (
               <th key={colIndex}>{colIndex + 1}</th>
             ))}
+            <th>
+              <button onClick={handleAddColumn}>+</button>
+              <button onClick={handleRemoveColumn}>-</button>
+            </th>
           </tr>
         </thead>
         <tbody>
-          {Array.from({ length: 10 }, (_, rowIndex) => (
+          {Array.from({ length: rowCount }, (_, rowIndex) => (
             <tr key={rowIndex}>
               <th>{rowIndex + 1}</th>
-              {Array.from({ length: 10 }, (_, colIndex) => (
+              {Array.from({ length: colCount }, (_, colIndex) => (
                 <td
                   key={colIndex}
                   className={isCellMarked(rowIndex, colIndex) ? "marked" : ""}
@@ -105,11 +145,23 @@ const Table = () => {
               ))}
             </tr>
           ))}
+          <tr>
+            <th>
+              <button onClick={handleAddRow}>+</button>
+              <button onClick={handleRemoveRow}>-</button>
+            </th>
+            {Array.from({ length: colCount }, (_, colIndex) => (
+              <th key={colIndex + rowCount + 1} />
+            ))}
+          </tr>
         </tbody>
       </table>
       <p>Number of corners: {countCorners()}</p>
       <p>Number of marked cells: {markedCells.length}</p>
       <button onClick={handleReset}>Reset</button>
+      <button onClick={handleUndo} disabled={previousMarkedCells.length === 0}>
+        Undo
+      </button>
     </div>
   );
 };
