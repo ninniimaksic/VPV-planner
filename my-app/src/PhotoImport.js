@@ -33,9 +33,8 @@ const PhotoImport = () => {
       <h2>Importer tegning</h2>
       <input type="file" accept="image/*" onChange={handlePhotoUpload} />
       {selectedPhoto && (
-        <div>
+        <div class="hasDrawing">
           <h3>Valgt tegning</h3>
-          {/* Next line is html row */}
           <div class="roofimg">
             <Imgscale />
             <img
