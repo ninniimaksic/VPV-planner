@@ -12,7 +12,6 @@ const App = () => {
   return (
     <>
       <Navbar />
-
       <div className="App">{component}</div>
     </>
   );

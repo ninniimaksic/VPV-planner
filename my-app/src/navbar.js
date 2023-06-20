@@ -15,6 +15,7 @@ class Navbar extends Component {
       <>
         <nav>
           <a href="index.html"></a>
+          <img id="logo-image" src={Logo} alt="Logo" />
 
           <div>
             <ul
