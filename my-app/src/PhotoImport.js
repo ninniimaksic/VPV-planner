@@ -37,6 +37,7 @@ const PhotoImport = () => {
           <h3>Valgt tegning</h3>
           {/* Next line is html row */}
           <div class="roofimg">
+            <Imgscale />
             <img
               class="selected-photo"
               src={selectedPhoto}
@@ -44,7 +45,6 @@ const PhotoImport = () => {
               className="selected-photo"
               onClick={showMarkerArea}
             />
-            <Imgscale />
           </div>
         </div>
       )}
