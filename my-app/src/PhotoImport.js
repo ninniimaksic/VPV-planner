@@ -14,15 +14,16 @@ const PhotoImport = () => {
   };
   const showMarkerArea = () => {
     if (selectedPhoto) {
-      const markerjs = new markerjs2.MarkerArea(
+      const markerArea = new markerjs2.MarkerArea(
         document.querySelector(".selected-photo")
       );
-      markerjs.addEventListener("render", (event) => {
+      markerArea.addEventListener("render", (event) => {
         if (this.imgRef.current) {
           this.imgRef.current.src = event.dataUrl;
         }
       });
-      markerjs.show();
+      markerArea.availableMarkerTypes = markerArea.ALL_MARKER_TYPES;
+      markerArea.show();
     }
   };
 
