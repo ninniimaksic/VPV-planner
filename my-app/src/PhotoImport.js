@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import Logo from "./Logo.png";
+import "./App.css";
+import Imgscale from "./imgscale";
+import * as markerjs2 from "markerjs2";
 
 const PhotoImport = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -8,6 +11,19 @@ const PhotoImport = () => {
     const file = event.target.files[0];
     // Utfør nødvendig validering av filen her
     setSelectedPhoto(URL.createObjectURL(file));
+  };
+  const showMarkerArea = () => {
+    if (selectedPhoto) {
+      const markerjs = new markerjs2.MarkerArea(
+        document.querySelector(".selected-photo")
+      );
+      markerjs.addEventListener("render", (event) => {
+        if (this.imgRef.current) {
+          this.imgRef.current.src = event.dataUrl;
+        }
+      });
+      markerjs.show();
+    }
   };
 
   return (
@@ -18,9 +34,17 @@ const PhotoImport = () => {
       {selectedPhoto && (
         <div>
           <h3>Valgt tegning</h3>
-          <img src={selectedPhoto} alt="Selected" className="selected-photo" />
-          {/* Her kan du legge til logikk for å tegne omrisset på bildet */}
-          <canvas id="canvas" width="500" height="500"></canvas>
+          {/* Next line is html row */}
+          <div class="roofimg">
+            <img
+              class="selected-photo"
+              src={selectedPhoto}
+              alt="Selected"
+              className="selected-photo"
+              onClick={showMarkerArea}
+            />
+            <Imgscale />
+          </div>
         </div>
       )}
     </div>
