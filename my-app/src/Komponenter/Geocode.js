@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Geocode.css";
+import "../css/Geocode.css";
 import "@navikt/ds-css";
 import { Button, TextField } from "@navikt/ds-react";
 

@@ -1,6 +1,5 @@
 import { Component } from "react";
-import Logo from "./Logo.png";
-import "./navbar.css";
+import "../css/navbar.css";
 import Modul3 from "./Modul3.js";
 import { Link } from "react-router-dom";
 

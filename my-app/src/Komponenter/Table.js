@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Table.css"; // Import CSS file for styling
+import "../css/Table.css";
 
 const Table = () => {
   const [markedCells, setMarkedCells] = useState([]);

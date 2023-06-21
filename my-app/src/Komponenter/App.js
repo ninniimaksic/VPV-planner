@@ -1,4 +1,4 @@
-import "./App.css";
+import "../css/App.css";
 import React from "react";
 import PhotoImport from "./PhotoImport";
 import Navbar from "./navbar.js";

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import Logo from "./Logo.png";
-import "./App.css";
+import "../css/App.css";
 import Imgscale from "./Geocode";
 import * as markerjs2 from "markerjs2";
 
