@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./App.css";
-import Imgscale from "./imgscale";
-import * as markerjs2 from "markerjs2";
+import Drawing from "./Drawing";
 import { Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
 
@@ -19,22 +18,6 @@ const PhotoImport = () => {
     fileInput.current.click();
   };
 
-  const showMarkerArea = () => {
-    if (selectedPhoto) {
-      const markerArea = new markerjs2.MarkerArea(
-        document.querySelector(".selected-photo")
-      );
-      markerArea.addEventListener("render", (event) => {
-        if (selectedPhoto) {
-          setSelectedPhoto(event.dataUrl);
-        }
-      });
-
-      markerArea.availableMarkerTypes = markerArea.ALL_MARKER_TYPES;
-      markerArea.show();
-    }
-  };
-
   return (
     <div>
       <h2>Importer tegning</h2>
@@ -49,19 +32,10 @@ const PhotoImport = () => {
         onChange={handlePhotoUpload}
       />
       {selectedPhoto && (
-        <div class="hasDrawing">
-          <h3>Valgt tegning</h3>
-          <div class="roofimg">
-            <Imgscale />
-            <img
-              class="selected-photo"
-              src={selectedPhoto}
-              alt="Selected"
-              className="selected-photo"
-              onClick={showMarkerArea}
-            />
-          </div>
-        </div>
+        <Drawing
+          selectedPhoto={selectedPhoto}
+          setSelectedPhoto={setSelectedPhoto}
+        />
       )}
     </div>
   );
