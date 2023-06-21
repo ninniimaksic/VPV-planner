@@ -11,17 +11,20 @@ const ProjectName = () => {
   };
 
   return (
-    <div>
-      <TextField
-        id="c"
-        label="Project name"
-        value={projectName}
-        onChange={(e) => setProjectName(e.target.value)}
-      />
-      <Button variant="secondary" onClick={handleSave}>
-        Save
-      </Button>
-    </div>
+    <>
+      <h2>Project name</h2>
+      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <TextField
+          id="c"
+          value={projectName}
+          onChange={(e) => setProjectName(e.target.value)}
+          style={{ flex: "1" }}
+        />
+        <Button variant="secondary" onClick={handleSave}>
+          Save
+        </Button>
+      </div>
+    </>
   );
 };
 
