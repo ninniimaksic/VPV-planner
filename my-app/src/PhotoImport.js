@@ -17,15 +17,15 @@ const PhotoImport = () => {
         document.querySelector(".selected-photo")
       );
       markerArea.addEventListener("render", (event) => {
-        if (this.imgRef.current) {
-          this.imgRef.current.src = event.dataUrl;
+        if (selectedPhoto) {
+          setSelectedPhoto(event.dataUrl);
         }
       });
+      // markerArea.addEventListener("addLine", (event) => {
+      //   console.log("Line added", event);
+      // });
       markerArea.availableMarkerTypes = markerArea.ALL_MARKER_TYPES;
       markerArea.show();
-      markerArea.on("addLine", (event) => {
-        console.log("Line added", event.line);
-      });
     }
   };
 
