@@ -3,6 +3,7 @@ import React from "react";
 import PhotoImport from "./PhotoImport";
 import Navbar from "./navbar.js";
 import Table from "./Table";
+import ProjectName from "./projectname";
 
 const App = () => {
   let component = <PhotoImport />;
@@ -12,7 +13,7 @@ const App = () => {
   return (
     <>
       <Navbar />
-
+      <ProjectName />
       <div className="App">{component}</div>
     </>
   );
