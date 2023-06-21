@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import "./App.css";
+import "./Geocode.css";
+import "@navikt/ds-css";
+import { Button, TextField } from "@navikt/ds-react";
 
 const Geocode = () => {
   const [address, setAddress] = useState("");
@@ -13,25 +15,38 @@ const Geocode = () => {
     setResponse(data[0]);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (address.trim() !== "") {
+      geocodeAddress(address);
+    }
+  };
+
   return (
-    <div id="plassering" style={{ width: "500px", height: "300px" }}>
+    <div id="plassering">
       <h2> Viktig informasjon som du må fylle ut</h2>
-      <label for="address">Adresse: </label>
-      <input
-        type="text"
-        id="address"
-        name="address"
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-      />
-      <button onClick={() => geocodeAddress(address)}>Lagre</button>
+      <form onSubmit={handleSubmit} className="form-container">
+        <TextField
+          required
+          label="Adresse"
+          id="address"
+          name="address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          description="Skriv inn adressen din, også byen etter."
+          className="input-field"
+        />
+        <Button variant="primary" type="submit" className="submit-button">
+          Lagre
+        </Button>
+      </form>
       {response && (
         <p>
           Lat: {response.lat}, Lon: {response.lon}
         </p>
       )}
       <br />
-      {/* resten av inputsfelene skal under her , men man skal ender layout ved å bruke komponenter*/}
+      {/* Resten av inputsfeltene plasseres her */}
     </div>
   );
 };
