@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Logo from "./Logo.png";
 import "./App.css";
-import Imgscale from "./imgscale";
+import Imgscale from "./Geocode";
 import * as markerjs2 from "markerjs2";
 
 const PhotoImport = () => {
@@ -29,7 +29,6 @@ const PhotoImport = () => {
 
   return (
     <div>
-      <img id="logo-image" src={Logo} alt="Logo" />
       <h2>Importer tegning</h2>
       <input type="file" accept="image/*" onChange={handlePhotoUpload} />
       {selectedPhoto && (
