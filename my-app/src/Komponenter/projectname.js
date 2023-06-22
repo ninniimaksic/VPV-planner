@@ -8,10 +8,7 @@ const ProjectName = () => {
   const [showInput, setShowInput] = useState(true);
 
   const handleSave = () => {
-    // Lagre verdien i console log også, kun for test
     console.log("Lagrer prosjektnavnet:", projectName);
-    // Skjuler inputfeltet og knappen etter lagring
-    //hvis true så hvises den
     setShowInput(false);
   };
 
@@ -21,23 +18,26 @@ const ProjectName = () => {
       {showInput ? (
         <>
           <h2>Project name</h2>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div
+            class="projectnamesbox"
+            style={{ display: "flex", alignItems: "center", gap: "10px" }}
+          >
             <TextField
-              id="c"
+              id="projectname"
               value={projectName}
               onChange={(e) => setProjectName(e.target.value)}
               style={{ flex: "1" }}
             />
-            <Button variant="secondary" onClick={handleSave}>
+            <Button variant="primary" onClick={handleSave}>
               Save
             </Button>
           </div>
         </>
       ) : (
-        <h2>
-          Project name: {projectName} <br /> <br /> <Imgscale />;
-        </h2>
+        <h2>Project name: {projectName}</h2>
       )}
+      <br /> <br />
+      <Imgscale />
     </>
   );
 };
