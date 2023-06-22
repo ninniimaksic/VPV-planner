@@ -6,17 +6,7 @@
   height: 550px;
 }
 
-.form-container {
-  display: flex;
-  align-items: flex-start;
-}
-
 .input-field {
-  margin-right: 1rem; /* Juster størrelsen etter behov */
-}
-
-.submit-button {
-  position: fixed;
-  top: 293px; /* Juster verdien etter behov */
-  left: 320px; /* Juster verdien etter behov */
+  margin-right: 4rem;
+  margin-bottom: 16px;
 }

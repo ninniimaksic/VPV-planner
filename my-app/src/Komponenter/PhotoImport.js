@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import "../css/App.css";
-import Imgscale from "./Geocode";
 import * as markerjs2 from "markerjs2";
 import { Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
@@ -52,7 +51,6 @@ const PhotoImport = () => {
         <div class="hasDrawing">
           <h3>Valgt tegning</h3>
           <div class="roofimg">
-            <Imgscale />
             <img
               class="selected-photo"
               src={selectedPhoto}

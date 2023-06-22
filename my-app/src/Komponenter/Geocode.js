@@ -24,11 +24,11 @@ const Geocode = () => {
 
   return (
     <div id="plassering">
-      <h2> Fyll ut adressen din:</h2>
       <form onSubmit={handleSubmit} className="form-container">
+        <h5> Viktig info som må fylles ut</h5> <br />
         <TextField
           required
-          label="Adresse"
+          label="Skriv inn adressen din her:"
           id="address"
           name="address"
           value={address}
