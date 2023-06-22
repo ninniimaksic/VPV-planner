@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "../css/App.css";
 import useImage from "use-image";
 import { Stage, Layer, Image } from "react-konva";
 
