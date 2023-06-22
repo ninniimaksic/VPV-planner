@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import "../css/Geocode.css";
 import "@navikt/ds-css";
 import { Button, TextField } from "@navikt/ds-react";
+import PhotoImport from "./PhotoImport";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 
 const Geocode = () => {
   const [address, setAddress] = useState("");
   const [response, setResponse] = useState(null);
   const [showButton, setShowButton] = useState(false);
-  const [showPhotoImport, setShowPhotoImport] = useState(false); // Add state for displaying PhotoImport
-  const [showNextButton, setShowNextButton] = useState(false); // Add state for displaying "Next Page" button
+  const [showPhotoImport, setShowPhotoImport] = useState(false);
+  const [showNextButton, setShowNextButton] = useState(false);
 
   const geocodeAddress = async (address) => {
     const response = await fetch(
@@ -34,56 +35,77 @@ const Geocode = () => {
       "Longitude:",
       response.lon
     );
-    setShowNextButton(true); // Set showNextButton to true after confirming
+    setShowNextButton(true);
+  };
+
+  const handleNextPage = () => {
+    setShowPhotoImport(true);
+  };
+
+  const resetForm = () => {
+    setAddress("");
+    setResponse(null);
+    setShowButton(false);
+    setShowNextButton(false);
   };
 
   return (
     <div id="plassering">
-      <form onSubmit={handleSubmit} className="form-container">
-        <h3> Viktig info som må fylles ut</h3> <br />
-        <TextField
-          required
-          label="Skriv inn adresse og by her:"
-          id="address"
-          name="address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          className="input-field"
-        />
-        <Button variant="primary" type="submit" className="submit-button">
-          Sjekk
-        </Button>
-      </form>
-      {response && (
-        <div>
-          <br />
-          <h4>Er dette riktig?</h4>
-          <p>
-            Adresse: {response.address.road}{" "}
-            {response.address.house_number || "N/A"} {""}
-            {response.address.city || response.address.town}{" "}
-            {response.address.postcode} {response.address.country}
-          </p>
-          <br></br>
-          <p>Hvis det ikke er riktig, legg inn by i feltet over</p>
-          <br></br>
-          <Button
-            variant="primary"
-            onClick={handleConfirm}
-            style={{ display: showButton ? "block" : "none" }}
-          >
-            Bekreft og lagre
+      {!showPhotoImport ? (
+        <form onSubmit={handleSubmit} className="form-container">
+          <h3> Viktig info som må fylles ut</h3> <br />
+          <TextField
+            required
+            label="Skriv inn adresse og by her:"
+            id="address"
+            name="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            className="input-field"
+          />
+          <Button variant="primary" type="submit" className="submit-button">
+            Sjekk
           </Button>
-        </div>
+          {response && (
+            <div>
+              <br />
+              <h4>Er dette riktig?</h4>
+              <p>
+                Adresse: {response.address.road}{" "}
+                {response.address.house_number || "N/A"} {""}
+                {response.address.city || response.address.town}{" "}
+                {response.address.postcode} {response.address.country}
+              </p>
+              <br></br>
+              <p>Hvis det ikke er riktig, legg inn by i feltet over</p>
+              <br></br>
+              <Button
+                variant="primary"
+                onClick={handleConfirm}
+                style={{ display: showButton ? "block" : "none" }}
+              >
+                Bekreft og lagre
+              </Button>
+            </div>
+          )}
+          <br />
+          <Button
+            variant="secondary"
+            style={{ display: showNextButton ? "block" : "none" }}
+            onClick={handleNextPage}
+          >
+            Neste side
+            <ArrowRightIcon />
+          </Button>
+        </form>
+      ) : (
+        <PhotoImport />
       )}
-      <br />
-      <Button
-        variant="primary"
-        style={{ display: showNextButton ? "block" : "none" }} // Display "Next Page" button based on showNextButton
-      >
-        Neste side
-        <ArrowRightIcon />
-      </Button>
+      {showPhotoImport && (
+        <Button variant="secondary" onClick={resetForm}>
+          Tilbake
+        </Button>
+      )}
     </div>
   );
 };
