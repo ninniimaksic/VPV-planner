@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import "../css/Geocode.css";
 import "@navikt/ds-css";
 import { Button, TextField } from "@navikt/ds-react";
-import PhotoImport from "./PhotoImport";
+import { ArrowRightIcon } from "@navikt/aksel-icons";
 
 const Geocode = () => {
   const [address, setAddress] = useState("");
   const [response, setResponse] = useState(null);
   const [showButton, setShowButton] = useState(false);
   const [showPhotoImport, setShowPhotoImport] = useState(false); // Add state for displaying PhotoImport
+  const [showNextButton, setShowNextButton] = useState(false); // Add state for displaying "Next Page" button
 
   const geocodeAddress = async (address) => {
     const response = await fetch(
@@ -33,7 +34,7 @@ const Geocode = () => {
       "Longitude:",
       response.lon
     );
-    setShowPhotoImport(true); // Display PhotoImport component after confirming
+    setShowNextButton(true); // Set showNextButton to true after confirming
   };
 
   return (
@@ -76,6 +77,13 @@ const Geocode = () => {
         </div>
       )}
       <br />
+      <Button
+        variant="primary"
+        style={{ display: showNextButton ? "block" : "none" }} // Display "Next Page" button based on showNextButton
+      >
+        Neste side
+        <ArrowRightIcon />
+      </Button>
     </div>
   );
 };
