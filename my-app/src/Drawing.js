@@ -1,37 +1,26 @@
 import React from "react";
 import "./App.css";
-import Imgscale from "./imgscale";
-import * as markerjs2 from "markerjs2";
+import useImage from "use-image";
+import { Stage, Layer, Image } from "react-konva";
 
 const Drawing = ({ selectedPhoto, setSelectedPhoto }) => {
-  const showMarkerArea = () => {
-    if (selectedPhoto) {
-      const markerArea = new markerjs2.MarkerArea(
-        document.querySelector(".selected-photo")
-      );
-      markerArea.addEventListener("render", (event) => {
-        if (selectedPhoto) {
-          setSelectedPhoto(event.dataUrl);
-        }
-      });
-
-      markerArea.availableMarkerTypes = markerArea.ALL_MARKER_TYPES;
-      markerArea.show();
-    }
-  };
+  const [image] = useImage(selectedPhoto);
+  const img = <Image image={image} />;
   return (
     <div className="hasDrawing">
       <h3>Valgt tegning</h3>
-      <div className="roofimg">
-        <Imgscale />
-        <img
-          class="selected-photo"
-          className="selected-photo"
-          src={selectedPhoto}
-          alt="Selected"
-          onClick={showMarkerArea}
-        />
-      </div>
+      <div className="roofimg"></div>
+      <Stage width={window.innerWidth} height={window.innerHeight}>
+        <Layer>
+          <Image
+            x={0}
+            y={0}
+            width={window.innerWidth}
+            height={window.innerHeight}
+            image={img}
+          />
+        </Layer>
+      </Stage>
     </div>
   );
 };
