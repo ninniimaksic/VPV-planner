@@ -28,12 +28,12 @@ const Geocode = () => {
         <h5> Viktig info som må fylles ut</h5> <br />
         <TextField
           required
-          label="Skriv inn adressen din her:"
+          label="Skriv inn adresse og by her:"
           id="address"
           name="address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          description="Skriv inn adressen din, også byen etter."
+          description="Ikke glem å skrive inn byen"
           className="input-field"
         />
         <Button variant="primary" type="submit" className="submit-button">
@@ -41,12 +41,13 @@ const Geocode = () => {
         </Button>
       </form>
       {response && (
-        <p>
-          Lat: {response.lat}, Lon: {response.lon}
-        </p>
+        <div>
+          <p>
+            Lat: {response.lat}, Lon: {response.lon}
+          </p>
+        </div>
       )}
       <br />
-      {/* Resten av inputsfeltene plasseres her */}
     </div>
   );
 };
