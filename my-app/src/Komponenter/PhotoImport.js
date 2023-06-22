@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
-import "./App.css";
 import Drawing from "./Drawing";
+import "../css/App.css";
 import { Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
 
