@@ -38,6 +38,7 @@ const ProjectName = () => {
       )}
       <br /> <br />
       <Imgscale />
+      <br></br>
     </>
   );
 };
