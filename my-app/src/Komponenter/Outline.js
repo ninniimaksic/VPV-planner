@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { fabric } from "fabric";
 
-const Outline = (props) => {
+const Outline = ({ selectedPhoto }) => {
   const canvasRef = useRef(null);
-  const { selectedPhoto } = props;
 
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
