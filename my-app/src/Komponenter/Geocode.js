@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import "../css/Geocode.css";
 import "@navikt/ds-css";
 import { Button, TextField } from "@navikt/ds-react";
+import PhotoImport from "./PhotoImport";
 
 const Geocode = () => {
   const [address, setAddress] = useState("");
   const [response, setResponse] = useState(null);
-  const [confirmed, setConfirmed] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+  const [showPhotoImport, setShowPhotoImport] = useState(false); // Add state for displaying PhotoImport
 
   const geocodeAddress = async (address) => {
     const response = await fetch(
@@ -14,6 +16,7 @@ const Geocode = () => {
     );
     const data = await response.json();
     setResponse(data[0]);
+    setShowButton(true);
   };
 
   const handleSubmit = (e) => {
@@ -24,13 +27,13 @@ const Geocode = () => {
   };
 
   const handleConfirm = () => {
-    setConfirmed(true);
     console.log(
       "Bekreft og lagre: Latitude:",
       response.lat,
       "Longitude:",
       response.lon
     );
+    setShowPhotoImport(true); // Display PhotoImport component after confirming
   };
 
   return (
@@ -63,11 +66,13 @@ const Geocode = () => {
           <br></br>
           <p>Hvis det ikke er riktig, legg inn by i feltet over</p>
           <br></br>
-          {!confirmed && (
-            <Button variant="primary" onClick={handleConfirm}>
-              Bekreft og lagre
-            </Button>
-          )}
+          <Button
+            variant="primary"
+            onClick={handleConfirm}
+            style={{ display: showButton ? "block" : "none" }}
+          >
+            Bekreft og lagre
+          </Button>
         </div>
       )}
       <br />
