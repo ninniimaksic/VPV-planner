@@ -6,6 +6,7 @@ import { Button, TextField } from "@navikt/ds-react";
 const Geocode = () => {
   const [address, setAddress] = useState("");
   const [response, setResponse] = useState(null);
+  const [confirmed, setConfirmed] = useState(false);
 
   const geocodeAddress = async (address) => {
     const response = await fetch(
@@ -22,6 +23,16 @@ const Geocode = () => {
     }
   };
 
+  const handleConfirm = () => {
+    setConfirmed(true);
+    console.log(
+      "Bekreft og lagre: Latitude:",
+      response.lat,
+      "Longitude:",
+      response.lon
+    );
+  };
+
   return (
     <div id="plassering">
       <form onSubmit={handleSubmit} className="form-container">
@@ -36,20 +47,27 @@ const Geocode = () => {
           className="input-field"
         />
         <Button variant="primary" type="submit" className="submit-button">
-          Lagre
+          Sjekk
         </Button>
       </form>
       {response && (
         <div>
           <br />
-
-          <h4> Er dette riktig?</h4>
+          <h4>Er dette riktig?</h4>
           <p>
             Adresse: {response.address.road}{" "}
             {response.address.house_number || "N/A"} {""}
             {response.address.city || response.address.town}{" "}
             {response.address.postcode} {response.address.country}
           </p>
+          <br></br>
+          <p>Hvis det ikke er riktig, legg inn by i feltet over</p>
+          <br></br>
+          {!confirmed && (
+            <Button variant="primary" onClick={handleConfirm}>
+              Bekreft og lagre
+            </Button>
+          )}
         </div>
       )}
       <br />
