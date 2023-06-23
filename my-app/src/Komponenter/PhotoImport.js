@@ -19,7 +19,7 @@ const PhotoImport = () => {
   };
 
   return (
-    <div>
+    <div class="plassering1">
       <h2>Importer tegning</h2>
       <Button variant="primary" onClick={handleClick}>
         Velg fil

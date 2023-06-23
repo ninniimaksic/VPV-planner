@@ -6,15 +6,10 @@ import Table from "./Table";
 import ProjectName from "./projectname";
 
 const App = () => {
-  let component = <PhotoImport />;
-  if (window.location.pathname === "/module3") {
-    component = <Table />;
-  }
   return (
     <>
       <Navbar />
       <ProjectName />
-      <div className="App">{component}</div>
     </>
   );
 };

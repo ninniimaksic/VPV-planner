@@ -9,6 +9,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "fabric": "^5.3.0",
+    "leaflet": "^1.9.4",
     "konva": "^9.2.0",
     "markerjs2": "^2.29.4",
     "react": "^18.2.0",
