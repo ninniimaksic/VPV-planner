@@ -3,27 +3,44 @@ import "../css/App.css";
 import useImage from "use-image";
 import { Stage, Layer, Image, Line } from "react-konva";
 
-const Drawing = ({ selectedPhoto, setSelectedPhoto }) => {
+const SetScale = ({ selectedPhoto }) => {
   const [lines, setLines] = useState([]); // Array to store lines
   const [line, setLine] = useState([]); // Array to store current line [x1, y1, x2, y2]
-  const [lineLength, setLineLength] = useState(0);
+  const [imgScale, setImgScale] = useState(0.2); // Scale of the image
   const lineRef = useRef(); // Ref to access the line component
   const [wimage] = useImage(selectedPhoto);
+  const getImgLen = (line) => {
+    const [x1, y1, x2, y2] = line;
+    const x = x2 - x1;
+    const y = y2 - y1;
+    return Math.sqrt(x * x + y * y);
+  };
   useEffect(() => {
     if (line.length === 4) {
-      setLines([...lines, [line, 0]]);
+      setLines([...lines, [line, (getImgLen(line) * imgScale).toFixed(2)]]);
       setLine([]);
     }
-  }, [line, lines, lineLength]);
+  }, [line, lines, imgScale, getImgLen]);
 
   const handleInputChange = (e) => {
     setLines([[lines[0][0], e.target.value], ...lines.slice(1)]);
+    setImgScale(e.target.value / getImgLen(lines[0][0]));
   };
 
   if (!wimage) return null;
 
   const img = new window.Image();
   img.src = wimage.src;
+  const targetW = window.innerWidth / 1.5 - 2;
+  const targetH = window.innerHeight / 1.5 - 2;
+
+  const widthFit = targetW / img.width;
+  const heightFit = targetH / img.height;
+
+  const scale = widthFit > heightFit ? heightFit : widthFit;
+
+  const imageWidth = parseInt(img.width * scale, 10);
+  const imageHeight = parseInt(img.height * scale, 10);
 
   const handleStageClick = (e) => {
     const liner = lineRef.current;
@@ -33,23 +50,30 @@ const Drawing = ({ selectedPhoto, setSelectedPhoto }) => {
     console.log("Added sum points", line);
   };
 
+  const resetLines = () => {
+    setLines([]);
+    setLine([]);
+  };
+
   return (
-    <div className="hasDrawing">
+    <div className="hassetScale">
       <h3>Valgt tegning</h3>
       <div className="roofimg"></div>
       <Stage
         width={window.innerWidth / 1.5}
-        height={window.innerHeight / 1.6}
+        height={window.innerHeight / 1.5}
         onClick={handleStageClick}
       >
         <Layer>
-          <Image
-            x={0}
-            y={0}
-            height={window.innerHeight / 1.5}
-            width={window.innerWidth / 1.5}
-            image={img}
-          />
+          {img && (
+            <Image
+              x={0}
+              y={0}
+              height={imageHeight}
+              width={imageWidth}
+              image={img}
+            />
+          )}
           {lines.map((line, index) => (
             <Line key={index} points={line[0]} stroke="red" strokeWidth={3} />
           ))}
@@ -59,24 +83,23 @@ const Drawing = ({ selectedPhoto, setSelectedPhoto }) => {
       {lines.map((line, index) => (
         <div key={index}>
           <p>
-            Line {index + 1} length: {line[1]}cm
+            Line {index + 1} length: {line[1]}m
           </p>
         </div>
       ))}
       {lines.length >= 1 && (
         <div>
-          <label htmlFor="lineLengthInput">Length line 1:</label>
+          <label htmlFor="lineLengthInput">Length line 1 (meters):</label>
           <input
             id="lineLengthInput"
             type="number"
             onChange={handleInputChange}
           />
-          <button onClick={() => handleInputChange(0)}>Reset</button>
+          <button onClick={() => resetLines()}>Reset</button>
         </div>
       )}
-      ;
     </div>
   );
 };
 
-export default Drawing;
+export default SetScale;

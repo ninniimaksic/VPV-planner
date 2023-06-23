@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import Drawing from "./Drawing";
+import SetScale from "./SetScale";
 import "../css/App.css";
 import { Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
@@ -31,12 +31,7 @@ const PhotoImport = () => {
         accept="image/*"
         onChange={handlePhotoUpload}
       />
-      {selectedPhoto && (
-        <Drawing
-          selectedPhoto={selectedPhoto}
-          setSelectedPhoto={setSelectedPhoto}
-        />
-      )}
+      {selectedPhoto && <SetScale selectedPhoto={selectedPhoto} />}
     </div>
   );
 };
