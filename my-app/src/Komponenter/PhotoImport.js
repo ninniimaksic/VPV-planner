@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import Drawing from "./Drawing";
-import Outline from "./Outline";
 import "../css/App.css";
 import { Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
@@ -33,7 +32,6 @@ const PhotoImport = () => {
         onChange={handlePhotoUpload}
       />
       {selectedPhoto && (
-        // <Outline selectedPhoto={selectedPhoto} />
         <Drawing
           selectedPhoto={selectedPhoto}
           setSelectedPhoto={setSelectedPhoto}
