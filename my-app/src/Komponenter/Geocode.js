@@ -64,7 +64,7 @@ const Geocode = () => {
             className="input-field"
           />
           <Button variant="primary" type="submit" className="submit-button">
-            Sjekk
+            Sjekk om det er riktig adresse
           </Button>
           {response && (
             <div>

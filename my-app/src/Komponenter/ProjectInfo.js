@@ -3,7 +3,7 @@ import { TextField, Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
 import Imgscale from "./Geocode";
 
-const ProjectName = () => {
+const ProjectInfo = () => {
   const [projectName, setProjectName] = useState("");
   const [showInput, setShowInput] = useState(true);
 
@@ -43,4 +43,4 @@ const ProjectName = () => {
   );
 };
 
-export default ProjectName;
+export default ProjectInfo;
