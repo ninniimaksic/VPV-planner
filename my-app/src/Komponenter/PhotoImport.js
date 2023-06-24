@@ -19,20 +19,22 @@ const PhotoImport = () => {
   };
 
   return (
-    <div class="plassering1">
-      <h2>Importer tegning</h2>
-      <Button variant="primary" onClick={handleClick}>
-        Velg fil
-      </Button>
-      <input
-        type="file"
-        ref={fileInput}
-        style={{ display: "none" }}
-        accept="image/*"
-        onChange={handlePhotoUpload}
-      />
+    <>
+      <div class="plassering1">
+        <h2>Importer tegning</h2>
+        <Button variant="primary" onClick={handleClick}>
+          Velg fil
+        </Button>
+        <input
+          type="file"
+          ref={fileInput}
+          style={{ display: "none" }}
+          accept="image/*"
+          onChange={handlePhotoUpload}
+        />
+      </div>
       {selectedPhoto && <SetScale selectedPhoto={selectedPhoto} />}
-    </div>
+    </>
   );
 };
 

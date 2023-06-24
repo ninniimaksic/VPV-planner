@@ -111,26 +111,27 @@ const SetScale = ({ selectedPhoto }) => {
           </Layer>
         </Stage>
       </div>
-      {lines.map((line, index) => (
-        <div key={index}>
-          <p>
-            Line {index + 1} length: {line[1]}m
-          </p>
-        </div>
-      ))}
       <div className="Line">
         {lines.length >= 1 && (
           <div>
-            <label htmlFor="lineLengthInput">Length line 1 (meters):</label>
             <TextField
               id="lineLengthInput"
-              type="number"
-              label="Set length"
+              type="text"
+              label="Set length of line"
               description="Drag or adjust"
               onChange={handleInputChange}
             />
-            <button onClick={() => resetLines()}>Reset</button>
+            <span id="unitlabel">m</span>
+            <div className="showScale">
+              <p>Pixel length: {getImgLen(lines[0][0]).toFixed(2)}px</p>
+            </div>
           </div>
+        )}
+        {!lines.length && (
+          <h4>
+            Indicate a known length on the image to set the scale. <br /> Click
+            to add points, drag to adjust.
+          </h4>
         )}
       </div>
     </div>

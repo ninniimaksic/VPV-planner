@@ -3,15 +3,33 @@
   z-index: 1;
   display: flex;
   flex-direction: row;
-  margin: 10%;
-  align-items: center;
+  flex-basis: 50%;
+  margin: 2%;
+  align-items: start;
 }
 
 .Line {
   display: flex;
-  flex-direction: col;
   width: 100%;
-  height: 1px;
+  margin-top: 15px;
+  margin-left: 40px;
+}
+
+.drawStage {
+  outline: 2px solid #0015ff;
   background-color: #fff;
-  margin: 0 10px;
+}
+
+.showScale {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 50%;
+  margin-top: 10px;
+  align-items: center;
+}
+
+#unitlabel {
+  position: relative;
+  left: 80px;
+  top: -36px;
 }

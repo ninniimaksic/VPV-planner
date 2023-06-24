@@ -15,8 +15,8 @@
 }
 
 .selected-photo {
-  width: 600px; /* Angi ønsket bredde */
-  height: 500px; /* Høyden tilpasses proporsjonalt */
+  width: 100%; /* Angi ønsket bredde */
+  height: 100%; /* Høyden tilpasses proporsjonalt */
 }
 
 @media (prefers-reduced-motion: no-preference) {
