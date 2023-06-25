@@ -33,3 +33,9 @@
   left: 80px;
   top: -36px;
 }
+
+#lineHelp {
+  position: relative;
+  left: 200px;
+  top: 45px;
+}

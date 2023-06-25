@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "../css/SetScale.css";
 import useImage from "use-image";
 import { Stage, Layer, Image, Line, Circle } from "react-konva";
-import { TextField } from "@navikt/ds-react";
+import { TextField, HelpText } from "@navikt/ds-react";
 
 const SetScale = ({ selectedPhoto }) => {
   const [lines, setLines] = useState([]); // Array to store lines
@@ -32,8 +32,8 @@ const SetScale = ({ selectedPhoto }) => {
 
   const img = new window.Image();
   img.src = wimage.src;
-  const targetW = window.innerWidth / 1.5 - 2;
-  const targetH = window.innerHeight / 1.5 - 2;
+  const targetW = 750;
+  const targetH = 550;
 
   const widthFit = targetW / img.width;
   const heightFit = targetH / img.height;
@@ -66,11 +66,7 @@ const SetScale = ({ selectedPhoto }) => {
   return (
     <div className="lenScale">
       <div className="drawStage">
-        <Stage
-          width={window.innerWidth / 1.5}
-          height={window.innerHeight / 1.5}
-          onClick={handleStageClick}
-        >
+        <Stage width={750} height={500} onClick={handleStageClick}>
           <Layer>
             {img && (
               <Image
@@ -80,6 +76,9 @@ const SetScale = ({ selectedPhoto }) => {
                 width={imageWidth}
                 image={img}
               />
+            )}
+            {line.length === 2 && (
+              <Circle x={line[0]} y={line[1]} radius={5} fill="blue" />
             )}
             {lines.map((line, index) => (
               <React.Fragment key={index}>
@@ -114,13 +113,16 @@ const SetScale = ({ selectedPhoto }) => {
       <div className="Line">
         {lines.length >= 1 && (
           <div>
+            <HelpText id="lineHelp">
+              Longer lines reduce the effect of errors
+            </HelpText>
             <TextField
               id="lineLengthInput"
               type="text"
               label="Set length of line"
-              description="Drag or adjust"
+              description="Drag to adjust"
               onChange={handleInputChange}
-            />
+            ></TextField>
             <span id="unitlabel">m</span>
             <div className="showScale">
               <p>Pixel length: {getImgLen(lines[0][0]).toFixed(2)}px</p>
@@ -129,8 +131,8 @@ const SetScale = ({ selectedPhoto }) => {
         )}
         {!lines.length && (
           <h4>
-            Indicate a known length on the image to set the scale. <br /> Click
-            to add points, drag to adjust.
+            Set a line where the distance is known <br /> Click to add points,
+            drag to adjust.
           </h4>
         )}
       </div>
