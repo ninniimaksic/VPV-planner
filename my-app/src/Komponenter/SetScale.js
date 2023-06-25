@@ -44,16 +44,14 @@ const SetScale = ({ selectedPhoto }) => {
   const imageHeight = parseInt(img.height * scale, 10);
 
   const handleStageClick = () => {
-    const liner = lineRef.current;
-    const stage = liner.getStage();
-    const point = stage.getPointerPosition();
-    setLine([...line, point.x, point.y]);
-    console.log("Added sum points", line);
-  };
-
-  const resetLines = () => {
-    setLines([]);
-    setLine([]);
+    if (lines.length === 1) return;
+    else {
+      const liner = lineRef.current;
+      const stage = liner.getStage();
+      const point = stage.getPointerPosition();
+      setLine([...line, point.x, point.y]);
+      console.log("Added sum points", line);
+    }
   };
 
   const handleCircleDragMove = (e, lineIndex, endPointIndex) => {
@@ -91,16 +89,18 @@ const SetScale = ({ selectedPhoto }) => {
                 <Circle
                   x={line[0][0]}
                   y={line[0][1]}
-                  radius={5}
+                  radius={10}
                   fill="blue"
+                  opacity={0.5}
                   draggable
                   onDragMove={(e) => handleCircleDragMove(e, index, 0)}
                 />
                 <Circle
                   x={line[0][2]}
                   y={line[0][3]}
-                  radius={5}
+                  radius={10}
                   fill="blue"
+                  opacity={0.5}
                   draggable
                   onDragMove={(e) => handleCircleDragMove(e, index, 1)}
                 />
@@ -131,8 +131,8 @@ const SetScale = ({ selectedPhoto }) => {
         )}
         {!lines.length && (
           <h4>
-            Set a line where the distance is known <br /> Click to add points,
-            drag to adjust.
+            Set a line where distance is known <br /> Click to add points, drag
+            to adjust.
           </h4>
         )}
       </div>
