@@ -145,7 +145,7 @@ const SetScale = ({ selectedPhoto }) => {
                 <div className="nextButton">
                   {showNextButton && (
                     <Button
-                      variant="primary"
+                      variant="secondary"
                       onClick={() => {
                         setShowNextButton(true);
                         setShowRoofOutline(true);
