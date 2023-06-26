@@ -15,11 +15,6 @@
   margin-left: 40px;
 }
 
-/* .drawStage {
-  outline: 2px solid #0015ff;
-  background-color: #fff;
-} */
-
 .showScale {
   display: flex;
   flex-direction: column;

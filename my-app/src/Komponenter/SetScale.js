@@ -5,9 +5,9 @@ import { Stage, Layer, Image, Line, Circle } from "react-konva";
 import { TextField, HelpText } from "@navikt/ds-react";
 
 const SetScale = ({ selectedPhoto }) => {
-  const [lines, setLines] = useState([]); // Array to store lines
-  const [line, setLine] = useState([]); // Array to store current line [x1, y1, x2, y2]
-  const [imgScale, setImgScale] = useState(0.2); // Scale of the image
+  const [lines, setLines] = useState([]);
+  const [line, setLine] = useState([]);
+  const [imgScale, setImgScale] = useState(0.2);
   const lineRef = useRef(); // Ref to access the line component
   const [wimage] = useImage(selectedPhoto);
 
