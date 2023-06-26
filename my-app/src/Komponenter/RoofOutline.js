@@ -1,48 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
-import "../css/App.css";
-import useImage from "use-image";
-import { Stage, Layer, Image, Line } from "react-konva";
+import React, { useState, useRef } from "react";
+import "../css/SetScale.css";
+import { Stage, Layer, Image, Line, Circle } from "react-konva";
+import { Button } from "@navikt/ds-react";
 
-const SetScale = ({ selectedPhoto }) => {
-  const [lines, setLines] = useState([]); // Array to store lines
-  const [line, setLine] = useState([]); // Array to store current line [x1, y1, x2, y2]
-  const [imgScale, setImgScale] = useState(0.2); // Scale of the image
+const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
+  const [line, setLine] = useState([]);
+  const [polygons, setPolygons] = useState([]);
   const lineRef = useRef(); // Ref to access the line component
-  const [wimage] = useImage(selectedPhoto);
-  const getImgLen = (line) => {
-    const [x1, y1, x2, y2] = line;
-    const x = x2 - x1;
-    const y = y2 - y1;
-    return Math.sqrt(x * x + y * y);
-  };
-  useEffect(() => {
-    if (line.length === 4) {
-      setLines([...lines, [line, (getImgLen(line) * imgScale).toFixed(2)]]);
-      setLine([]);
-    }
-  }, [line, lines, imgScale, getImgLen]);
 
-  const handleInputChange = (e) => {
-    setLines([[lines[0][0], e.target.value], ...lines.slice(1)]);
-    setImgScale(e.target.value / getImgLen(lines[0][0]));
-  };
-
-  if (!wimage) return null;
-
-  const img = new window.Image();
-  img.src = wimage.src;
-  const targetW = window.innerWidth / 1.5 - 2;
-  const targetH = window.innerHeight / 1.5 - 2;
-
-  const widthFit = targetW / img.width;
-  const heightFit = targetH / img.height;
-
-  const scale = widthFit > heightFit ? heightFit : widthFit;
-
-  const imageWidth = parseInt(img.width * scale, 10);
-  const imageHeight = parseInt(img.height * scale, 10);
-
-  const handleStageClick = (e) => {
+  const handleStageClick = () => {
     const liner = lineRef.current;
     const stage = liner.getStage();
     const point = stage.getPointerPosition();
@@ -50,56 +16,65 @@ const SetScale = ({ selectedPhoto }) => {
     console.log("Added sum points", line);
   };
 
-  const resetLines = () => {
-    setLines([]);
+  const handleCircleDragMove = (e, lineIndex) => {
+    const newLines = [...line];
+    newLines[lineIndex] = e.target.x();
+    newLines[lineIndex + 1] = e.target.y();
+    setLine(newLines);
+  };
+
+  const resetLine = () => {
     setLine([]);
   };
 
   return (
-    <div className="hassetScale">
-      <h3>Valgt tegning</h3>
-      <div className="roofimg"></div>
-      <Stage
-        width={window.innerWidth / 1.5}
-        height={window.innerHeight / 1.5}
-        onClick={handleStageClick}
-      >
-        <Layer>
-          {img && (
-            <Image
-              x={0}
-              y={0}
-              height={imageHeight}
-              width={imageWidth}
-              image={img}
+    <div className="lenScale">
+      <div className="drawStage">
+        <Stage width={1000} height={750} onClick={handleStageClick}>
+          <Layer>
+            {img && (
+              <Image height={imageHeight} width={imageWidth} image={img} />
+            )}
+            {line.map((_, i) => (
+              <Circle
+                key={i}
+                x={line[i * 2]}
+                y={line[i * 2 + 1]}
+                radius={8}
+                zIndex={10}
+                stroke="blue"
+                draggable
+                onDragMove={(e) => handleCircleDragMove(e, i * 2)}
+              />
+            ))}
+            <Line
+              ref={lineRef}
+              points={line}
+              zIndex={9}
+              stroke="red"
+              fill="#00D2FF"
+              opacity={0.4}
+              strokeWidth={3}
+              closed={true}
             />
-          )}
-          {lines.map((line, index) => (
-            <Line key={index} points={line[0]} stroke="red" strokeWidth={3} />
-          ))}
-          <Line ref={lineRef} points={[]} stroke="red" strokeWidth={3} />
-        </Layer>
-      </Stage>
-      {lines.map((line, index) => (
-        <div key={index}>
-          <p>
-            Line {index + 1} length: {line[1]}m
-          </p>
-        </div>
-      ))}
-      {lines.length >= 1 && (
+          </Layer>
+        </Stage>
+      </div>
+      <div className="Line">
         <div>
-          <label htmlFor="lineLengthInput">Length line 1 (meters):</label>
-          <input
-            id="lineLengthInput"
-            type="number"
-            onChange={handleInputChange}
-          />
-          <button onClick={() => resetLines()}>Reset</button>
+          <h4>
+            Outline roof/PV module area <br /> Click to add points, drag to
+            adjust.
+          </h4>
+          {line.length >= 2 && (
+            <Button variant="primary" onClick={resetLine}>
+              Reset
+            </Button>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
 
-export default SetScale;
+export default RoofOutline;
