@@ -5,15 +5,17 @@ import { Button } from "@navikt/ds-react";
 
 const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
   const [line, setLine] = useState([]);
-  const [polygons, setPolygons] = useState([]);
+  const [addPoints, setAddPoints] = useState(false);
   const lineRef = useRef(); // Ref to access the line component
 
   const handleStageClick = () => {
-    const liner = lineRef.current;
-    const stage = liner.getStage();
-    const point = stage.getPointerPosition();
-    setLine([...line, point.x, point.y]);
-    console.log("Added sum points", line);
+    if (addPoints) {
+      const liner = lineRef.current;
+      const stage = liner.getStage();
+      const point = stage.getPointerPosition();
+      setLine([...line, point.x, point.y]);
+      console.log("Added sum points", line);
+    }
   };
 
   const handleCircleDragMove = (e, lineIndex) => {
@@ -25,6 +27,14 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
 
   const resetLine = () => {
     setLine([]);
+  };
+
+  const undo = () => {
+    setLine(line.slice(0, -2));
+  };
+
+  const toggleAddingPoints = () => {
+    setAddPoints((prevIsAddingPoints) => !prevIsAddingPoints);
   };
 
   return (
@@ -61,15 +71,42 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
         </Stage>
       </div>
       <div className="Line">
-        <div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <h4>
             Outline roof/PV module area <br /> Click to add points, drag to
             adjust.
           </h4>
-          {line.length >= 2 && (
-            <Button variant="primary" onClick={resetLine}>
-              Reset
+          <div>
+            <Button
+              variant="primary"
+              onClick={toggleAddingPoints}
+              style={{
+                marginRight: "1rem",
+                marginBottom: "1rem",
+                marginTop: "1rem",
+              }}
+            >
+              {addPoints ? "Done" : "Start adding points"}
             </Button>
+          </div>
+          {line.length >= 2 && (
+            <div>
+              <Button
+                variant="secondary"
+                onClick={undo}
+                style={{ marginRight: "1rem" }}
+              >
+                Undo
+              </Button>
+              <Button variant="secondary" onClick={resetLine}>
+                Reset
+              </Button>
+            </div>
           )}
         </div>
       </div>
