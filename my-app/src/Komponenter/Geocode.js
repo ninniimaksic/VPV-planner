@@ -50,63 +50,66 @@ const Geocode = () => {
   };
 
   return (
-    <div id="plassering">
-      {!showPhotoImport ? (
-        <form onSubmit={handleSubmit} className="form-container">
-          <h3> Viktig info som må fylles ut</h3> <br />
-          <TextField
-            required
-            label="Skriv inn adresse og by her:"
-            id="address"
-            name="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            className="input-field"
-          />
-          <Button variant="primary" type="submit" className="submit-button">
-            Sjekk
-          </Button>
-          {response && (
-            <div>
-              <br />
-              <h4>Er dette riktig?</h4>
-              <p>
-                Adresse: {response.address.road}{" "}
-                {response.address.house_number || "N/A"} {""}
-                {response.address.city || response.address.town}{" "}
-                {response.address.postcode} {response.address.country}
-              </p>
-              <br></br>
-              <p>Hvis det ikke er riktig, legg inn by i feltet over</p>
-              <br></br>
-              <Button
-                variant="primary"
-                onClick={handleConfirm}
-                style={{ display: showButton ? "block" : "none" }}
-              >
-                Bekreft og lagre
+    <React.Fragment>
+      <div className={!showPhotoImport ? "geocodeStyle" : ""}>
+        <div id="plassering">
+          {!showPhotoImport ? (
+            <form onSubmit={handleSubmit} className="form-container">
+              <h3> Viktig info som må fylles ut</h3> <br />
+              <TextField
+                required
+                label="Skriv inn adresse og by her:"
+                id="address"
+                name="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className="input-field"
+              />
+              <Button variant="primary" type="submit" className="submit-button">
+                Sjekk om det er riktig adresse
               </Button>
-            </div>
+              {response && (
+                <div>
+                  <br />
+                  <h4>Er dette riktig?</h4>
+                  <p>
+                    Adresse: {response.address.road}{" "}
+                    {response.address.house_number || "N/A"} {""}
+                    {response.address.city || response.address.town}{" "}
+                    {response.address.postcode} {response.address.country}
+                  </p>
+                  <br></br>
+                  <p>Hvis det ikke er riktig, legg inn by i feltet over</p>
+                  <br></br>
+                  <Button
+                    variant="primary"
+                    onClick={handleConfirm}
+                    style={{ display: showButton ? "block" : "none" }}
+                  >
+                    Bekreft og lagre
+                  </Button>
+                </div>
+              )}
+              <br />
+              <Button
+                variant="secondary"
+                className="next-button"
+                style={{ display: showNextButton ? "block" : "none" }}
+                onClick={handleNextPage}
+              >
+                <span className="next-button-content">
+                  Neste side
+                  <ArrowRightIcon />
+                </span>
+              </Button>
+            </form>
+          ) : (
+            " "
           )}
-          <br />
-          <Button
-            variant="secondary"
-            style={{ display: showNextButton ? "block" : "none" }}
-            onClick={handleNextPage}
-          >
-            Neste side
-            <ArrowRightIcon />
-          </Button>
-        </form>
-      ) : (
-        <PhotoImport />
-      )}
-      {showPhotoImport && (
-        <Button variant="secondary" onClick={resetForm}>
-          Tilbake
-        </Button>
-      )}
-    </div>
+        </div>
+      </div>
+      {showPhotoImport ? <PhotoImport /> : null}
+    </React.Fragment>
   );
 };
 
