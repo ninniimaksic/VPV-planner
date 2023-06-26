@@ -37,3 +37,9 @@
   left: 200px;
   top: 45px;
 }
+
+.nextButton {
+  position: relative;
+  top: 90%;
+  left: 50%;
+}

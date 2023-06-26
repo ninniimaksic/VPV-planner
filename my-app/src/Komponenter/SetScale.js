@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../css/SetScale.css";
+import RoofOutline from "./RoofOutline";
 import useImage from "use-image";
 import { Stage, Layer, Image, Line, Circle } from "react-konva";
-import { TextField, HelpText } from "@navikt/ds-react";
+import { TextField, HelpText, Button } from "@navikt/ds-react";
 
 const SetScale = ({ selectedPhoto }) => {
   const [lines, setLines] = useState([]);
@@ -10,6 +11,8 @@ const SetScale = ({ selectedPhoto }) => {
   const [imgScale, setImgScale] = useState(0.2);
   const lineRef = useRef(); // Ref to access the line component
   const [wimage] = useImage(selectedPhoto);
+  const [showNextButton, setShowNextButton] = useState(false);
+  const [showRoofOutline, setShowRoofOutline] = useState(false);
 
   const getImgLen = (line) => {
     const [x1, y1, x2, y2] = line;
@@ -27,6 +30,7 @@ const SetScale = ({ selectedPhoto }) => {
   const handleInputChange = (e) => {
     setLines([[lines[0][0], e.target.value], ...lines.slice(1)]);
     setImgScale(e.target.value / getImgLen(lines[0][0]));
+    setShowNextButton(true);
   };
 
   if (!wimage) return null;
@@ -63,89 +67,117 @@ const SetScale = ({ selectedPhoto }) => {
   };
 
   return (
-    <div className="lenScale">
-      <div className="drawStage">
-        <Stage width={1000} height={750} onClick={handleStageClick}>
-          <Layer>
-            {img && (
-              <Image
-                x={0}
-                y={0}
-                height={imageHeight}
-                width={imageWidth}
-                image={img}
-              />
-            )}
-            {line.length === 2 && (
-              <Circle x={line[0]} y={line[1]} radius={12} stroke="blue" />
-            )}
-            {lines.map((line, index) => (
-              <React.Fragment key={index}>
-                <Line
-                  key={index}
-                  points={line[0]}
-                  stroke="#df4b26"
-                  strokeWidth={3}
-                />
-                <Circle
-                  x={line[0][0]}
-                  y={line[0][1]}
-                  radius={12}
-                  stroke="blue"
-                  draggable
-                  onDragMove={(e) => handleCircleDragMove(e, index, 0)}
-                />
-                <Circle
-                  x={line[0][2]}
-                  y={line[0][3]}
-                  radius={12}
-                  stroke="blue"
-                  draggable
-                  onDragMove={(e) => handleCircleDragMove(e, index, 1)}
-                />
-              </React.Fragment>
-            ))}
-            <Line ref={lineRef} points={[]} stroke="red" strokeWidth={3} />
-          </Layer>
-        </Stage>
-      </div>
-      <div className="Line">
-        {lines.length >= 1 && (
-          <div>
-            <HelpText id="lineHelp">
-              Longer lines reduce the effect of errors
-            </HelpText>
-            <TextField
-              id="lineLengthInput"
-              type="text"
-              label="Set length of line"
-              description="Drag to adjust"
-              onChange={handleInputChange}
-            ></TextField>
-            <span id="unitlabel">m</span>
-            <div className="showScale">
-              <p>Line: {lines && getImgLen(lines[0][0]).toFixed(2)} px</p>
-              <br />
-              <p>
-                Scale:{" "}
-                {lines &&
-                  (
-                    (parseFloat(lines[0][1]) * 100) /
-                    getImgLen(lines[0][0])
-                  ).toFixed(2)}{" "}
-                cm/px
-              </p>
-            </div>
+    <>
+      {!showRoofOutline ? (
+        <div className="lenScale">
+          <div className="drawStage">
+            <Stage width={1000} height={750} onClick={handleStageClick}>
+              <Layer>
+                {img && (
+                  <Image
+                    x={0}
+                    y={0}
+                    height={imageHeight}
+                    width={imageWidth}
+                    image={img}
+                  />
+                )}
+                {line.length === 2 && (
+                  <Circle x={line[0]} y={line[1]} radius={12} stroke="blue" />
+                )}
+                {lines.map((line, index) => (
+                  <React.Fragment key={index}>
+                    <Line
+                      key={index}
+                      points={line[0]}
+                      stroke="#df4b26"
+                      strokeWidth={3}
+                    />
+                    <Circle
+                      x={line[0][0]}
+                      y={line[0][1]}
+                      radius={12}
+                      stroke="blue"
+                      draggable
+                      onDragMove={(e) => handleCircleDragMove(e, index, 0)}
+                    />
+                    <Circle
+                      x={line[0][2]}
+                      y={line[0][3]}
+                      radius={12}
+                      stroke="blue"
+                      draggable
+                      onDragMove={(e) => handleCircleDragMove(e, index, 1)}
+                    />
+                  </React.Fragment>
+                ))}
+                <Line ref={lineRef} points={[]} stroke="red" strokeWidth={3} />
+              </Layer>
+            </Stage>
           </div>
-        )}
-        {!lines.length && (
-          <h4>
-            Set a line where distance is known <br /> Click to add points, drag
-            to adjust.
-          </h4>
-        )}
-      </div>
-    </div>
+          <div className="Line">
+            {lines.length >= 1 && (
+              <div>
+                <HelpText id="lineHelp">
+                  Longer lines reduce the effect of errors
+                </HelpText>
+                <TextField
+                  id="lineLengthInput"
+                  type="text"
+                  label="Set length of line"
+                  description="Drag to adjust"
+                  onChange={handleInputChange}
+                ></TextField>
+                <span id="unitlabel">m</span>
+                <div className="showScale">
+                  <p>Line: {lines && getImgLen(lines[0][0]).toFixed(2)} px</p>
+                  <br />
+                  <p>
+                    Scale:{" "}
+                    {lines &&
+                      (
+                        (parseFloat(lines[0][1]) * 100) /
+                        getImgLen(lines[0][0])
+                      ).toFixed(2)}{" "}
+                    cm/px
+                  </p>
+                </div>
+                <div className="nextButton">
+                  {showNextButton && (
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        setShowNextButton(true);
+                        setShowRoofOutline(true);
+                        setImgScale(
+                          (parseFloat(lines[0][1]) * 100) /
+                            getImgLen(lines[0][0])
+                        );
+                      }}
+                    >
+                      Continue
+                    </Button>
+                  )}
+                </div>
+              </div>
+            )}
+            {!lines.length && (
+              <h4>
+                Set a line where distance is known <br /> Click to add points,
+                drag to adjust.
+              </h4>
+            )}
+          </div>
+        </div>
+      ) : (
+        <RoofOutline
+          img={img}
+          imageHeight={imageHeight}
+          imageWidth={imageWidth}
+          scale={scale}
+        />
+      )}
+    </>
   );
 };
 
