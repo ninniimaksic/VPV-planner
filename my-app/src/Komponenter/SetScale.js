@@ -67,30 +67,19 @@ const SetScale = ({ selectedPhoto }) => {
   };
 
   return (
-    <div className="plassering1">
-      <div className="lenScale">
-        <div className="drawStage">
-          <Stage width={1000} height={750} onClick={handleStageClick}>
-            <Layer>
-              {img && (
-                <Image
-                  x={0}
-                  y={0}
-                  height={imageHeight}
-                  width={imageWidth}
-                  image={img}
-                />
-              )}
-              {line.length === 2 && (
-                <Circle x={line[0]} y={line[1]} radius={12} stroke="blue" />
-              )}
-              {lines.map((line, index) => (
-                <React.Fragment key={index}>
-                  <Line
-                    key={index}
-                    points={line[0]}
-                    stroke="#df4b26"
-                    strokeWidth={3}
+    <>
+      {!showRoofOutline ? (
+        <div className="lenScale">
+          <div className="drawStage">
+            <Stage width={1000} height={750} onClick={handleStageClick}>
+              <Layer>
+                {img && (
+                  <Image
+                    x={0}
+                    y={0}
+                    height={imageHeight}
+                    width={imageWidth}
+                    image={img}
                   />
                 )}
                 {line.length === 2 && (
@@ -156,7 +145,7 @@ const SetScale = ({ selectedPhoto }) => {
                 <div className="nextButton">
                   {showNextButton && (
                     <Button
-                      variant="secondary"
+                      variant="primary"
                       onClick={() => {
                         setShowNextButton(true);
                         setShowRoofOutline(true);
@@ -171,17 +160,24 @@ const SetScale = ({ selectedPhoto }) => {
                   )}
                 </div>
               </div>
-            </div>
-          )}
-          {!lines.length && (
-            <h4>
-              Set a line where distance is known <br /> Click to add points,
-              drag to adjust.
-            </h4>
-          )}
+            )}
+            {!lines.length && (
+              <h4>
+                Set a line where distance is known <br /> Click to add points,
+                drag to adjust.
+              </h4>
+            )}
+          </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <RoofOutline
+          img={img}
+          imageHeight={imageHeight}
+          imageWidth={imageWidth}
+          scale={scale}
+        />
+      )}
+    </>
   );
 };
 
