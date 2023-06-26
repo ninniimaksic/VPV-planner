@@ -4,6 +4,7 @@ import RoofOutline from "./RoofOutline";
 import useImage from "use-image";
 import { Stage, Layer, Image, Line, Circle } from "react-konva";
 import { TextField, HelpText, Button } from "@navikt/ds-react";
+import Compass from "../Komponenter/Compass";
 
 const SetScale = ({ selectedPhoto }) => {
   const [lines, setLines] = useState([]);
@@ -141,6 +142,11 @@ const SetScale = ({ selectedPhoto }) => {
                       ).toFixed(2)}{" "}
                     cm/px
                   </p>
+                </div>
+
+                <div>
+                  <br></br>
+                  <Compass />
                 </div>
                 <div className="nextButton">
                   {showNextButton && (
