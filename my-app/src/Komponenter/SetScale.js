@@ -10,6 +10,7 @@ const SetScale = ({ selectedPhoto }) => {
   const [imgScale, setImgScale] = useState(0.2); // Scale of the image
   const lineRef = useRef(); // Ref to access the line component
   const [wimage] = useImage(selectedPhoto);
+
   const getImgLen = (line) => {
     const [x1, y1, x2, y2] = line;
     const x = x2 - x1;
@@ -32,8 +33,8 @@ const SetScale = ({ selectedPhoto }) => {
 
   const img = new window.Image();
   img.src = wimage.src;
-  const targetW = 750;
-  const targetH = 550;
+  const targetW = 1000;
+  const targetH = 800;
 
   const widthFit = targetW / img.width;
   const heightFit = targetH / img.height;
@@ -64,7 +65,7 @@ const SetScale = ({ selectedPhoto }) => {
   return (
     <div className="lenScale">
       <div className="drawStage">
-        <Stage width={750} height={500} onClick={handleStageClick}>
+        <Stage width={1000} height={750} onClick={handleStageClick}>
           <Layer>
             {img && (
               <Image
@@ -76,31 +77,29 @@ const SetScale = ({ selectedPhoto }) => {
               />
             )}
             {line.length === 2 && (
-              <Circle x={line[0]} y={line[1]} radius={5} fill="blue" />
+              <Circle x={line[0]} y={line[1]} radius={12} stroke="blue" />
             )}
             {lines.map((line, index) => (
               <React.Fragment key={index}>
                 <Line
                   key={index}
                   points={line[0]}
-                  stroke="red"
+                  stroke="#df4b26"
                   strokeWidth={3}
                 />
                 <Circle
                   x={line[0][0]}
                   y={line[0][1]}
-                  radius={10}
-                  fill="blue"
-                  opacity={0.5}
+                  radius={12}
+                  stroke="blue"
                   draggable
                   onDragMove={(e) => handleCircleDragMove(e, index, 0)}
                 />
                 <Circle
                   x={line[0][2]}
                   y={line[0][3]}
-                  radius={10}
-                  fill="blue"
-                  opacity={0.5}
+                  radius={12}
+                  stroke="blue"
                   draggable
                   onDragMove={(e) => handleCircleDragMove(e, index, 1)}
                 />
@@ -125,7 +124,17 @@ const SetScale = ({ selectedPhoto }) => {
             ></TextField>
             <span id="unitlabel">m</span>
             <div className="showScale">
-              <p>Pixel length: {getImgLen(lines[0][0]).toFixed(2)}px</p>
+              <p>Line: {lines && getImgLen(lines[0][0]).toFixed(2)} px</p>
+              <br />
+              <p>
+                Scale:{" "}
+                {lines &&
+                  (
+                    (parseFloat(lines[0][1]) * 100) /
+                    getImgLen(lines[0][0])
+                  ).toFixed(2)}{" "}
+                cm/px
+              </p>
             </div>
           </div>
         )}
