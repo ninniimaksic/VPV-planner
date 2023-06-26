@@ -63,87 +63,89 @@ const SetScale = ({ selectedPhoto }) => {
   };
 
   return (
-    <div className="lenScale">
-      <div className="drawStage">
-        <Stage width={1000} height={750} onClick={handleStageClick}>
-          <Layer>
-            {img && (
-              <Image
-                x={0}
-                y={0}
-                height={imageHeight}
-                width={imageWidth}
-                image={img}
-              />
-            )}
-            {line.length === 2 && (
-              <Circle x={line[0]} y={line[1]} radius={12} stroke="blue" />
-            )}
-            {lines.map((line, index) => (
-              <React.Fragment key={index}>
-                <Line
-                  key={index}
-                  points={line[0]}
-                  stroke="#df4b26"
-                  strokeWidth={3}
+    <div className="plassering1">
+      <div className="lenScale">
+        <div className="drawStage">
+          <Stage width={1000} height={750} onClick={handleStageClick}>
+            <Layer>
+              {img && (
+                <Image
+                  x={0}
+                  y={0}
+                  height={imageHeight}
+                  width={imageWidth}
+                  image={img}
                 />
-                <Circle
-                  x={line[0][0]}
-                  y={line[0][1]}
-                  radius={12}
-                  stroke="blue"
-                  draggable
-                  onDragMove={(e) => handleCircleDragMove(e, index, 0)}
-                />
-                <Circle
-                  x={line[0][2]}
-                  y={line[0][3]}
-                  radius={12}
-                  stroke="blue"
-                  draggable
-                  onDragMove={(e) => handleCircleDragMove(e, index, 1)}
-                />
-              </React.Fragment>
-            ))}
-            <Line ref={lineRef} points={[]} stroke="red" strokeWidth={3} />
-          </Layer>
-        </Stage>
-      </div>
-      <div className="Line">
-        {lines.length >= 1 && (
-          <div>
-            <HelpText id="lineHelp">
-              Longer lines reduce the effect of errors
-            </HelpText>
-            <TextField
-              id="lineLengthInput"
-              type="text"
-              label="Set length of line"
-              description="Drag to adjust"
-              onChange={handleInputChange}
-            ></TextField>
-            <span id="unitlabel">m</span>
-            <div className="showScale">
-              <p>Line: {lines && getImgLen(lines[0][0]).toFixed(2)} px</p>
-              <br />
-              <p>
-                Scale:{" "}
-                {lines &&
-                  (
-                    (parseFloat(lines[0][1]) * 100) /
-                    getImgLen(lines[0][0])
-                  ).toFixed(2)}{" "}
-                cm/px
-              </p>
+              )}
+              {line.length === 2 && (
+                <Circle x={line[0]} y={line[1]} radius={12} stroke="blue" />
+              )}
+              {lines.map((line, index) => (
+                <React.Fragment key={index}>
+                  <Line
+                    key={index}
+                    points={line[0]}
+                    stroke="#df4b26"
+                    strokeWidth={3}
+                  />
+                  <Circle
+                    x={line[0][0]}
+                    y={line[0][1]}
+                    radius={12}
+                    stroke="blue"
+                    draggable
+                    onDragMove={(e) => handleCircleDragMove(e, index, 0)}
+                  />
+                  <Circle
+                    x={line[0][2]}
+                    y={line[0][3]}
+                    radius={12}
+                    stroke="blue"
+                    draggable
+                    onDragMove={(e) => handleCircleDragMove(e, index, 1)}
+                  />
+                </React.Fragment>
+              ))}
+              <Line ref={lineRef} points={[]} stroke="red" strokeWidth={3} />
+            </Layer>
+          </Stage>
+        </div>
+        <div className="Line">
+          {lines.length >= 1 && (
+            <div>
+              <HelpText id="lineHelp">
+                Longer lines reduce the effect of errors
+              </HelpText>
+              <TextField
+                id="lineLengthInput"
+                type="text"
+                label="Set length of line"
+                description="Drag to adjust"
+                onChange={handleInputChange}
+              ></TextField>
+              <span id="unitlabel">m</span>
+              <div className="showScale">
+                <p>Line: {lines && getImgLen(lines[0][0]).toFixed(2)} px</p>
+                <br />
+                <p>
+                  Scale:{" "}
+                  {lines &&
+                    (
+                      (parseFloat(lines[0][1]) * 100) /
+                      getImgLen(lines[0][0])
+                    ).toFixed(2)}{" "}
+                  cm/px
+                </p>
+              </div>
             </div>
-          </div>
-        )}
-        {!lines.length && (
-          <h4>
-            Set a line where distance is known <br /> Click to add points, drag
-            to adjust.
-          </h4>
-        )}
+          )}
+          {!lines.length && (
+            <h4>
+              Set a line where distance is known <br /> Click to add points,
+              drag to adjust.
+            </h4>
+          )}
+        </div>
       </div>
     </div>
   );

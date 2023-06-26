@@ -120,9 +120,11 @@ const ProjectInfo = () => {
         </>
       ) : (
         <>
-          <h2>
-            Project information: {projectName} {projectNumber}{" "}
-          </h2>
+          <div className="info">
+            <h2>
+              Project information: {projectName} {projectNumber}{" "}
+            </h2>
+          </div>
           <Geocode />
         </>
       )}

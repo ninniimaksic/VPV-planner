@@ -101,11 +101,6 @@ const Geocode = () => {
       ) : (
         <PhotoImport />
       )}
-      {showPhotoImport && (
-        <Button variant="secondary" onClick={resetForm}>
-          Tilbake
-        </Button>
-      )}
     </div>
   );
 };
