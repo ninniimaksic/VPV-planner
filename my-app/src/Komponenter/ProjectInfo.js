@@ -3,6 +3,7 @@ import { TextField, Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
 import "../css/ProjectInfo.css";
 import Geocode from "./Geocode";
+import { ArrowRightIcon } from "@navikt/aksel-icons";
 
 const ProjectInfo = () => {
   const [projectName, setProjectName] = useState("");
@@ -114,7 +115,10 @@ const ProjectInfo = () => {
               variant="primary"
               onClick={handleSave}
             >
-              Continue
+              <span className="next-button-content">
+                Neste side
+                <ArrowRightIcon />
+              </span>
             </Button>
           </div>
         </>

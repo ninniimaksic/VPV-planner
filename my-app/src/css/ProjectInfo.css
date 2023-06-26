@@ -54,3 +54,13 @@
   width: 550px;
   height: 550px;
 }
+
+.next-button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.next-button-content svg {
+  margin-left: 10px;
+}
