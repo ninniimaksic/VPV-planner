@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import SetScale from "./SetScale";
-import "../css/App.css";
+import "../css/photoimport.css";
 import { Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
 

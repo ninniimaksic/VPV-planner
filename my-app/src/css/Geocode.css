@@ -1,12 +1,29 @@
-#plassering {
+.geocodeStyle #plassering {
   background-color: #a1d7cf;
   border-radius: 25px;
+  height: 600px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   padding: 20px;
-  width: 100%;
-  height: 100%;
+  width: 30%;
+  margin: auto; /* Sentrer div */
+  border-radius: 25px;
+  margin-bottom: 20px;
 }
 
-.input-field {
+.geocodeStyle .input-field {
   margin-right: 4rem;
   margin-bottom: 16px;
+}
+
+.next-button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.next-button-content svg {
+  margin-left: 10px;
 }
