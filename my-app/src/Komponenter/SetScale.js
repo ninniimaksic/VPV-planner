@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../css/SetScale.css";
+import RoofOutline from "./RoofOutline";
 import useImage from "use-image";
 import { Stage, Layer, Image, Line, Circle } from "react-konva";
-import { TextField, HelpText } from "@navikt/ds-react";
+import { TextField, HelpText, Button } from "@navikt/ds-react";
 
 const SetScale = ({ selectedPhoto }) => {
   const [lines, setLines] = useState([]);
@@ -10,6 +11,8 @@ const SetScale = ({ selectedPhoto }) => {
   const [imgScale, setImgScale] = useState(0.2);
   const lineRef = useRef(); // Ref to access the line component
   const [wimage] = useImage(selectedPhoto);
+  const [showNextButton, setShowNextButton] = useState(false);
+  const [showRoofOutline, setShowRoofOutline] = useState(false);
 
   const getImgLen = (line) => {
     const [x1, y1, x2, y2] = line;
@@ -27,6 +30,7 @@ const SetScale = ({ selectedPhoto }) => {
   const handleInputChange = (e) => {
     setLines([[lines[0][0], e.target.value], ...lines.slice(1)]);
     setImgScale(e.target.value / getImgLen(lines[0][0]));
+    setShowNextButton(true);
   };
 
   if (!wimage) return null;
