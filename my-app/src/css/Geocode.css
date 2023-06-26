@@ -1,4 +1,4 @@
-#plassering {
+.geocodeStyle #plassering {
   background-color: #a1d7cf;
   border-radius: 25px;
   height: 600px;
@@ -13,7 +13,17 @@
   margin-bottom: 20px;
 }
 
-.input-field {
+.geocodeStyle .input-field {
   margin-right: 4rem;
   margin-bottom: 16px;
+}
+
+.next-button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.next-button-content svg {
+  margin-left: 10px;
 }

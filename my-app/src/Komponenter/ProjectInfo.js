@@ -92,7 +92,7 @@ const ProjectInfo = () => {
               <TextField
                 description="Name on the cover of the report"
                 id="EndCostumer"
-                value={projectName}
+                value={EndCostumer}
                 onChange={(e) => setProjectName(e.target.value)}
                 style={{ flex: "1" }}
               />
