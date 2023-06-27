@@ -5,6 +5,7 @@ import { Button } from "@navikt/ds-react";
 
 const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
   const [line, setLine] = useState([]);
+  const [lines, setLines] = useState([]);
   const [addPoints, setAddPoints] = useState(false);
   const lineRef = useRef(); // Ref to access the line component
 
@@ -13,7 +14,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
       const liner = lineRef.current;
       const stage = liner.getStage();
       const point = stage.getPointerPosition();
-      setLine([...line, point.x, point.y]);
+      setLine((prevLine) => [...prevLine, point.x, point.y]);
       console.log("Added sum points", line);
     }
   };
@@ -27,14 +28,22 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
 
   const resetLine = () => {
     setLine([]);
+    setLines([]);
   };
 
   const undo = () => {
-    setLine(line.slice(0, -2));
+    setLine((prevLine) => prevLine.slice(0, -2));
   };
 
   const toggleAddingPoints = () => {
-    setAddPoints((prevIsAddingPoints) => !prevIsAddingPoints);
+    if (addPoints) {
+      setLines((prevLines) => [...prevLines, line]);
+      setLine([]);
+      setAddPoints(false);
+    }
+    if (!addPoints) {
+      setAddPoints(true);
+    }
   };
 
   return (
@@ -67,6 +76,19 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
               strokeWidth={3}
               closed={true}
             />
+            {lines.map((l, i) => (
+              <Line
+                ref={lineRef}
+                key={i}
+                points={l}
+                zIndex={9}
+                stroke="red"
+                fill="#00D2FF"
+                opacity={0.4}
+                strokeWidth={3}
+                closed={true}
+              />
+            ))}
           </Layer>
         </Stage>
       </div>
@@ -91,7 +113,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                 marginTop: "1rem",
               }}
             >
-              {addPoints ? "Done" : "Start adding points"}
+              {addPoints ? "Save line" : "New line"}
             </Button>
           </div>
           {line.length >= 2 && (
