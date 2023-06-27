@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import CompassImg from "../img/CompassImg.svg";
 import "../css/Compass.css";
 import { TextField } from "@navikt/ds-react";
+import CompassImg from "../img/Compass.png";
 
 const Compass = () => {
-  const [angle, setAngle] = useState(0);
+  const [angle, setAngle] = useState(180);
 
   const handleAngleChange = (event) => {
     const newAngle = parseInt(event.target.value);

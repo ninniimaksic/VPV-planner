@@ -4,6 +4,7 @@ import "@navikt/ds-css";
 import "../css/ProjectInfo.css";
 import Geocode from "./Geocode";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
+import { Pagination } from "@navikt/ds-react";
 
 const ProjectInfo = () => {
   const [projectName, setProjectName] = useState("");
@@ -13,6 +14,7 @@ const ProjectInfo = () => {
   const [EndCostumer, setEndCostumer] = useState("");
   const [projectNumberEC, setProjectnumberEC] = useState("");
   const [showInput, setShowInput] = useState(true);
+  const [pageState, setPageState] = useState(1);
 
   const handleSave = () => {
     if (projectName === "") {
@@ -121,6 +123,15 @@ const ProjectInfo = () => {
               </span>
             </Button>
           </div>
+          <Pagination
+            className="pagination-container"
+            page={pageState}
+            onPageChange={(x) => setPageState(x)}
+            count={5}
+            boundaryCount={1}
+            siblingCount={1}
+            size="medium"
+          />
         </>
       ) : (
         <>
