@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import "../css/SetScale.css";
 import { Stage, Layer, Image, Line, Circle } from "react-konva";
-import { Button } from "@navikt/ds-react";
+import { Button, Table, TextField } from "@navikt/ds-react";
 
 const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
   const [line, setLine] = useState([]);
@@ -100,7 +100,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
           }}
         >
           <h4>
-            Outline roof/PV module area <br /> Click to add points, drag to
+            Outline roof/PV module section <br /> Click to add points, drag to
             adjust.
           </h4>
           <div>
@@ -113,21 +113,47 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                 marginTop: "1rem",
               }}
             >
-              {addPoints ? "Save line" : "New line"}
+              {addPoints ? "Save section" : "New Section"}
             </Button>
           </div>
-          {line.length >= 2 && (
+          <div>
+            <Button
+              variant="secondary"
+              onClick={undo}
+              style={{ marginRight: "1rem" }}
+            >
+              Undo
+            </Button>
+            <Button variant="secondary" onClick={resetLine}>
+              Reset
+            </Button>
+          </div>
+          {lines.length > 0 && (
             <div>
-              <Button
-                variant="secondary"
-                onClick={undo}
-                style={{ marginRight: "1rem" }}
-              >
-                Undo
-              </Button>
-              <Button variant="secondary" onClick={resetLine}>
-                Reset
-              </Button>
+              <Table>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell scope="col">Section</Table.HeaderCell>
+                    <Table.HeaderCell scope="col">Area</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                {lines.map((l, i) => (
+                  <Table.Row key={i}>
+                    <Table.DataCell>
+                      <TextField
+                        label="Section name"
+                        hideLabel
+                        defaultValue={`Section ${i + 1}`}
+                        size="small"
+                        htmlSize={10}
+                      />
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      {Math.round(l[0] * scale * l[1] * scale)} m²
+                    </Table.DataCell>
+                  </Table.Row>
+                ))}
+              </Table>
             </div>
           )}
         </div>
