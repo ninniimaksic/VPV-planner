@@ -5,6 +5,7 @@ import "../css/ProjectInfo.css";
 import Geocode from "./Geocode";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { Pagination } from "@navikt/ds-react";
+import Navbar from "./navbar";
 
 const ProjectInfo = () => {
   const [projectName, setProjectName] = useState("");
@@ -42,6 +43,7 @@ const ProjectInfo = () => {
 
   return (
     <>
+      <Navbar />
       <br />
       {showInput ? (
         <>

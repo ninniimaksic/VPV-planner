@@ -1,0 +1,30 @@
+html {
+  background-color: rgb(227, 240, 247);
+}
+
+#overskrift {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20ch;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-margin {
+  margin-top: 10px;
+}
+
+.input-margin {
+  margin-bottom: 20px; /* or however much space you want */
+}
+
+.image-bottom-left {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
