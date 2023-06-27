@@ -27,3 +27,12 @@
 .next-button-content svg {
   margin-left: 10px;
 }
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: none;
+}

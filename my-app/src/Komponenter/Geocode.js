@@ -4,6 +4,7 @@ import "@navikt/ds-css";
 import { Button, TextField } from "@navikt/ds-react";
 import PhotoImport from "./PhotoImport";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
+import { Pagination } from "@navikt/ds-react";
 
 const Geocode = () => {
   const [address, setAddress] = useState("");
@@ -20,6 +21,8 @@ const Geocode = () => {
     setResponse(data[0]);
     setShowButton(true);
   };
+
+  const [pageState, setPageState] = useState(2);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,6 +54,15 @@ const Geocode = () => {
 
   return (
     <React.Fragment>
+      <Pagination
+        className="pagination-container"
+        page={pageState}
+        onPageChange={(x) => setPageState(x)}
+        count={5}
+        boundaryCount={1}
+        siblingCount={1}
+        size="medium"
+      />
       <div className={!showPhotoImport ? "geocodeStyle" : ""}>
         <div id="plassering">
           {!showPhotoImport ? (
@@ -81,6 +93,7 @@ const Geocode = () => {
                   <br></br>
                   <p>Hvis det ikke er riktig, legg inn by i feltet over</p>
                   <br></br>
+
                   <Button
                     variant="primary"
                     onClick={handleConfirm}
