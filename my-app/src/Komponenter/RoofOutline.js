@@ -1,12 +1,13 @@
 import React, { useState, useRef } from "react";
 import "../css/SetScale.css";
-import { Stage, Layer, Image, Line, Circle } from "react-konva";
+import { Stage, Layer, Image, Line, Circle, Text } from "react-konva";
 import { Button, Table, TextField } from "@navikt/ds-react";
 
 const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
   const [line, setLine] = useState([]);
   const [lines, setLines] = useState([]);
   const [addPoints, setAddPoints] = useState(false);
+  const [showDims, setShowDims] = useState(false); // Show dimensions of each section
   const lineRef = useRef(); // Ref to access the line component
 
   const handleStageClick = () => {
@@ -46,6 +47,19 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
     }
   };
 
+  const getSideLengths = (p) => {
+    const sideLens = [];
+    for (let i = 0; i < p.length - 2; i += 2) {
+      const x1 = p[i];
+      const y1 = p[i + 1];
+      const x2 = p[i + 2];
+      const y2 = p[i + 3];
+      sideLens.push(Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) * (scale / 100));
+    }
+    console.log("Scale: ", scale);
+    return sideLens;
+  };
+
   return (
     <div className="lenScale">
       <div className="drawStage">
@@ -77,17 +91,36 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
               closed={true}
             />
             {lines.map((l, i) => (
-              <Line
-                ref={lineRef}
-                key={i}
-                points={l}
-                zIndex={9}
-                stroke="red"
-                fill="#00D2FF"
-                opacity={0.4}
-                strokeWidth={3}
-                closed={true}
-              />
+              <React.Fragment key={i}>
+                <Line
+                  ref={lineRef}
+                  key={i}
+                  points={l}
+                  zIndex={9}
+                  stroke="red"
+                  fill="#00D2FF"
+                  opacity={0.4}
+                  strokeWidth={3}
+                  closed={true}
+                />
+                {showDims &&
+                  getSideLengths(l).map((len, j) => {
+                    const x = (l[j * 2] + l[j * 2 + 2]) / 2;
+                    const y = (l[j * 2 + 1] + l[j * 2 + 3]) / 2;
+                    return (
+                      <Text
+                        key={j}
+                        text={`${len.toFixed(2)} m`}
+                        x={x}
+                        y={y}
+                        fontSize={28}
+                        fill="blue"
+                        stroke={"white"}
+                        strokeWidth={0.5}
+                      />
+                    );
+                  })}
+              </React.Fragment>
             ))}
           </Layer>
         </Stage>
@@ -115,6 +148,17 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
             >
               {addPoints ? "Save section" : "New Section"}
             </Button>
+            <Button
+              variant="primary"
+              onClick={() => setShowDims((prev) => !prev)}
+              style={{
+                marginRight: "1rem",
+                marginBottom: "1rem",
+                marginTop: "1rem",
+              }}
+            >
+              {showDims ? "Hide dimensions" : "Show dimensions"}
+            </Button>
           </div>
           <div>
             <Button
@@ -134,25 +178,25 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell scope="col">Section</Table.HeaderCell>
-                    <Table.HeaderCell scope="col">Area</Table.HeaderCell>
+                    <Table.HeaderCell scope="col">Sides</Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
-                {lines.map((l, i) => (
-                  <Table.Row key={i}>
-                    <Table.DataCell>
-                      <TextField
-                        label="Section name"
-                        hideLabel
-                        defaultValue={`Section ${i + 1}`}
-                        size="small"
-                        htmlSize={10}
-                      />
-                    </Table.DataCell>
-                    <Table.DataCell>
-                      {Math.round(l[0] * scale * l[1] * scale)} m²
-                    </Table.DataCell>
-                  </Table.Row>
-                ))}
+                <Table.Body>
+                  {lines.map((l, i) => (
+                    <Table.Row key={i}>
+                      <Table.DataCell>
+                        <TextField
+                          label="Section name"
+                          hideLabel
+                          defaultValue={`Section ${i + 1}`}
+                          size="small"
+                          htmlSize={10}
+                        />
+                      </Table.DataCell>
+                      <Table.DataCell>{l.length / 2}</Table.DataCell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
               </Table>
             </div>
           )}

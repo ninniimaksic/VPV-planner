@@ -180,7 +180,7 @@ const SetScale = ({ selectedPhoto }) => {
           img={img}
           imageHeight={imageHeight}
           imageWidth={imageWidth}
-          scale={scale}
+          scale={imgScale}
         />
       )}
     </>
