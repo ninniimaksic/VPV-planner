@@ -8,6 +8,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
   const [line, setLine] = useState([]);
   const [lines, setLines] = useState([]);
   const [addPoints, setAddPoints] = useState(false);
+  const [showUnitPlacer, setShowUnitPlacer] = useState(false); // Show unit placer
   const [showDims, setShowDims] = useState(true); // Show dimensions of each section
   const lineRef = useRef(); // Ref to access the line component
 
@@ -165,92 +166,111 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
           </Layer>
         </Stage>
       </div>
-      <div className="Line">
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <h4>
-            Outline roof/PV module section <br /> Click to add points, drag to
-            adjust.
-          </h4>
-          <div>
-            <Button
-              variant="primary"
-              onClick={toggleAddingPoints}
-              style={{
-                marginRight: "1rem",
-                marginBottom: "1rem",
-                marginTop: "1rem",
-              }}
-            >
-              {addPoints ? "Save section" : "New Section"}
-            </Button>
-            <Button
-              variant="primary"
-              onClick={() => setShowDims((prev) => !prev)}
-              style={{
-                marginRight: "1rem",
-                marginBottom: "1rem",
-                marginTop: "1rem",
-              }}
-            >
-              {showDims ? "Hide dimensions" : "Show dimensions"}
-            </Button>
-          </div>
-          <div>
-            <Button
-              variant="secondary"
-              onClick={undo}
-              style={{ marginRight: "1rem" }}
-            >
-              Undo
-            </Button>
-            <Button variant="secondary" onClick={deleteLine}>
-              Delete
-            </Button>
-          </div>
-          {lines.length > 0 && (
+      {!showUnitPlacer ? (
+        <div className="Line">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <h4>
+              Outline roof/PV module section <br /> Click to add points, drag to
+              adjust.
+            </h4>
             <div>
-              <Table>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell scope="col">Section</Table.HeaderCell>
-                    <Table.HeaderCell scope="col">Sides</Table.HeaderCell>
-                    <Table.HeaderCell scope="col">Edit</Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                  {lines.map((l, i) => (
-                    <Table.Row key={i}>
-                      <Table.DataCell>
-                        <TextField
-                          label="Section name"
-                          hideLabel
-                          defaultValue={`Section ${i + 1}`}
-                          size="small"
-                          htmlSize={10}
-                        />
-                      </Table.DataCell>
-                      <Table.DataCell>{l.length / 2}</Table.DataCell>
-                      <Table.DataCell>
-                        <Button
-                          variant="tertiary"
-                          icon={<WrenchIcon aria-hidden />}
-                          onClick={() => editSection(i)}
-                          size="small"
-                        ></Button>
-                      </Table.DataCell>
-                    </Table.Row>
-                  ))}
-                </Table.Body>
-              </Table>
+              <Button
+                variant="primary"
+                onClick={toggleAddingPoints}
+                style={{
+                  marginRight: "1rem",
+                  marginBottom: "1rem",
+                  marginTop: "1rem",
+                }}
+              >
+                {addPoints ? "Save section" : "New Section"}
+              </Button>
+              <Button
+                variant="primary"
+                onClick={() => setShowDims((prev) => !prev)}
+                style={{
+                  marginRight: "1rem",
+                  marginBottom: "1rem",
+                  marginTop: "1rem",
+                }}
+              >
+                {showDims ? "Hide dimensions" : "Show dimensions"}
+              </Button>
             </div>
-          )}
+            <div>
+              <Button
+                variant="secondary"
+                onClick={undo}
+                style={{ marginRight: "1rem" }}
+              >
+                Undo
+              </Button>
+              <Button variant="secondary" onClick={deleteLine}>
+                Delete
+              </Button>
+            </div>
+            {lines.length > 0 && (
+              <div>
+                <Table>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell scope="col">Section</Table.HeaderCell>
+                      <Table.HeaderCell scope="col">Sides</Table.HeaderCell>
+                      <Table.HeaderCell scope="col">Edit</Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {lines.map((l, i) => (
+                      <Table.Row key={i}>
+                        <Table.DataCell>
+                          <TextField
+                            label="Section name"
+                            hideLabel
+                            defaultValue={`Section ${i + 1}`}
+                            size="small"
+                            htmlSize={10}
+                          />
+                        </Table.DataCell>
+                        <Table.DataCell>{l.length / 2}</Table.DataCell>
+                        <Table.DataCell>
+                          <Button
+                            variant="tertiary"
+                            icon={<WrenchIcon aria-hidden />}
+                            onClick={() => editSection(i)}
+                            size="small"
+                          ></Button>
+                        </Table.DataCell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table>
+              </div>
+            )}
+          </div>
+          <div style={{ height: "50%" }}></div>
+          <div style={{ marginTop: "auto" }}>
+            <Button
+              variant="primary"
+              onClick={() => setShowUnitPlacer(!showUnitPlacer)}
+            >
+              Continue
+            </Button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <Button
+          variant="primary"
+          onClick={() => setShowUnitPlacer(!showUnitPlacer)}
+          style={{ marginTop: "auto" }}
+        >
+          Continue
+        </Button>
+      )}
     </div>
   );
 };

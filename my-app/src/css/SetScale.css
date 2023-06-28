@@ -1,16 +1,14 @@
 .lenScale {
-  /* background-color: rgba(0, 0, 0, 0.5); */
-  z-index: 1;
   display: flex;
   flex-direction: row;
-  flex-basis: 50%;
   margin: 2%;
-  align-items: start;
 }
 
 .Line {
   display: flex;
-  width: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 60vh;
   margin-top: 15px;
   margin-left: 40px;
 }
