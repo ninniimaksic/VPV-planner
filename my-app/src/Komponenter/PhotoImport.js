@@ -21,9 +21,9 @@ const PhotoImport = () => {
   return (
     <>
       <div class="plassering1">
-        <h2>Importer tegning</h2>
+        <h2>Upload image </h2>
         <Button variant="primary" onClick={handleClick}>
-          Velg fil
+          Choose image
         </Button>
         <input
           type="file"

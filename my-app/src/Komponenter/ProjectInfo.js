@@ -121,7 +121,7 @@ const ProjectInfo = () => {
               onClick={handleSave}
             >
               <span className="next-button-content">
-                Neste side
+                Next page
                 <ArrowRightIcon />
               </span>
             </Button>

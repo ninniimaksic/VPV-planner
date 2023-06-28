@@ -67,10 +67,10 @@ const Geocode = () => {
         <div id="plassering">
           {!showPhotoImport ? (
             <form onSubmit={handleSubmit} className="form-container">
-              <h3> Viktig info som må fylles ut</h3> <br />
+              <h1>L O C A T I O N</h1> <br />
               <TextField
                 required
-                label="Skriv inn adresse og by her:"
+                label="Type in your adress and city"
                 id="address"
                 name="address"
                 value={address}
@@ -78,12 +78,12 @@ const Geocode = () => {
                 className="input-field"
               />
               <Button variant="primary" type="submit" className="submit-button">
-                Sjekk om det er riktig adresse
+                Check if it's the correct address
               </Button>
               {response && (
                 <div>
                   <br />
-                  <h4>Er dette riktig?</h4>
+                  <h4>Is this correct</h4>
                   <p>
                     Adresse: {response.address.road}{" "}
                     {response.address.house_number || "N/A"} {""}
@@ -91,7 +91,10 @@ const Geocode = () => {
                     {response.address.postcode} {response.address.country}
                   </p>
                   <br></br>
-                  <p>Hvis det ikke er riktig, legg inn by i feltet over</p>
+                  <p>
+                    If it's not correct, please enter the city in the field
+                    above
+                  </p>
                   <br></br>
 
                   <Button
@@ -99,7 +102,7 @@ const Geocode = () => {
                     onClick={handleConfirm}
                     style={{ display: showButton ? "block" : "none" }}
                   >
-                    Bekreft og lagre
+                    Save & confirm
                   </Button>
                 </div>
               )}
@@ -111,7 +114,7 @@ const Geocode = () => {
                 onClick={handleNextPage}
               >
                 <span className="next-button-content">
-                  Neste side
+                  Next page
                   <ArrowRightIcon />
                 </span>
               </Button>
