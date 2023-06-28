@@ -64,6 +64,7 @@ const ProjectInfo = () => {
               <TextField
                 description="Her kommer det noe viktig info"
                 id="Projectnumber"
+                type="number"
                 value={projectNumber}
                 onChange={(e) => setProjectNumber(e.target.value)}
                 style={{ flex: "1" }}
@@ -86,6 +87,7 @@ const ProjectInfo = () => {
               <TextField
                 description="Her kommer det noe viktig info"
                 id="PNinstaller"
+                type="number"
                 value={PNinstaller}
                 onChange={(e) => setPNinstaller(e.target.value)}
                 style={{ flex: "1" }}
@@ -108,6 +110,7 @@ const ProjectInfo = () => {
               <TextField
                 description="Her kommer det noe viktig info"
                 id="ProjectnumberEC"
+                type="number"
                 value={projectNumberEC}
                 onChange={(e) => setProjectnumberEC(e.target.value)}
                 style={{ flex: "1" }}

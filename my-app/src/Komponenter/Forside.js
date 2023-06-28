@@ -5,6 +5,7 @@ import { TextField } from "@navikt/ds-react";
 import "../css/Forside.css";
 import "../css/ProjectInfo.css";
 import ForsideImg from "../img/Forsidebilde.png";
+import { useNavigate } from "react-router-dom";
 
 const Forside = () => {
   const [password, setPassword] = useState("");
@@ -15,17 +16,16 @@ const Forside = () => {
     setPassword(event.target.value);
   };
 
+  const navigate = useNavigate();
+
   const handleLogin = () => {
     if (password === "123456") {
       setLoggedIn(true);
+      navigate("/projectinfo");
     } else {
       setShowError(true);
     }
   };
-
-  if (loggedIn) {
-    return <ProjectInfo />;
-  }
 
   return (
     <>
