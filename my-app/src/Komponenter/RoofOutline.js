@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "../css/SetScale.css";
-import { Stage, Layer, Image, Line, Circle, Text } from "react-konva";
+import { Stage, Layer, Image, Line, Circle, Text, Rect } from "react-konva";
 import { Button, Table, TextField } from "@navikt/ds-react";
 
 const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
@@ -47,7 +47,8 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
     }
   };
 
-  const getSideLengths = (p) => {
+  const getSideLengths = (points) => {
+    const p = [...points, points[0], points[1]];
     const sideLens = [];
     for (let i = 0; i < p.length - 2; i += 2) {
       const x1 = p[i];
@@ -90,12 +91,32 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
               strokeWidth={3}
               closed={true}
             />
-            {lines.map((l, i) => (
+            {showDims &&
+              line.length > 0 &&
+              getSideLengths(line).map((len, j) => {
+                const l = [...line, line[0], line[1]];
+                const x = (l[j * 2] + l[j * 2 + 2]) / 2;
+                const y = (l[j * 2 + 1] + l[j * 2 + 3]) / 2;
+                return (
+                  <React.Fragment key={j}>
+                    <Rect x={x} y={y} width={75} height={20} fill="white" />
+                    <Text
+                      key={j}
+                      text={`${len.toFixed(2)} m`}
+                      x={x}
+                      y={y}
+                      fontSize={20}
+                      fill="black"
+                    />
+                  </React.Fragment>
+                );
+              })}
+            {lines.map((p, i) => (
               <React.Fragment key={i}>
                 <Line
                   ref={lineRef}
                   key={i}
-                  points={l}
+                  points={p}
                   zIndex={9}
                   stroke="red"
                   fill="#00D2FF"
@@ -104,20 +125,22 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                   closed={true}
                 />
                 {showDims &&
-                  getSideLengths(l).map((len, j) => {
+                  getSideLengths(p).map((len, j) => {
+                    const l = [...p, p[0], p[1]];
                     const x = (l[j * 2] + l[j * 2 + 2]) / 2;
                     const y = (l[j * 2 + 1] + l[j * 2 + 3]) / 2;
                     return (
-                      <Text
-                        key={j}
-                        text={`${len.toFixed(2)} m`}
-                        x={x}
-                        y={y}
-                        fontSize={28}
-                        fill="blue"
-                        stroke={"white"}
-                        strokeWidth={0.5}
-                      />
+                      <React.Fragment key={j}>
+                        <Rect x={x} y={y} width={75} height={20} fill="white" />
+                        <Text
+                          key={j}
+                          text={`${len.toFixed(2)} m`}
+                          x={x}
+                          y={y}
+                          fontSize={20}
+                          fill="black"
+                        />
+                      </React.Fragment>
                     );
                   })}
               </React.Fragment>
