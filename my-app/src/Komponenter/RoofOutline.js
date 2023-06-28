@@ -263,13 +263,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
           </div>
         </div>
       ) : (
-        <Button
-          variant="primary"
-          onClick={() => setShowUnitPlacer(!showUnitPlacer)}
-          style={{ marginTop: "auto" }}
-        >
-          Continue
-        </Button>
+        <>{/*  */}</>
       )}
     </div>
   );
