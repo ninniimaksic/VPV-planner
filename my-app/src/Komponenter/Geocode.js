@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import "../css/Geocode.css";
 import "@navikt/ds-css";
 import { Button, TextField } from "@navikt/ds-react";
-import PhotoImport from "./PhotoImport";
-import { ArrowRightIcon } from "@navikt/aksel-icons";
+import Navbar from "./navbar";
+import { useNavigate } from "react-router-dom";
+import { ArrowRightIcon, ArrowLeftIcon } from "@navikt/aksel-icons";
 import { Pagination } from "@navikt/ds-react";
 
 const Geocode = () => {
   const [address, setAddress] = useState("");
   const [response, setResponse] = useState(null);
   const [showButton, setShowButton] = useState(false);
-  const [showPhotoImport, setShowPhotoImport] = useState(false);
   const [showNextButton, setShowNextButton] = useState(false);
 
   const geocodeAddress = async (address) => {
@@ -23,6 +23,8 @@ const Geocode = () => {
   };
 
   const [pageState, setPageState] = useState(2);
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,7 +44,11 @@ const Geocode = () => {
   };
 
   const handleNextPage = () => {
-    setShowPhotoImport(true);
+    navigate("/photoimport");
+  };
+
+  const handleBackPage = () => {
+    navigate("/projectinfo");
   };
 
   const resetForm = () => {
@@ -53,19 +59,20 @@ const Geocode = () => {
   };
 
   return (
-    <React.Fragment>
-      <Pagination
-        className="pagination-container"
-        page={pageState}
-        onPageChange={(x) => setPageState(x)}
-        count={5}
-        boundaryCount={1}
-        siblingCount={1}
-        size="medium"
-      />
-      <div className={!showPhotoImport ? "geocodeStyle" : ""}>
-        <div id="plassering">
-          {!showPhotoImport ? (
+    <>
+      <Navbar />
+      <React.Fragment>
+        <Pagination
+          className="pagination-container"
+          page={pageState}
+          onPageChange={(x) => setPageState(x)}
+          count={5}
+          boundaryCount={1}
+          siblingCount={1}
+          size="medium"
+        />
+        <div className={"geocodeStyle"}>
+          <div id="plassering">
             <form onSubmit={handleSubmit} className="form-container">
               <h1>L O C A T I O N</h1> <br />
               <TextField
@@ -119,13 +126,20 @@ const Geocode = () => {
                 </span>
               </Button>
             </form>
-          ) : (
-            " "
-          )}
+          </div>
         </div>
-      </div>
-      {showPhotoImport ? <PhotoImport /> : null}
-    </React.Fragment>
+        <Button
+          variant="secondary"
+          className="back-button"
+          onClick={handleBackPage}
+        >
+          <span className="back-button-content">
+            <ArrowLeftIcon />
+            Back
+          </span>
+        </Button>
+      </React.Fragment>
+    </>
   );
 };
 
