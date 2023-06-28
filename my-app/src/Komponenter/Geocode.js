@@ -4,7 +4,7 @@ import "@navikt/ds-css";
 import { Button, TextField } from "@navikt/ds-react";
 import Navbar from "./navbar";
 import { useNavigate } from "react-router-dom";
-import { ArrowRightIcon } from "@navikt/aksel-icons";
+import { ArrowRightIcon, ArrowLeftIcon } from "@navikt/aksel-icons";
 import { Pagination } from "@navikt/ds-react";
 
 const Geocode = () => {
@@ -45,6 +45,10 @@ const Geocode = () => {
 
   const handleNextPage = () => {
     navigate("/photoimport");
+  };
+
+  const handleBackPage = () => {
+    navigate("/projectinfo");
   };
 
   const resetForm = () => {
@@ -124,6 +128,16 @@ const Geocode = () => {
             </form>
           </div>
         </div>
+        <Button
+          variant="secondary"
+          className="back-button"
+          onClick={handleBackPage}
+        >
+          <span className="back-button-content">
+            <ArrowLeftIcon />
+            Back
+          </span>
+        </Button>
       </React.Fragment>
     </>
   );

@@ -27,3 +27,14 @@
 .next-button-content svg {
   margin-left: 10px;
 }
+
+.back-button-content svg {
+  margin-right: 10px;
+}
+
+.back-button {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 35px;
+  margin-top: 5px;
+}

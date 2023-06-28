@@ -44,9 +44,9 @@ const ProjectInfo = () => {
 
   return (
     <>
+      <Navbar />
       <br />
       <>
-        <Navbar />
         <h1 className="centeredTitle"> I N F O R M A T I O N</h1>
         <div className="side-by-side">
           <div style={{ marginRight: "20px" }}>
