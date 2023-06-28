@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../css/SetScale.css";
+import UnitPlacer from "./UnitPlacer";
 import { Stage, Layer, Image, Line, Circle, Text, Rect } from "react-konva";
 import { Button, Table, TextField } from "@navikt/ds-react";
 import { WrenchIcon } from "@navikt/aksel-icons";
@@ -263,7 +264,9 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
           </div>
         </div>
       ) : (
-        <>{/*  */}</>
+        <>
+          <UnitPlacer sections={lines} />
+        </>
       )}
     </div>
   );
