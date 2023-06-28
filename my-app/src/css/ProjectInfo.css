@@ -1,3 +1,6 @@
+.centeredTitle {
+  text-align: center;
+}
 .info {
   display: flex;
   justify-content: center;
@@ -9,7 +12,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #aec0c0; /* Erstatt med din ønskede farge */
+  background-color: #e3e3cc; /* Erstatt med din ønskede farge */
   padding: 20px;
   width: 50%;
   margin: auto; /* Sentrer div */
@@ -21,7 +24,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #99a799; /* Erstatt med din ønskede farge */
+  background-color: #e3e3cc; /* Erstatt med din ønskede farge */
   padding: 20px;
   width: 50%;
   margin: auto; /* Sentrer div */
@@ -33,7 +36,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #e3c3bb; /* Erstatt med din ønskede farge */
+  background-color: #e3e3cc; /* Erstatt med din ønskede farge */
   padding: 20px;
   width: 50%;
   margin: auto; /* Sentrer div */

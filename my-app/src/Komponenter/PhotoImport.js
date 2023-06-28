@@ -32,8 +32,8 @@ const PhotoImport = () => {
           accept="image/*"
           onChange={handlePhotoUpload}
         />
+        {selectedPhoto && <SetScale selectedPhoto={selectedPhoto} />}
       </div>
-      {selectedPhoto && <SetScale selectedPhoto={selectedPhoto} />}
     </>
   );
 };

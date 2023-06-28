@@ -1,6 +1,6 @@
 import { Component } from "react";
 import "../css/navbar.css";
-import { Link } from "react-router-dom";
+import logo1 from "../img/logo1.png";
 
 class Navbar extends Component {
   state = { clicked: false };
@@ -12,6 +12,7 @@ class Navbar extends Component {
     return (
       <>
         <nav>
+          <img src={logo1} alt="Logo" className="navbar-logo" />
           <a href="index.html"></a>
 
           <div>
@@ -23,17 +24,6 @@ class Navbar extends Component {
                 <a classname="active" href="index.html">
                   Home{"                    "}
                 </a>
-              </li>
-              <li>
-                {" "}
-                <a href="index.html">Modul 1 </a>
-              </li>
-              <li>
-                {" "}
-                <a href="index.html">Modul 2 </a>
-              </li>
-              <li>
-                <a href="/module3">Modul 3 </a>
               </li>
             </ul>
           </div>
