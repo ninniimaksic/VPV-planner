@@ -1,5 +1,5 @@
 .geocodeStyle #plassering {
-  background-color: #e3e3cc;
+  background-color: #a1d7cf;
   border-radius: 25px;
   height: 600px;
   margin-top: 30px;
@@ -26,13 +26,4 @@
 
 .next-button-content svg {
   margin-left: 10px;
-}
-
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: none;
 }

@@ -6,6 +6,7 @@ import Geocode from "./Geocode";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { Pagination } from "@navikt/ds-react";
 import Navbar from "./navbar";
+import { useNavigate } from "react-router-dom";
 
 const ProjectInfo = () => {
   const [projectName, setProjectName] = useState("");
@@ -16,6 +17,8 @@ const ProjectInfo = () => {
   const [projectNumberEC, setProjectnumberEC] = useState("");
   const [showInput, setShowInput] = useState(true);
   const [pageState, setPageState] = useState(1);
+
+  const navigate = useNavigate();
 
   const handleSave = () => {
     if (projectName === "") {

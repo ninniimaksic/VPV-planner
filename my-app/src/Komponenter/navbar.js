@@ -1,42 +1,42 @@
-import { Component } from "react";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "../css/navbar.css";
 import logo1 from "../img/logo1.png";
 
-class Navbar extends Component {
-  state = { clicked: false };
-  handleClick = () => {
-    this.setState({ clicked: !this.state.clicked });
+const Navbar = () => {
+  const [clicked, setClicked] = useState(false);
+  const location = useLocation();
+
+  const handleClick = () => {
+    setClicked(!clicked);
   };
 
-  render() {
-    return (
-      <>
-        <nav>
-          <img src={logo1} alt="Logo" className="navbar-logo" />
-          <a href="index.html"></a>
+  return (
+    <>
+      <nav>
+        <Link to="/" className="navbar-logo">
+          <img src={logo1} alt="Logo" />
+        </Link>
 
-          <div>
-            <ul
-              id="navbar"
-              className={this.state.clicked ? "#navbar active" : "#navbar"}
-            >
-              <li>
-                <a classname="active" href="index.html">
-                  Home{"                    "}
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div id="mobile" on Click={this.handleClick}>
-            <i
-              id="bar"
-              className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}
-            ></i>
-          </div>
-        </nav>
-      </>
-    );
-  }
-}
+        <div>
+          <ul id="navbar" className={clicked ? "navbar active" : "navbar"}>
+            <li>
+              <Link
+                className={location.pathname === "/" ? "active" : ""}
+                to="/"
+              >
+                Home
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        <div id="mobile" onClick={handleClick}>
+          <i id="bar" className={clicked ? "fas fa-times" : "fas fa-bars"}></i>
+        </div>
+      </nav>
+    </>
+  );
+};
 
 export default Navbar;
