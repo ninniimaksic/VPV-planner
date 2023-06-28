@@ -1,14 +1,19 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../css/SetScale.css";
 import { Stage, Layer, Image, Line, Circle, Text, Rect } from "react-konva";
 import { Button, Table, TextField } from "@navikt/ds-react";
+import { WrenchIcon } from "@navikt/aksel-icons";
 
 const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
   const [line, setLine] = useState([]);
   const [lines, setLines] = useState([]);
   const [addPoints, setAddPoints] = useState(false);
-  const [showDims, setShowDims] = useState(false); // Show dimensions of each section
+  const [showDims, setShowDims] = useState(true); // Show dimensions of each section
   const lineRef = useRef(); // Ref to access the line component
+
+  useEffect(() => {
+    lineRef.current.getLayer().batchDraw();
+  }, [line]);
 
   const handleStageClick = () => {
     if (addPoints) {
@@ -27,9 +32,9 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
     setLine(newLines);
   };
 
-  const resetLine = () => {
+  const deleteLine = () => {
     setLine([]);
-    setLines([]);
+    setAddPoints(false);
   };
 
   const undo = () => {
@@ -38,7 +43,9 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
 
   const toggleAddingPoints = () => {
     if (addPoints) {
-      setLines((prevLines) => [...prevLines, line]);
+      if (line.length > 0) {
+        setLines((prevLines) => [...prevLines, line]);
+      }
       setLine([]);
       setAddPoints(false);
     }
@@ -61,6 +68,17 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
     return sideLens;
   };
 
+  const editSection = (i) => {
+    if (!addPoints) {
+      const sec = lines[i];
+      setLine(sec);
+      setLines((prevLines) => prevLines.filter((_, j) => j !== i));
+      if (!addPoints) {
+        setAddPoints(true);
+      }
+    }
+  };
+
   return (
     <div className="lenScale">
       <div className="drawStage">
@@ -74,7 +92,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                 key={i}
                 x={line[i * 2]}
                 y={line[i * 2 + 1]}
-                radius={8}
+                radius={10}
                 zIndex={10}
                 stroke="blue"
                 draggable
@@ -87,8 +105,8 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
               zIndex={9}
               stroke="red"
               fill="#00D2FF"
-              opacity={0.4}
-              strokeWidth={3}
+              opacity={0.55}
+              strokeWidth={4}
               closed={true}
             />
             {showDims &&
@@ -114,7 +132,6 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
             {lines.map((p, i) => (
               <React.Fragment key={i}>
                 <Line
-                  ref={lineRef}
                   key={i}
                   points={p}
                   zIndex={9}
@@ -191,8 +208,8 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
             >
               Undo
             </Button>
-            <Button variant="secondary" onClick={resetLine}>
-              Reset
+            <Button variant="secondary" onClick={deleteLine}>
+              Delete
             </Button>
           </div>
           {lines.length > 0 && (
@@ -202,6 +219,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                   <Table.Row>
                     <Table.HeaderCell scope="col">Section</Table.HeaderCell>
                     <Table.HeaderCell scope="col">Sides</Table.HeaderCell>
+                    <Table.HeaderCell scope="col">Edit</Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
@@ -217,6 +235,14 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                         />
                       </Table.DataCell>
                       <Table.DataCell>{l.length / 2}</Table.DataCell>
+                      <Table.DataCell>
+                        <Button
+                          variant="tertiary"
+                          icon={<WrenchIcon aria-hidden />}
+                          onClick={() => editSection(i)}
+                          size="small"
+                        ></Button>
+                      </Table.DataCell>
                     </Table.Row>
                   ))}
                 </Table.Body>
