@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import SetScale from "./SetScale";
+import Navbar from "./navbar";
 import "../css/photoimport.css";
 import { Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
@@ -20,6 +21,7 @@ const PhotoImport = () => {
 
   return (
     <>
+      <Navbar />
       <div class="plassering1">
         <h2>Upload image </h2>
         <Button variant="primary" onClick={handleClick}>
