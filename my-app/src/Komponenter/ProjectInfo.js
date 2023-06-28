@@ -47,6 +47,7 @@ const ProjectInfo = () => {
       <br />
       {showInput ? (
         <>
+          <h1 className="centeredTitle"> I N F O R M A T I O N</h1>
           <div className="side-by-side">
             <div style={{ marginRight: "20px" }}>
               <h2>Project name</h2>
@@ -76,7 +77,7 @@ const ProjectInfo = () => {
                 description="Name on the cover of the report"
                 id="installer"
                 value={installer}
-                onChange={(e) => setProjectName(e.target.value)}
+                onChange={(e) => setInstaller(e.target.value)}
                 style={{ flex: "1" }}
               />
             </div>
@@ -86,7 +87,7 @@ const ProjectInfo = () => {
                 description="Her kommer det noe viktig info"
                 id="PNinstaller"
                 value={PNinstaller}
-                onChange={(e) => setProjectNumber(e.target.value)}
+                onChange={(e) => setPNinstaller(e.target.value)}
                 style={{ flex: "1" }}
               />
             </div>
@@ -98,7 +99,7 @@ const ProjectInfo = () => {
                 description="Name on the cover of the report"
                 id="EndCostumer"
                 value={EndCostumer}
-                onChange={(e) => setProjectName(e.target.value)}
+                onChange={(e) => setEndCostumer(e.target.value)}
                 style={{ flex: "1" }}
               />
             </div>
@@ -108,7 +109,7 @@ const ProjectInfo = () => {
                 description="Her kommer det noe viktig info"
                 id="ProjectnumberEC"
                 value={projectNumberEC}
-                onChange={(e) => setProjectNumber(e.target.value)}
+                onChange={(e) => setProjectnumberEC(e.target.value)}
                 style={{ flex: "1" }}
               />
             </div>
@@ -137,11 +138,6 @@ const ProjectInfo = () => {
         </>
       ) : (
         <>
-          <div className="info">
-            <h2>
-              Project information: {projectName} {projectNumber}{" "}
-            </h2>
-          </div>
           <Geocode />
         </>
       )}
