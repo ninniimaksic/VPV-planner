@@ -4,6 +4,8 @@ import Navbar from "./navbar";
 import "../css/photoimport.css";
 import { Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
+import { ArrowLeftIcon } from "@navikt/aksel-icons";
+import { useNavigate } from "react-router-dom";
 
 const PhotoImport = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -19,9 +21,16 @@ const PhotoImport = () => {
     fileInput.current.click();
   };
 
+  const navigate = useNavigate();
+
+  const handleBackPage = () => {
+    navigate("/geocode");
+  };
+
   return (
     <>
       <Navbar />
+
       <div class="plassering1">
         <h2>Upload image </h2>
         <Button variant="primary" onClick={handleClick}>
@@ -36,6 +45,16 @@ const PhotoImport = () => {
         />
         {selectedPhoto && <SetScale selectedPhoto={selectedPhoto} />}
       </div>
+      <Button
+        variant="secondary"
+        className="back-button"
+        onClick={handleBackPage}
+      >
+        <span className="back-button-content">
+          <ArrowLeftIcon />
+          Back
+        </span>
+      </Button>
     </>
   );
 };

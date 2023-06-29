@@ -10,3 +10,8 @@
   margin-right: 4rem;
   margin-bottom: 16px;
 }
+.back-button {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 35px;
+}

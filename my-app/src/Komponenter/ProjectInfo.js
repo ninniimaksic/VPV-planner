@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
 import "../css/ProjectInfo.css";
@@ -8,15 +8,69 @@ import Navbar from "./navbar";
 import { useNavigate } from "react-router-dom";
 
 const ProjectInfo = () => {
-  const [projectName, setProjectName] = useState("");
-  const [projectNumber, setProjectNumber] = useState("");
-  const [installer, setInstaller] = useState("");
-  const [PNinstaller, setPNinstaller] = useState("");
-  const [EndCostumer, setEndCostumer] = useState("");
-  const [projectNumberEC, setProjectnumberEC] = useState("");
+  const [projectName, setProjectName] = useState(
+    sessionStorage.getItem("projectName") || ""
+  );
+  const [projectNumber, setProjectNumber] = useState(
+    sessionStorage.getItem("projectNumber") || ""
+  );
+  const [installer, setInstaller] = useState(
+    sessionStorage.getItem("installer") || ""
+  );
+  const [PNinstaller, setPNinstaller] = useState(
+    sessionStorage.getItem("PNinstaller") || ""
+  );
+  const [EndCostumer, setEndCostumer] = useState(
+    sessionStorage.getItem("EndCostumer") || ""
+  );
+  const [projectNumberEC, setProjectnumberEC] = useState(
+    sessionStorage.getItem("projectNumberEC") || ""
+  );
   const [pageState, setPageState] = useState(1);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    sessionStorage.setItem("projectName", projectName);
+    sessionStorage.setItem("projectNumber", projectNumber);
+    sessionStorage.setItem("installer", installer);
+    sessionStorage.setItem("PNinstaller", PNinstaller);
+    sessionStorage.setItem("EndCostumer", EndCostumer);
+    sessionStorage.setItem("projectNumberEC", projectNumberEC);
+
+    const unloadListener = () => {
+      sessionStorage.removeItem("projectName");
+      sessionStorage.removeItem("projectNumber");
+      sessionStorage.removeItem("installer");
+      sessionStorage.removeItem("PNinstaller");
+      sessionStorage.removeItem("projectNumberEC");
+      sessionStorage.removeItem("EndCostumer");
+    };
+
+    const handleUnload = () => {
+      sessionStorage.removeItem("projectName");
+      sessionStorage.removeItem("projectNumber");
+      sessionStorage.removeItem("installer");
+      sessionStorage.removeItem("PNinstaller");
+      sessionStorage.removeItem("projectNumberEC");
+      sessionStorage.removeItem("EndCostumer");
+    };
+
+    window.addEventListener("beforeunload", unloadListener);
+    window.addEventListener("visibilitychange", handleUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", unloadListener);
+      window.removeEventListener("visibilitychange", handleUnload);
+    };
+  }, [
+    projectName,
+    projectNumber,
+    installer,
+    PNinstaller,
+    EndCostumer,
+    projectNumberEC,
+  ]);
 
   const handleSave = () => {
     if (projectName === "") {
