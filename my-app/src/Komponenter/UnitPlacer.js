@@ -1,18 +1,24 @@
 import React, { useState, useRef, useEffect } from "react";
+import Draggable from "react-draggable";
 import "../css/SetScale.css";
-import Table from "./Table";
+import PVgrid from "./PVgrid";
 
-const UnitPlacer = ({ sections }) => {
-  const genGrid = (section) => {
-    const grid = [section];
-    return grid;
-  };
+const UnitPlacer = ({ sections, scale }) => {
+  /*Real cm unit dimensions scaled to pixel dimensions, scale is cm/px */
+  const unitLength = 160 / scale;
+  const unitWidth = 150 / scale;
+  console.log(unitLength, unitWidth, "px");
+  console.log(unitLength * scale, unitWidth * scale, "cm");
+
   return (
     <div>
       {sections.map((section) => (
-        <div>{genGrid(section)}</div>
+        <Draggable>
+          <div>
+            <PVgrid points={section} l={unitLength} w={unitWidth} />
+          </div>
+        </Draggable>
       ))}
-      <Table />
     </div>
   );
 };

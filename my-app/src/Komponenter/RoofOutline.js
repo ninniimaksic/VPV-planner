@@ -265,7 +265,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
         </div>
       ) : (
         <>
-          <UnitPlacer sections={lines} />
+          <UnitPlacer sections={lines} scale={scale} />
         </>
       )}
     </div>

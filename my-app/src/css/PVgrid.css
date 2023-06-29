@@ -1,0 +1,11 @@
+.grid {
+  position: relative;
+  touch-action: none;
+  transform-origin: top left;
+  cursor: grab;
+  user-select: none;
+}
+
+.grid.grabbing {
+  cursor: grabbing;
+}
