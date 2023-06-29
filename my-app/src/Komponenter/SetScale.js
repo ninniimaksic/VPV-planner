@@ -5,12 +5,14 @@ import useImage from "use-image";
 import { Stage, Layer, Image, Line, Circle } from "react-konva";
 import { TextField, HelpText, Button } from "@navikt/ds-react";
 import Compass from "../Komponenter/Compass";
+import { MapInteractionCSS } from "react-map-interaction";
 
 const SetScale = ({ selectedPhoto }) => {
   const [lines, setLines] = useState([]);
   const [line, setLine] = useState([]);
   const [imgScale, setImgScale] = useState(0.2);
   const lineRef = useRef(); // Ref to access the line component
+  const circleLayerRef = useRef(); // Ref to access the circle layer
   const [wimage] = useImage(selectedPhoto);
   const [showNextButton, setShowNextButton] = useState(false);
   const [showRoofOutline, setShowRoofOutline] = useState(false);
@@ -21,6 +23,7 @@ const SetScale = ({ selectedPhoto }) => {
     const y = y2 - y1;
     return Math.sqrt(x * x + y * y);
   };
+
   useEffect(() => {
     if (line.length === 4) {
       setLines([...lines, [line, (getImgLen(line) * imgScale).toFixed(2)]]);
@@ -72,49 +75,70 @@ const SetScale = ({ selectedPhoto }) => {
       {!showRoofOutline ? (
         <div className="lenScale">
           <div className="drawStage">
-            <Stage width={1000} height={750} onClick={handleStageClick}>
-              <Layer>
-                {img && (
-                  <Image
-                    x={0}
-                    y={0}
-                    height={imageHeight}
-                    width={imageWidth}
-                    image={img}
+            <MapInteractionCSS
+              showControls
+              defaultValue={{
+                scale: 1,
+                translation: { x: 0, y: 0 },
+              }}
+              minScale={0.2}
+              maxScale={2}
+              translationBounds={{
+                xMax: 1000,
+                yMax: 1000,
+              }}
+            >
+              <Stage width={1000} height={750} onClick={handleStageClick}>
+                <Layer>
+                  {img && (
+                    <Image
+                      x={0}
+                      y={0}
+                      height={imageHeight}
+                      width={imageWidth}
+                      image={img}
+                    />
+                  )}
+                  {line.length === 2 && (
+                    <Circle x={line[0]} y={line[1]} radius={12} stroke="blue" />
+                  )}
+                  {lines.map((line, index) => (
+                    <React.Fragment key={index}>
+                      <Line
+                        key={index}
+                        points={line[0]}
+                        stroke="#df4b26"
+                        strokeWidth={3}
+                      />
+                      <Circle
+                        x={line[0][0]}
+                        y={line[0][1]}
+                        radius={12}
+                        stroke="blue"
+                        draggable
+                        onDragMove={(e) => handleCircleDragMove(e, index, 0)}
+                        onMouseDown={(e) => e.evt.stopPropagation()}
+                      />
+                      <Circle
+                        x={line[0][2]}
+                        y={line[0][3]}
+                        radius={12}
+                        stroke="blue"
+                        draggable
+                        onDragMove={(e) => handleCircleDragMove(e, index, 1)}
+                        onMouseDown={(e) => e.evt.stopPropagation()}
+                      />
+                    </React.Fragment>
+                  ))}
+                  <Line
+                    ref={lineRef}
+                    points={[]}
+                    stroke="red"
+                    strokeWidth={3}
                   />
-                )}
-                {line.length === 2 && (
-                  <Circle x={line[0]} y={line[1]} radius={12} stroke="blue" />
-                )}
-                {lines.map((line, index) => (
-                  <React.Fragment key={index}>
-                    <Line
-                      key={index}
-                      points={line[0]}
-                      stroke="#df4b26"
-                      strokeWidth={3}
-                    />
-                    <Circle
-                      x={line[0][0]}
-                      y={line[0][1]}
-                      radius={12}
-                      stroke="blue"
-                      draggable
-                      onDragMove={(e) => handleCircleDragMove(e, index, 0)}
-                    />
-                    <Circle
-                      x={line[0][2]}
-                      y={line[0][3]}
-                      radius={12}
-                      stroke="blue"
-                      draggable
-                      onDragMove={(e) => handleCircleDragMove(e, index, 1)}
-                    />
-                  </React.Fragment>
-                ))}
-                <Line ref={lineRef} points={[]} stroke="red" strokeWidth={3} />
-              </Layer>
-            </Stage>
+                </Layer>
+              </Stage>
+            </MapInteractionCSS>
           </div>
           <div className="Line">
             {lines.length >= 1 && (

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../css/SetScale.css";
+import Table from "./Table";
 
 const UnitPlacer = ({ sections }) => {
   const genGrid = (section) => {
@@ -11,6 +12,7 @@ const UnitPlacer = ({ sections }) => {
       {sections.map((section) => (
         <div>{genGrid(section)}</div>
       ))}
+      <Table />
     </div>
   );
 };
