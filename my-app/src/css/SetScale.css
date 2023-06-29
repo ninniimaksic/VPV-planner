@@ -41,3 +41,10 @@
   top: 40%;
   left: 50%;
 }
+
+.back-button {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 35px;
+  margin-top: 5px;
+}

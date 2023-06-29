@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/Geocode.css";
 import "@navikt/ds-css";
 import { Button, TextField } from "@navikt/ds-react";
@@ -8,7 +8,9 @@ import { ArrowRightIcon, ArrowLeftIcon } from "@navikt/aksel-icons";
 import { Pagination } from "@navikt/ds-react";
 
 const Geocode = () => {
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(
+    sessionStorage.getItem("address") || ""
+  );
   const [response, setResponse] = useState(null);
   const [showButton, setShowButton] = useState(false);
   const [showNextButton, setShowNextButton] = useState(false);
@@ -21,6 +23,26 @@ const Geocode = () => {
     setResponse(data[0]);
     setShowButton(true);
   };
+
+  useEffect(() => {
+    sessionStorage.setItem("address", address);
+
+    const unloadListener = () => {
+      sessionStorage.removeItem("address");
+    };
+
+    const handleUnload = () => {
+      sessionStorage.removeItem("address");
+    };
+
+    window.addEventListener("beforeunload", unloadListener);
+    window.addEventListener("visibilitychange", handleUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", unloadListener);
+      window.removeEventListener("visibilitychange", handleUnload);
+    };
+  }, [address]);
 
   const [pageState, setPageState] = useState(2);
 
@@ -128,17 +150,17 @@ const Geocode = () => {
             </form>
           </div>
         </div>
-        <Button
-          variant="secondary"
-          className="back-button"
-          onClick={handleBackPage}
-        >
-          <span className="back-button-content">
-            <ArrowLeftIcon />
-            Back
-          </span>
-        </Button>
       </React.Fragment>
+      <Button
+        variant="secondary"
+        className="back-button"
+        onClick={handleBackPage}
+      >
+        <span className="back-button-content">
+          <ArrowLeftIcon />
+          Back
+        </span>
+      </Button>
     </>
   );
 };
