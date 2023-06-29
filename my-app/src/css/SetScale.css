@@ -7,7 +7,7 @@
 .Line {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-around;
   height: 60vh;
   margin-top: 15px;
   margin-left: 40px;
