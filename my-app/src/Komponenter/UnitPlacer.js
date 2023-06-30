@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
 import "../css/SetScale.css";
 import PVgrid from "./PVgrid";
+import { DragHorizontalIcon } from "@navikt/aksel-icons";
 
 const UnitPlacer = ({ sections, scale }) => {
   /*Real cm unit dimensions scaled to pixel dimensions, scale is cm/px */
@@ -13,14 +14,19 @@ const UnitPlacer = ({ sections, scale }) => {
   return (
     <div>
       {sections.map((section) => (
-        <Draggable>
+        <Draggable handle=".draggable">
           <div>
             <PVgrid
               points={section}
               l={unitLength}
               w={unitWidth}
-              ncol={7}
-              nrow={3}
+              ncol={6}
+              nrow={4}
+            />
+            <DragHorizontalIcon
+              className="draggable"
+              fontSize={48}
+              style={{ cursor: "move" }}
             />
           </div>
         </Draggable>

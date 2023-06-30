@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ReactGridLayout, { WidthProvider } from "react-grid-layout";
 import "../css/PVgrid.css";
 import { Button } from "@navikt/ds-react";
@@ -13,7 +13,7 @@ const PVgrid = ({ points, l, w, ncol, nrow }) => {
   const itemWidth = w; // Width of the grid item
 
   // Generate grid items to fill the grid
-  const generateGridItems = () => {
+  const generateGridItems = useCallback(() => {
     const gridItems = [];
     let itemId = 1;
     for (let row = 0; row < numRows; row++) {
@@ -31,47 +31,13 @@ const PVgrid = ({ points, l, w, ncol, nrow }) => {
       }
     }
     return gridItems;
-  };
+  }, [numColumns, numRows]);
 
-  // Define the grid layout configuration
-  var layout = generateGridItems();
-  const setLayout = (newLayout) => {
-    layout = newLayout;
-  };
-
-  // Calculate the grid container width based on the item width and number of columns
-  const gridContainerWidth = itemWidth * numColumns;
-
-  // Calculate the grid container height based on the item height and number of rows
-  const gridContainerHeight = itemLength * numRows;
-
-  // Set the grid container size dynamically based on the items
-  const [gridSize, setGridSize] = useState({
-    width: gridContainerWidth,
-    height: gridContainerHeight,
-  });
+  const [layout, setLayout] = useState(generateGridItems());
 
   useEffect(() => {
-    const handleResize = () => {
-      // Calculate the new grid container width based on the item width and number of columns
-      const newGridContainerWidth = itemWidth * numColumns;
-
-      // Calculate the new grid container height based on the item height and number of rows
-      const newGridContainerHeight = itemLength * numRows;
-
-      // Update the grid container size
-      setGridSize({
-        width: newGridContainerWidth,
-        height: newGridContainerHeight,
-      });
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+    setLayout(generateGridItems());
+  }, [numColumns, numRows, generateGridItems]);
 
   const handleGridItemClick = (itemId) => {
     const updatedLayout = layout.map((item) => {
@@ -88,13 +54,13 @@ const PVgrid = ({ points, l, w, ncol, nrow }) => {
   };
 
   return (
-    <div style={{ width: gridSize.width, height: gridSize.height }}>
+    <div style={{ width: itemWidth * numColumns }}>
       <GridLayout
         className="layout"
         layout={layout}
         cols={numColumns}
         rowHeight={itemLength}
-        width={gridSize.width}
+        width={itemWidth * numColumns}
         isResizable={false} // Disable resizing
         isDraggable={false} // Disable dragging
         margin={[0, 0]} // Remove margin between items
@@ -103,27 +69,21 @@ const PVgrid = ({ points, l, w, ncol, nrow }) => {
           <div
             key={item.i}
             style={{
-              background: item.selected ? "red" : "lightblue",
+              background: item.selected ? "pink" : "white",
               border: "1px solid gray",
               boxSizing: "border-box",
-              display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              opacity: 0.7,
+              width: itemWidth,
+              height: itemLength,
             }} // Add custom styles for the rectangle
             onClick={() => handleGridItemClick(item.i)} // Handle click events
           >
-            {/* Render the content of each grid item */}
-            <div>lmao</div>
+            <div></div>
           </div>
         ))}
       </GridLayout>
-      <Button
-        variant="primary"
-        style={{ marginTop: "10px" }}
-        onClick={() => handleGridItemClick("2")}
-      >
-        Add PV Unit
-      </Button>
     </div>
   );
 };
