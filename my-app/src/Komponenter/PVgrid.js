@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactGridLayout, { WidthProvider } from "react-grid-layout";
 import "../css/PVgrid.css";
+import { Button } from "@navikt/ds-react";
 
 const GridLayout = WidthProvider(ReactGridLayout);
 
-const PVgrid = ({ points, l, w }) => {
-  const numColumns = 7; // Number of columns in the grid
-  const numRows = 3; // Number of rows in the grid
+const PVgrid = ({ points, l, w, ncol, nrow }) => {
+  const numColumns = ncol; // Number of columns in the grid
+  const numRows = nrow; // Number of rows in the grid
 
   const itemLength = l; // Length of the grid item
   const itemWidth = w; // Width of the grid item
@@ -23,7 +24,8 @@ const PVgrid = ({ points, l, w }) => {
           y: row,
           w: 1,
           h: 1,
-          stati: true,
+          static: true,
+          selected: true,
         });
         itemId++;
       }
@@ -32,7 +34,10 @@ const PVgrid = ({ points, l, w }) => {
   };
 
   // Define the grid layout configuration
-  const layout = generateGridItems();
+  var layout = generateGridItems();
+  const setLayout = (newLayout) => {
+    layout = newLayout;
+  };
 
   // Calculate the grid container width based on the item width and number of columns
   const gridContainerWidth = itemWidth * numColumns;
@@ -68,6 +73,20 @@ const PVgrid = ({ points, l, w }) => {
     };
   }, []);
 
+  const handleGridItemClick = (itemId) => {
+    const updatedLayout = layout.map((item) => {
+      if (item.i === itemId) {
+        return {
+          ...item,
+          selected: !item.selected,
+        };
+      }
+      return item;
+    });
+
+    setLayout(updatedLayout);
+  };
+
   return (
     <div style={{ width: gridSize.width, height: gridSize.height }}>
       <GridLayout
@@ -84,19 +103,27 @@ const PVgrid = ({ points, l, w }) => {
           <div
             key={item.i}
             style={{
-              background: "lightblue",
+              background: item.selected ? "red" : "lightblue",
               border: "1px solid gray",
               boxSizing: "border-box",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
             }} // Add custom styles for the rectangle
+            onClick={() => handleGridItemClick(item.i)} // Handle click events
           >
             {/* Render the content of each grid item */}
-            <div>{item.i}</div>
+            <div>lmao</div>
           </div>
         ))}
       </GridLayout>
+      <Button
+        variant="primary"
+        style={{ marginTop: "10px" }}
+        onClick={() => handleGridItemClick("2")}
+      >
+        Add PV Unit
+      </Button>
     </div>
   );
 };

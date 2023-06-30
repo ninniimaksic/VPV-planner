@@ -15,7 +15,13 @@ const UnitPlacer = ({ sections, scale }) => {
       {sections.map((section) => (
         <Draggable>
           <div>
-            <PVgrid points={section} l={unitLength} w={unitWidth} />
+            <PVgrid
+              points={section}
+              l={unitLength}
+              w={unitWidth}
+              ncol={7}
+              nrow={3}
+            />
           </div>
         </Draggable>
       ))}
