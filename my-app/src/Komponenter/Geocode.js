@@ -12,8 +12,9 @@ const Geocode = () => {
     sessionStorage.getItem("address") || ""
   );
   const [response, setResponse] = useState(null);
-  const [showButton, setShowButton] = useState(false);
-  const [showNextButton, setShowNextButton] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const [info, setInfo] = useState(sessionStorage.getItem("info") || "");
 
   const geocodeAddress = async (address) => {
     const response = await fetch(
@@ -21,18 +22,21 @@ const Geocode = () => {
     );
     const data = await response.json();
     setResponse(data[0]);
-    setShowButton(true);
+    setIsConfirmed(true);
   };
 
   useEffect(() => {
     sessionStorage.setItem("address", address);
+    sessionStorage.setItem("info", info);
 
     const unloadListener = () => {
       sessionStorage.removeItem("address");
+      sessionStorage.removeItem("info");
     };
 
     const handleUnload = () => {
       sessionStorage.removeItem("address");
+      sessionStorage.removeItem("info");
     };
 
     window.addEventListener("beforeunload", unloadListener);
@@ -42,7 +46,7 @@ const Geocode = () => {
       window.removeEventListener("beforeunload", unloadListener);
       window.removeEventListener("visibilitychange", handleUnload);
     };
-  }, [address]);
+  }, [address, info]);
 
   const [pageState, setPageState] = useState(2);
 
@@ -55,14 +59,15 @@ const Geocode = () => {
     }
   };
 
-  const handleConfirm = () => {
+  const handleSave = () => {
     console.log(
       "Bekreft og lagre: Latitude:",
       response.lat,
       "Longitude:",
       response.lon
     );
-    setShowNextButton(true);
+
+    setIsSaved(true);
   };
 
   const handleNextPage = () => {
@@ -76,8 +81,9 @@ const Geocode = () => {
   const resetForm = () => {
     setAddress("");
     setResponse(null);
-    setShowButton(false);
-    setShowNextButton(false);
+    setIsConfirmed(false);
+    setIsSaved(false);
+    setInfo("");
   };
 
   return (
@@ -93,13 +99,13 @@ const Geocode = () => {
           siblingCount={1}
           size="medium"
         />
+        <h1>L O C A T I O N</h1> <br />
         <div className={"geocodeStyle"}>
           <div id="plassering">
             <form onSubmit={handleSubmit} className="form-container">
-              <h1>L O C A T I O N</h1> <br />
               <TextField
                 required
-                label="Type in your adress and city"
+                label="Type in your address and city"
                 id="address"
                 name="address"
                 value={address}
@@ -109,7 +115,7 @@ const Geocode = () => {
               <Button variant="primary" type="submit" className="submit-button">
                 Check if it's the correct address
               </Button>
-              {response && (
+              {response && isConfirmed && (
                 <div>
                   <br />
                   <h4>Is this correct</h4>
@@ -119,38 +125,61 @@ const Geocode = () => {
                     {response.address.city || response.address.town}{" "}
                     {response.address.postcode} {response.address.country}
                   </p>
-                  <br></br>
+                  <br />
                   <p>
                     If it's not correct, please enter the city in the field
                     above
                   </p>
-                  <br></br>
-
-                  <Button
-                    variant="primary"
-                    onClick={handleConfirm}
-                    style={{ display: showButton ? "block" : "none" }}
-                  >
-                    Save & confirm
-                  </Button>
+                  <br />
+                  {isSaved ? (
+                    <div className="pop-up-container">
+                      <div className="info-container">
+                        <TextField
+                          label="Add information"
+                          id="info"
+                          name="info"
+                          value={info}
+                          onChange={(e) => setInfo(e.target.value)}
+                          className="input-field"
+                        />
+                        <Button
+                          variant="primary"
+                          onClick={handleSave}
+                          style={{ display: isSaved ? "block" : "none" }}
+                        >
+                          Save
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      onClick={handleSave}
+                      style={{ display: isConfirmed ? "block" : "none" }}
+                    >
+                      Save & Confirm
+                    </Button>
+                  )}
                 </div>
               )}
               <br />
-              <Button
-                variant="secondary"
-                className="next-button"
-                style={{ display: showNextButton ? "block" : "none" }}
-                onClick={handleNextPage}
-              >
-                <span className="next-button-content">
-                  Next page
-                  <ArrowRightIcon />
-                </span>
-              </Button>
             </form>
           </div>
         </div>
+        {isSaved && (
+          <Button
+            variant="secondary"
+            className="next-button"
+            onClick={handleNextPage}
+          >
+            <span className="next-button-content">
+              Next page
+              <ArrowRightIcon />
+            </span>
+          </Button>
+        )}
       </React.Fragment>
+
       <Button
         variant="secondary"
         className="back-button"

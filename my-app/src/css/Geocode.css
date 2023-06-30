@@ -1,40 +1,71 @@
 .geocodeStyle #plassering {
-  background-color: #a1d7cf;
+  text-align: left;
+  background-color: #d1dacb;
   border-radius: 25px;
-  height: 600px;
+  height: 400px;
   margin-top: 30px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 20px;
-  width: 30%;
-  margin: auto; /* Sentrer div */
+  width: 28%;
+  margin: auto;
   border-radius: 25px;
   margin-bottom: 20px;
+  position: relative;
+
+  flex-wrap: wrap;
 }
 
-.geocodeStyle .input-field {
-  margin-right: 4rem;
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.input-field {
+  width: 100%;
   margin-bottom: 16px;
 }
 
-.next-button-content {
+.info-container {
   display: flex;
   align-items: center;
-  justify-content: center;
-}
-
-.next-button-content svg {
+  background-color: #d1dacb;
+  padding: 10px;
+  width: 100%;
+  position: absolute;
+  border-radius: 25px;
+  flex: 1;
   margin-left: 10px;
+  top: 0;
+  left: 100%;
+  transform: translateX(10px);
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.back-button-content svg {
-  margin-right: 10px;
+.info-container .input-field {
+  margin-right: 0;
+}
+
+.info-container .input-field,
+.info-container .ds-button {
+  flex: 1;
 }
 
 .back-button {
   display: flex;
   justify-content: flex-start;
-  margin-left: 35px;
-  margin-bottom: 35px;
+  position: fixed;
+  bottom: 35px;
+  right: calc(100% - 174px);
+}
+
+.next-button {
+  display: flex;
+  justify-content: flex-end;
+  position: fixed;
+  bottom: 35px;
+  left: calc(100% - 215px);
 }
