@@ -73,27 +73,46 @@ const ProjectInfo = () => {
   ]);
 
   const handleSave = () => {
-    if (projectName === "") {
-      setProjectName("Project");
-    }
-    if (projectNumber === "") {
-      setProjectNumber("1");
-    }
-    if (installer === "") {
-      setInstaller("");
-    }
-    if (PNinstaller === "") {
-      setPNinstaller("1");
-    }
-    if (EndCostumer === "") {
-      setEndCostumer("1");
-    }
-    if (projectNumberEC === "") {
-      setProjectnumberEC("1");
-    }
+    // Validering for tallfeltene
+    const isValidNumber = (value) => {
+      return value !== "" && !isNaN(value);
+    };
 
-    console.log("Saving project name and number:", projectName, projectNumber);
-    navigate("/geocode");
+    if (
+      projectName === "" ||
+      (isValidNumber(projectNumber) &&
+        isValidNumber(PNinstaller) &&
+        isValidNumber(projectNumberEC))
+    ) {
+      if (projectName === "") {
+        setProjectName("Project");
+      }
+      if (projectNumber === "") {
+        setProjectNumber("1");
+      }
+      if (installer === "") {
+        setInstaller("");
+      }
+      if (PNinstaller === "") {
+        setPNinstaller("1");
+      }
+      if (EndCostumer === "") {
+        setEndCostumer("1");
+      }
+      if (projectNumberEC === "") {
+        setProjectnumberEC("1");
+      }
+
+      console.log(
+        "Saving project name and number:",
+        projectName,
+        projectNumber
+      );
+      navigate("/geocode");
+    } else {
+      // Vis en feilmelding eller utfør en annen handling
+      console.log("Vennligst fyll inn gyldige tallverdier.");
+    }
   };
 
   return (
