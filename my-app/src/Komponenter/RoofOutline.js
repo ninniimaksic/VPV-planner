@@ -19,12 +19,12 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
     const angles = [];
     for (let i = 0; i < p.length - 4; i += 2) {
       const v1 = getVectorBetweenPoints(
-        { x: p[i], y: p[i + 1] },
-        { x: p[i + 2], y: p[i + 3] }
+        { x: p[i + 2], y: p[i + 3] }, // end point
+        { x: p[i], y: p[i + 1] } // start point
       );
       const v2 = getVectorBetweenPoints(
-        { x: p[i + 2], y: p[i + 3] },
-        { x: p[i + 4], y: p[i + 5] }
+        { x: p[i + 2], y: p[i + 3] }, // start point
+        { x: p[i + 4], y: p[i + 5] } // end point
       );
       const angle = getAngleBetweenVectors(v1, v2);
       angles.push(angle);
@@ -152,6 +152,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                 const y = (l[j * 2 + 1] + l[j * 2 + 3]) / 2;
                 return (
                   <React.Fragment key={j}>
+                    <Rect x={x} y={y} width={75} height={20} fill="salmon" />
                     <Text
                       key={j}
                       text={`${len.toFixed(2)} m`}
@@ -212,16 +213,16 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
               return (
                 <React.Fragment key={i}>
                   <Rect
-                    x={x - 10} // juster disse verdiene for å passe boksen rundt teksten
-                    y={y - 10}
+                    x={x - 30} // juster disse verdiene for å passe boksen rundt teksten
+                    y={y - 30}
                     width={75} // juster disse verdiene for å passe boksen rundt teksten
                     height={20}
                     fill="white"
                   />
                   <Text
                     text={`${angle.toFixed(2)}°`}
-                    x={x}
-                    y={y}
+                    x={x - 30}
+                    y={y - 30}
                     fontSize={16}
                     fill="black"
                   />
