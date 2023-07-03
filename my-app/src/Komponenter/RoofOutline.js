@@ -9,9 +9,28 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
   const [line, setLine] = useState([]);
   const [lines, setLines] = useState([]);
   const [addPoints, setAddPoints] = useState(false);
-  const [showUnitPlacer, setShowUnitPlacer] = useState(false); // Show unit placer
-  const [showDims, setShowDims] = useState(true); // Show dimensions of each section
-  const lineRef = useRef(); // Ref to access the line component
+  const [showUnitPlacer, setShowUnitPlacer] = useState(false);
+  const [showDims, setShowDims] = useState(true);
+  const lineRef = useRef();
+  const [angles, setAngles] = useState([]);
+
+  const updateAngles = (points) => {
+    const p = [...points, points[0], points[1], points[2], points[3]];
+    const angles = [];
+    for (let i = 0; i < p.length - 4; i += 2) {
+      const v1 = getVectorBetweenPoints(
+        { x: p[i], y: p[i + 1] },
+        { x: p[i + 2], y: p[i + 3] }
+      );
+      const v2 = getVectorBetweenPoints(
+        { x: p[i + 2], y: p[i + 3] },
+        { x: p[i + 4], y: p[i + 5] }
+      );
+      const angle = getAngleBetweenVectors(v1, v2);
+      angles.push(angle);
+    }
+    setAngles(angles);
+  };
 
   useEffect(() => {
     lineRef.current.getLayer().batchDraw();
@@ -24,6 +43,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
       const point = stage.getPointerPosition();
       setLine((prevLine) => [...prevLine, point.x, point.y]);
       console.log("Added sum points", line);
+      updateAngles([...line, point.x, point.y]);
     }
   };
 
@@ -31,7 +51,21 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
     const newLines = [...line];
     newLines[lineIndex] = e.target.x();
     newLines[lineIndex + 1] = e.target.y();
+    updateAngles(newLines);
     setLine(newLines);
+  };
+
+  const getVectorBetweenPoints = (p1, p2) => {
+    return { x: p2.x - p1.x, y: p2.y - p1.y };
+  };
+
+  const getAngleBetweenVectors = (v1, v2) => {
+    const angle1 = Math.atan2(v1.y, v1.x);
+    const angle2 = Math.atan2(v2.y, v2.x);
+    let degrees = (angle2 - angle1) * (180 / Math.PI);
+    if (degrees < 0) degrees += 360;
+    if (degrees > 180) degrees = 360 - degrees;
+    return degrees;
   };
 
   const deleteLine = () => {
@@ -66,7 +100,6 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
       const y2 = p[i + 3];
       sideLens.push(Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) * (scale / 100));
     }
-    console.log("Scale: ", scale);
     return sideLens;
   };
 
@@ -119,7 +152,15 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                 const y = (l[j * 2 + 1] + l[j * 2 + 3]) / 2;
                 return (
                   <React.Fragment key={j}>
-                    <Rect x={x} y={y} width={75} height={20} fill="white" />
+                    <Text
+                      key={j}
+                      text={`${len.toFixed(2)} m`}
+                      x={x}
+                      y={y}
+                      fontSize={20}
+                      fill="black"
+                    />
+
                     <Text
                       key={j}
                       text={`${len.toFixed(2)} m`}
@@ -164,6 +205,29 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                   })}
               </React.Fragment>
             ))}
+            {angles.map((angle, i) => {
+              const l = [...line, line[0], line[1]];
+              const x = l[i * 2];
+              const y = l[i * 2 + 1];
+              return (
+                <React.Fragment key={i}>
+                  <Rect
+                    x={x - 10} // juster disse verdiene for å passe boksen rundt teksten
+                    y={y - 10}
+                    width={75} // juster disse verdiene for å passe boksen rundt teksten
+                    height={20}
+                    fill="white"
+                  />
+                  <Text
+                    text={`${angle.toFixed(2)}°`}
+                    x={x}
+                    y={y}
+                    fontSize={16}
+                    fill="black"
+                  />
+                </React.Fragment>
+              );
+            })}
           </Layer>
         </Stage>
       </div>
