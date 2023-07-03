@@ -254,20 +254,20 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
             )}
           </div>
           <div style={{ height: "50%" }}></div>
-          <div style={{ marginTop: "auto" }}>
-            <Button
-              variant="primary"
-              onClick={() => setShowUnitPlacer(!showUnitPlacer)}
-            >
-              Continue
-            </Button>
-          </div>
         </div>
       ) : (
         <>
           <UnitPlacer sections={lines} scale={scale} />
         </>
       )}
+      <div style={{ marginTop: "auto" }}>
+        <Button
+          variant="primary"
+          onClick={() => setShowUnitPlacer(!showUnitPlacer)}
+        >
+          {showUnitPlacer ? "Change sections" : "Place units"}
+        </Button>
+      </div>
     </div>
   );
 };
