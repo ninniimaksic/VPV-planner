@@ -15,6 +15,7 @@ const PhotoImport = () => {
     const file = event.target.files[0];
     // Utfør nødvendig validering av filen her
     setSelectedPhoto(URL.createObjectURL(file));
+    sessionStorage.setItem("imgurl", selectedPhoto);
   };
 
   const handleClick = () => {
