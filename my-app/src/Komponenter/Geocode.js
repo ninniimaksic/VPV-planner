@@ -20,7 +20,10 @@ const Geocode = () => {
     const response = await fetch(
       `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${address}`
     );
-    const data = await response.json();
+    const data = await response.json().then((res) => {
+      sessionStorage.setItem("lat", JSON.stringify(res[0].lat));
+      sessionStorage.setItem("lon", JSON.stringify(res[0].lon));
+    });
     setResponse(data[0]);
     setIsConfirmed(true);
   };
