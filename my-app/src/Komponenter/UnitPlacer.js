@@ -1,24 +1,20 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import Draggable from "react-draggable";
 import "../css/SetScale.css";
 import PVgrid from "./PVgrid";
-import Moveable from "react-moveable";
 import { DragHorizontalIcon } from "@navikt/aksel-icons";
 import { Button, TextField } from "@navikt/ds-react";
 
 const UnitPlacer = ({ sections, scale }) => {
-  /*Real cm unit dimensions scaled to pixel dimensions, scale is cm/px */
   const [grids, setGrids] = useState([]); // Array of grid items
   const [ncol, setNcol] = useState(0);
   const [nrow, setNrow] = useState(0);
   const [selectedGrid, setSelectedGrid] = useState(null);
   const unitLength = 160 / scale;
   const unitWidth = 150 / scale;
-  console.log(unitLength, unitWidth, "px");
-  console.log(unitLength * scale, unitWidth * scale, "cm");
 
   const addGrid = (ncol, nrow, angle) => {
-    setGrids([...grids, [ncol, nrow, angle]]);
+    setGrids([...grids, { ncol, nrow, angle, position: { x: 0, y: 0 } }]);
   };
 
   const handleNcolChange = (event) => {
@@ -31,7 +27,13 @@ const UnitPlacer = ({ sections, scale }) => {
 
   const handleAngleChange = (event, index) => {
     const updatedGrids = [...grids];
-    updatedGrids[index][2] = parseInt(event.target.value);
+    updatedGrids[index].angle = parseInt(event.target.value);
+    setGrids(updatedGrids);
+  };
+
+  const handleGridDrag = (event, index) => {
+    const updatedGrids = [...grids];
+    updatedGrids[index].position = { x: event.clientX, y: event.clientY };
     setGrids(updatedGrids);
   };
 
@@ -52,49 +54,35 @@ const UnitPlacer = ({ sections, scale }) => {
     <div>
       {grids.map((grid, i) => (
         <div
+          key={`grid-${i}`}
           style={{
-            position: "relative",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
+            position: "absolute",
+            top: grid.position.y,
+            left: grid.position.x,
+            transform: `rotate(${grid.angle}deg)`,
+            transformOrigin: "center center", // Rotate around the center of the element
           }}
         >
-          <div
-            style={{
-              position: "absolute",
-              transform: `rotate(${grid[2]}deg)`,
-            }}
-          >
-            <Draggable handle=".draggable" key={`new-grid-${i}`}>
-              <div
-                style={{
-                  position: "absolute",
-                  transform: `rotate(${grid[2]}deg)`,
-                }}
-                className="rotatable"
-              >
-                <div
-                  style={{
-                    border: i === selectedGrid ? "2px solid red" : "none",
-                  }}
-                >
-                  <PVgrid
-                    points={sections[0]}
-                    l={unitLength}
-                    w={unitWidth}
-                    ncol={grid[0]}
-                    nrow={grid[1]}
-                  />
-                </div>
-                <DragHorizontalIcon
-                  className="draggable"
-                  fontSize={48}
-                  style={{ cursor: "grab" }}
-                  onMouseDown={() => selectGrid(i)}
-                />
-              </div>
-            </Draggable>
-          </div>
+          <Draggable handle=".draggable">
+            <div
+              className={`rotatable ${i === selectedGrid ? "selected" : ""}`}
+              onMouseDown={() => selectGrid(i)}
+              onDrag={(event) => handleGridDrag(event, i)}
+            >
+              <PVgrid
+                points={sections[0]}
+                l={unitLength}
+                w={unitWidth}
+                ncol={grid.ncol}
+                nrow={grid.nrow}
+              />
+              <DragHorizontalIcon
+                className="draggable"
+                fontSize={48}
+                style={{ cursor: "grab" }}
+              />
+            </div>
+          </Draggable>
         </div>
       ))}
       <div style={{ marginTop: "10%" }}>
@@ -132,13 +120,28 @@ const UnitPlacer = ({ sections, scale }) => {
           Delete grid
         </Button>
         {grids.map((grid, i) => (
-          <div key={`grid-${i}`}>
-            <TextField
-              type="number"
-              label={`Angle of grid ${i + 1}`}
-              value={grid[2]}
-              onChange={(event) => handleAngleChange(event, i)}
-            />
+          <div key={`angle-${i + 1}`}>
+            <label htmlFor={`angle-${i + 1}`}>{`Angle of grid ${i + 1}`}</label>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  backgroundColor: "#fff",
+                  border: "1px solid #000",
+                  marginRight: "10px",
+                }}
+              ></div>
+              <input
+                type="range"
+                id={`angle-${i + 1}`}
+                min="0"
+                max="360"
+                value={grid.angle}
+                onChange={(event) => handleAngleChange(event, i)}
+              />
+              <span>{grid.angle}°</span>
+            </div>
           </div>
         ))}
       </div>
