@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/SetScale.css";
 import UnitPlacer from "./UnitPlacer";
 import { Stage, Layer, Image, Line, Circle, Text, Rect } from "react-konva";
 import { Button, Table, TextField } from "@navikt/ds-react";
-import { WrenchIcon } from "@navikt/aksel-icons";
+import { WrenchIcon, ArrowRightIcon } from "@navikt/aksel-icons";
 
 const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
   const [line, setLine] = useState([]);
@@ -26,7 +27,6 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
       console.log("Added sum points", line);
     }
   };
-
   const handleCircleDragMove = (e, lineIndex) => {
     const newLines = [...line];
     newLines[lineIndex] = e.target.x();
@@ -79,6 +79,13 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
         setAddPoints(true);
       }
     }
+  };
+
+  const navigate = useNavigate();
+
+  const handleSaveCont = () => {
+    sessionStorage.setItem("sections", JSON.stringify(lines));
+    navigate("/results");
   };
 
   return (
@@ -264,9 +271,18 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
         <Button
           variant="primary"
           onClick={() => setShowUnitPlacer(!showUnitPlacer)}
+          style={{ marginRight: "1rem" }}
         >
           {showUnitPlacer ? "Change sections" : "Place units"}
         </Button>
+        {showUnitPlacer && (
+          <Button variant="primary" onClick={handleSaveCont}>
+            <span className="next-button-content">
+              Save and continue
+              <ArrowRightIcon />
+            </span>
+          </Button>
+        )}
       </div>
     </div>
   );

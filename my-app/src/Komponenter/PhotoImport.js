@@ -31,7 +31,7 @@ const PhotoImport = () => {
     <>
       <Navbar />
 
-      <div class="plassering1">
+      <div className="plassering1">
         <h2>Upload image </h2>
         <Button variant="primary" onClick={handleClick}>
           Choose image
