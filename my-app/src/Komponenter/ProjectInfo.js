@@ -14,7 +14,7 @@ const ProjectInfo = () => {
   const [projectNumber, setProjectNumber] = useState(
     sessionStorage.getItem("projectNumber") || ""
   );
-  const [installer, setInstaller] = useState(
+  const [partner, setPartner] = useState(
     sessionStorage.getItem("installer") || ""
   );
   const [PNinstaller, setPNinstaller] = useState(
@@ -33,7 +33,7 @@ const ProjectInfo = () => {
   useEffect(() => {
     sessionStorage.setItem("projectName", projectName);
     sessionStorage.setItem("projectNumber", projectNumber);
-    sessionStorage.setItem("installer", installer);
+    sessionStorage.setItem("partner", partner);
     sessionStorage.setItem("PNinstaller", PNinstaller);
     sessionStorage.setItem("EndCostumer", EndCostumer);
     sessionStorage.setItem("projectNumberEC", projectNumberEC);
@@ -41,7 +41,7 @@ const ProjectInfo = () => {
     const unloadListener = () => {
       sessionStorage.removeItem("projectName");
       sessionStorage.removeItem("projectNumber");
-      sessionStorage.removeItem("installer");
+      sessionStorage.removeItem("partner");
       sessionStorage.removeItem("PNinstaller");
       sessionStorage.removeItem("projectNumberEC");
       sessionStorage.removeItem("EndCostumer");
@@ -50,7 +50,7 @@ const ProjectInfo = () => {
     const handleUnload = () => {
       sessionStorage.removeItem("projectName");
       sessionStorage.removeItem("projectNumber");
-      sessionStorage.removeItem("installer");
+      sessionStorage.removeItem("partner");
       sessionStorage.removeItem("PNinstaller");
       sessionStorage.removeItem("projectNumberEC");
       sessionStorage.removeItem("EndCostumer");
@@ -66,7 +66,7 @@ const ProjectInfo = () => {
   }, [
     projectName,
     projectNumber,
-    installer,
+    partner,
     PNinstaller,
     EndCostumer,
     projectNumberEC,
@@ -90,8 +90,8 @@ const ProjectInfo = () => {
       if (projectNumber === "") {
         setProjectNumber("1");
       }
-      if (installer === "") {
-        setInstaller("");
+      if (partner === "") {
+        setPartner("");
       }
       if (PNinstaller === "") {
         setPNinstaller("1");
@@ -149,9 +149,9 @@ const ProjectInfo = () => {
             <h2>Installer</h2>
             <TextField
               description="Name on the cover of the report"
-              id="installer"
-              value={installer}
-              onChange={(e) => setInstaller(e.target.value)}
+              id="Partner"
+              value={partner}
+              onChange={(e) => setPartner(e.target.value)}
               style={{ flex: "1" }}
             />
           </div>
