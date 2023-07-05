@@ -31,12 +31,11 @@ const UnitPlacer = ({ sections, scale }) => {
     setGrids(updatedGrids);
   };
 
-  const handleGridDrag = (event, index) => {
+  const handleGridDrag = (data, index) => {
     const updatedGrids = [...grids];
-    updatedGrids[index].position = { x: event.clientX, y: event.clientY };
+    updatedGrids[index].position = { x: data.lastX, y: data.lastY };
     setGrids(updatedGrids);
   };
-
   const deleteGrid = () => {
     if (selectedGrid !== null) {
       const updatedGrids = [...grids];
@@ -57,17 +56,15 @@ const UnitPlacer = ({ sections, scale }) => {
           key={`grid-${i}`}
           style={{
             position: "absolute",
-            top: grid.position.y,
-            left: grid.position.x,
             transform: `rotate(${grid.angle}deg)`,
-            transformOrigin: "center center", // Rotate around the center of the element
+            left: `${grid.position.x}px`,
+            top: `${grid.position.y}px`,
           }}
         >
-          <Draggable handle=".draggable">
+          <Draggable onStop={(e, data) => handleGridDrag(data, i)}>
             <div
               className={`rotatable ${i === selectedGrid ? "selected" : ""}`}
               onMouseDown={() => selectGrid(i)}
-              onDrag={(event) => handleGridDrag(event, i)}
             >
               <PVgrid
                 points={sections[0]}
