@@ -15,6 +15,7 @@ export default function Results() {
   const projectNumberEC = sessionStorage.getItem("projectNumberEC");
   const sections = sessionStorage.getItem("sections");
   const grids = sessionStorage.getItem("grids");
+  const layout0 = sessionStorage.getItem("layout0");
   const address = sessionStorage.getItem("address");
   const info = sessionStorage.getItem("info");
   const lat = sessionStorage.getItem("lat");
@@ -31,7 +32,7 @@ export default function Results() {
     console.log("End Customer:", EndCostumer);
     console.log("Project Number EC:", projectNumberEC);
     console.log("Sections:", sections);
-    console.log("Grids:", grids);
+    console.log("Grids:", grids, "Length:", grids.length);
     console.log("Address:", address);
     console.log("Info:", info);
     console.log("Lat:", lat);
@@ -56,6 +57,7 @@ export default function Results() {
               <li>Project Number EC: {projectNumberEC}</li>
               <li>Sections: {sections}</li>
               <li>Grids: {grids}</li>
+              <li>Layout0: {layout0}</li>
               <li>Address: {address}</li>
               <li>Info: {info}</li>
               <li>Lat: {lat}</li>

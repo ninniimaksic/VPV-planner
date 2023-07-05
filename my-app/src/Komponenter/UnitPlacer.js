@@ -22,6 +22,7 @@ const UnitPlacer = ({ sections, scale }) => {
       return;
     }
     setGrids([...grids, [ncol, nrow, angle]]);
+    sessionStorage.setItem("grids", grids);
   };
 
   const handleNcolChange = (event) => {
@@ -36,6 +37,7 @@ const UnitPlacer = ({ sections, scale }) => {
     const updatedGrids = [...grids];
     updatedGrids[index][2] = parseInt(event.target.value);
     setGrids(updatedGrids);
+    sessionStorage.setItem("grids", updatedGrids);
   };
 
   const deleteGrid = () => {
@@ -43,6 +45,7 @@ const UnitPlacer = ({ sections, scale }) => {
       const updatedGrids = [...grids];
       updatedGrids.splice(selectedGrid, 1);
       setGrids(updatedGrids);
+      sessionStorage.setItem("grids", updatedGrids);
       setSelectedGrid(null);
     }
   };

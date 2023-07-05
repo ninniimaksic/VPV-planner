@@ -34,19 +34,26 @@ const PVgrid = ({ points, l, w, ncol, nrow, layoutid }) => {
         itemId++;
       }
     }
-    const grid = sessionStorage.getItem("grids") || [];
-    sessionStorage.setItem(
-      "grids",
-      grid.concat([gridItems.map((item) => item.selected)])
-    );
     return gridItems;
   }, [numColumns, numRows]);
 
   const [layout, setLayout] = useState(generateGridItems());
 
+  const saveLayout = (l) => {
+    const grid = Array.from({ length: nrow }, () => Array(ncol).fill(0));
+    l.forEach((i) => {
+      const { x, y, selected } = i;
+      grid[y][x] = selected ? 1 : 0;
+    });
+    sessionStorage.setItem(`layout${layoutid}`, grid);
+    console.log("Saved layout:", grid);
+  };
+
   useEffect(() => {
-    setLayout(generateGridItems());
-  }, [numColumns, numRows, generateGridItems]);
+    const griddy = generateGridItems();
+    // setLayout(griddy);
+    // saveLayout(griddy);
+  }, [numColumns, numRows, generateGridItems, layoutid, saveLayout]);
 
   const handleGridItemClick = (itemId) => {
     const updatedLayout = layout.map((item) => {
@@ -60,6 +67,7 @@ const PVgrid = ({ points, l, w, ncol, nrow, layoutid }) => {
     });
 
     setLayout(updatedLayout);
+    saveLayout(updatedLayout);
   };
 
   const handleMouseDown = () => {
@@ -93,7 +101,7 @@ const PVgrid = ({ points, l, w, ncol, nrow, layoutid }) => {
       });
 
       setLayout(updatedLayout);
-      sessionStorage.setItem(`layout${layoutid}`, updatedLayout);
+      saveLayout(updatedLayout);
     }
   };
 
@@ -111,6 +119,8 @@ const PVgrid = ({ points, l, w, ncol, nrow, layoutid }) => {
         });
 
         setLayout(updatedLayout);
+        saveLayout(updatedLayout);
+        console.log("layout:", layout);
         selectedCells.current = [];
       }
     };
@@ -121,7 +131,7 @@ const PVgrid = ({ points, l, w, ncol, nrow, layoutid }) => {
     return () => {
       gridContainer.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [layout]);
+  }, [layout, layoutid]);
 
   return (
     <div
