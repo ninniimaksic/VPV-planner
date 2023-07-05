@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./navbar";
+import useImage from "use-image";
+import "../css/results.css";
+import { Image } from "react-konva";
 // import ProjectInfo from "./Komponenter/ProjectInfo";
 // import UnitPlacer from "./Komponenter/UnitPlacer";
 
@@ -11,12 +14,14 @@ export default function Results() {
   const EndCostumer = sessionStorage.getItem("EndCostumer");
   const projectNumberEC = sessionStorage.getItem("projectNumberEC");
   const sections = sessionStorage.getItem("sections");
+  const grids = sessionStorage.getItem("grids");
   const address = sessionStorage.getItem("address");
   const info = sessionStorage.getItem("info");
   const lat = sessionStorage.getItem("lat");
   const lon = sessionStorage.getItem("lon");
-  const azimuth = sessionStorage.getItem("azimuth");
+  const azimuth = sessionStorage.getItem("azimuth") || 0;
   const imgurl = sessionStorage.getItem("imgurl");
+
   useEffect(() => {
     // Do something with the retrieved data
     console.log("Project Name:", projectName);
@@ -26,6 +31,7 @@ export default function Results() {
     console.log("End Customer:", EndCostumer);
     console.log("Project Number EC:", projectNumberEC);
     console.log("Sections:", sections);
+    console.log("Grids:", grids);
     console.log("Address:", address);
     console.log("Info:", info);
     console.log("Lat:", lat);
@@ -41,21 +47,24 @@ export default function Results() {
         <div className="row">
           <div className="col-12">
             <h1>Results</h1>
-            <p>Project Name: {projectName}</p>
-            <p>Project Number: {projectNumber}</p>
-            <p>Installer: {installer}</p>
-            <p>PN Installer: {PNinstaller}</p>
-            <p>End Customer: {EndCostumer}</p>
-            <p>Project Number EC: {projectNumberEC}</p>
-            <p>Sections: {sections}</p>
-            <p>Address: {address}</p>
-            <p>Info: {info}</p>
-            <p>Lat: {lat}</p>
-            <p>Lon: {lon}</p>
-            <p>Azimuth: {azimuth}</p>
-            <p>Imgurl: {imgurl}</p>
-            <img ref={imgurl} alt="Uploaded" />
+            <ul>
+              <li>Project Name: {projectName}</li>
+              <li>Project Number: {projectNumber}</li>
+              <li>Installer: {installer}</li>
+              <li>PN Installer: {PNinstaller}</li>
+              <li>End Customer: {EndCostumer}</li>
+              <li>Project Number EC: {projectNumberEC}</li>
+              <li>Sections: {sections}</li>
+              <li>Grids: {grids}</li>
+              <li>Address: {address}</li>
+              <li>Info: {info}</li>
+              <li>Lat: {lat}</li>
+              <li>Lon: {lon}</li>
+              <li>Azimuth: {azimuth}</li>
+              <li>Imgurl: {imgurl}</li>
+            </ul>
           </div>
+          {imgurl && <img src={imgurl} alt="Uploaded" />}
         </div>
       </div>
     </>

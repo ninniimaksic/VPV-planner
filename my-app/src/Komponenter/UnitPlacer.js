@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
 import "../css/SetScale.css";
 import PVgrid from "./PVgrid";
-import Moveable from "react-moveable";
 import { DragHorizontalIcon } from "@navikt/aksel-icons";
 import { Button, TextField } from "@navikt/ds-react";
 
@@ -12,12 +11,16 @@ const UnitPlacer = ({ sections, scale }) => {
   const [ncol, setNcol] = useState(0);
   const [nrow, setNrow] = useState(0);
   const [selectedGrid, setSelectedGrid] = useState(null);
+  const [layouts, setLayouts] = useState([]); // Array of grid items
   const unitLength = 160 / scale;
   const unitWidth = 150 / scale;
   console.log(unitLength, unitWidth, "px");
   console.log(unitLength * scale, unitWidth * scale, "cm");
 
   const addGrid = (ncol, nrow, angle) => {
+    if (ncol <= 0 || nrow <= 0) {
+      return;
+    }
     setGrids([...grids, [ncol, nrow, angle]]);
   };
 
@@ -84,6 +87,7 @@ const UnitPlacer = ({ sections, scale }) => {
                     w={unitWidth}
                     ncol={grid[0]}
                     nrow={grid[1]}
+                    layoutid={i}
                   />
                 </div>
                 <DragHorizontalIcon

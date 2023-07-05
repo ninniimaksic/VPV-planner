@@ -5,7 +5,7 @@ import { Button } from "@navikt/ds-react";
 
 const GridLayout = WidthProvider(ReactGridLayout);
 
-const PVgrid = ({ points, l, w, ncol, nrow }) => {
+const PVgrid = ({ points, l, w, ncol, nrow, layoutid }) => {
   const numColumns = ncol; // Number of columns in the grid
   const numRows = nrow; // Number of rows in the grid
 
@@ -34,6 +34,11 @@ const PVgrid = ({ points, l, w, ncol, nrow }) => {
         itemId++;
       }
     }
+    const grid = sessionStorage.getItem("grids") || [];
+    sessionStorage.setItem(
+      "grids",
+      grid.concat([gridItems.map((item) => item.selected)])
+    );
     return gridItems;
   }, [numColumns, numRows]);
 
@@ -88,6 +93,7 @@ const PVgrid = ({ points, l, w, ncol, nrow }) => {
       });
 
       setLayout(updatedLayout);
+      sessionStorage.setItem(`layout${layoutid}`, updatedLayout);
     }
   };
 
