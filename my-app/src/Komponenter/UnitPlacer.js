@@ -6,15 +6,23 @@ import { DragHorizontalIcon } from "@navikt/aksel-icons";
 import { Button, TextField } from "@navikt/ds-react";
 
 const UnitPlacer = ({ sections, scale }) => {
-  const [grids, setGrids] = useState([]); // Array of grid items
+  const [grids, setGrids] = useState([]);
   const [ncol, setNcol] = useState(0);
   const [nrow, setNrow] = useState(0);
   const [selectedGrid, setSelectedGrid] = useState(null);
+  const [rotationDegrees, setRotationDegrees] = useState(0);
   const unitLength = 160 / scale;
   const unitWidth = 150 / scale;
 
   const addGrid = (ncol, nrow, angle) => {
-    setGrids([...grids, { ncol, nrow, angle, position: { x: 0, y: 0 } }]);
+    if (ncol <= 0 || nrow <= 0) {
+      return;
+    }
+    setGrids([...grids, [ncol, nrow, angle]]);
+    sessionStorage.setItem(
+      "grids",
+      JSON.stringify([...grids, [ncol, nrow, angle]])
+    );
   };
 
   const handleNcolChange = (event) => {
@@ -25,22 +33,15 @@ const UnitPlacer = ({ sections, scale }) => {
     setNrow(parseInt(event.target.value));
   };
 
-  const handleAngleChange = (event, index) => {
-    const updatedGrids = [...grids];
-    updatedGrids[index].angle = parseInt(event.target.value);
-    setGrids(updatedGrids);
+  const handleRotationChange = (event) => {
+    setRotationDegrees(parseInt(event.target.value));
   };
 
-  const handleGridDrag = (data, index) => {
-    const updatedGrids = [...grids];
-    updatedGrids[index].position = { x: data.lastX, y: data.lastY };
-    setGrids(updatedGrids);
-  };
   const deleteGrid = () => {
     if (selectedGrid !== null) {
-      const updatedGrids = [...grids];
-      updatedGrids.splice(selectedGrid, 1);
+      const updatedGrids = grids.filter((_, index) => index !== selectedGrid);
       setGrids(updatedGrids);
+      sessionStorage.setItem("grids", JSON.stringify(updatedGrids));
       setSelectedGrid(null);
     }
   };
@@ -53,31 +54,58 @@ const UnitPlacer = ({ sections, scale }) => {
     <div>
       {grids.map((grid, i) => (
         <div
-          key={`grid-${i}`}
+          key={`new-grid-${i}`}
           style={{
-            position: "absolute",
-            transform: `rotate(${grid.angle}deg)`,
-            left: `${grid.position.x}px`,
-            top: `${grid.position.y}px`,
+            position: "relative",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
           }}
         >
-          <Draggable onStop={(e, data) => handleGridDrag(data, i)}>
-            <div
-              className={`rotatable ${i === selectedGrid ? "selected" : ""}`}
-              onMouseDown={() => selectGrid(i)}
-            >
-              <PVgrid
-                points={sections[0]}
-                l={unitLength}
-                w={unitWidth}
-                ncol={grid.ncol}
-                nrow={grid.nrow}
-              />
-              <DragHorizontalIcon
-                className="draggable"
-                fontSize={48}
-                style={{ cursor: "grab" }}
-              />
+          <Draggable
+            handle=".draggable"
+            defaultPosition={{ x: 0, y: 0 }}
+            grid={[1, 1]}
+            scale={1}
+          >
+            <div style={{ position: "relative", display: "inline-block" }}>
+              <div
+                style={{
+                  position: "absolute",
+                  transform: `rotate(${rotationDegrees}deg)`,
+                }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    border: i === selectedGrid ? "2px solid red" : "none",
+                  }}
+                >
+                  <PVgrid
+                    points={sections[0]}
+                    l={unitLength}
+                    w={unitWidth}
+                    ncol={grid[0]}
+                    nrow={grid[1]}
+                    layoutid={i}
+                  />
+                  <DragHorizontalIcon
+                    className="draggable"
+                    fontSize={48}
+                    style={{
+                      position: "absolute",
+                      left: "50%",
+                      top: "100%",
+                      transform: "translateX(-50%)",
+                      marginTop: "10px",
+                      cursor: "grab",
+                      transition: "transform 0.3s ease-in-out",
+                      backgroundColor: "yellow",
+                    }}
+                    onMouseDown={() => selectGrid(i)}
+                  />
+                </div>
+              </div>
             </div>
           </Draggable>
         </div>
@@ -95,8 +123,14 @@ const UnitPlacer = ({ sections, scale }) => {
           value={nrow}
           onChange={handleNrowChange}
         />
+        <TextField
+          type="number"
+          label="Rotation degrees"
+          value={rotationDegrees}
+          onChange={handleRotationChange}
+        />
         <Button
-          onClick={() => addGrid(ncol, nrow, 0)}
+          onClick={() => addGrid(ncol, nrow, rotationDegrees)}
           style={{
             marginRight: "1rem",
             marginBottom: "1rem",
@@ -116,31 +150,6 @@ const UnitPlacer = ({ sections, scale }) => {
         >
           Delete grid
         </Button>
-        {grids.map((grid, i) => (
-          <div key={`angle-${i + 1}`}>
-            <label htmlFor={`angle-${i + 1}`}>{`Angle of grid ${i + 1}`}</label>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <div
-                style={{
-                  width: "20px",
-                  height: "20px",
-                  backgroundColor: "#fff",
-                  border: "1px solid #000",
-                  marginRight: "10px",
-                }}
-              ></div>
-              <input
-                type="range"
-                id={`angle-${i + 1}`}
-                min="0"
-                max="360"
-                value={grid.angle}
-                onChange={(event) => handleAngleChange(event, i)}
-              />
-              <span>{grid.angle}°</span>
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   );

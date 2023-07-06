@@ -48,3 +48,26 @@
   margin-left: 35px;
   margin-top: 5px;
 }
+
+.draggable {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.rotatable {
+  display: inline-block;
+  position: relative;
+  transform-origin: top left;
+}
+
+.rotate-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 50%;
+}
