@@ -5,7 +5,7 @@ import { Button } from "@navikt/ds-react";
 
 const GridLayout = WidthProvider(ReactGridLayout);
 
-const PVgrid = ({ points, l, w, ncol, nrow }) => {
+const PVgrid = ({ points, l, w, ncol, nrow, layoutid }) => {
   const numColumns = ncol; // Number of columns in the grid
   const numRows = nrow; // Number of rows in the grid
 
@@ -39,9 +39,15 @@ const PVgrid = ({ points, l, w, ncol, nrow }) => {
 
   const [layout, setLayout] = useState(generateGridItems());
 
-  useEffect(() => {
-    setLayout(generateGridItems());
-  }, [numColumns, numRows, generateGridItems]);
+  const saveLayout = (l) => {
+    const grid = Array.from({ length: nrow }, () => Array(ncol).fill(0));
+    l.forEach((i) => {
+      const { x, y, selected } = i;
+      grid[y][x] = selected ? 1 : 0;
+    });
+    sessionStorage.setItem(`layout${layoutid}`, JSON.stringify(grid));
+    console.log("Saved layout:", grid);
+  };
 
   const handleGridItemClick = (itemId) => {
     const updatedLayout = layout.map((item) => {
@@ -55,6 +61,7 @@ const PVgrid = ({ points, l, w, ncol, nrow }) => {
     });
 
     setLayout(updatedLayout);
+    saveLayout(updatedLayout);
   };
 
   const handleMouseDown = () => {
@@ -88,6 +95,7 @@ const PVgrid = ({ points, l, w, ncol, nrow }) => {
       });
 
       setLayout(updatedLayout);
+      saveLayout(updatedLayout);
     }
   };
 
@@ -105,6 +113,8 @@ const PVgrid = ({ points, l, w, ncol, nrow }) => {
         });
 
         setLayout(updatedLayout);
+        saveLayout(updatedLayout);
+        console.log("layout:", layout);
         selectedCells.current = [];
       }
     };
@@ -115,7 +125,7 @@ const PVgrid = ({ points, l, w, ncol, nrow }) => {
     return () => {
       gridContainer.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [layout]);
+  }, [layout, layoutid]);
 
   return (
     <div

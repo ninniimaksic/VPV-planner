@@ -12,19 +12,19 @@ const ProjectInfo = () => {
     sessionStorage.getItem("projectName") || ""
   );
   const [projectNumber, setProjectNumber] = useState(
-    sessionStorage.getItem("projectNumber") || ""
+    sessionStorage.getItem("projectNumber") || 0
   );
   const [installer, setInstaller] = useState(
     sessionStorage.getItem("installer") || ""
   );
   const [PNinstaller, setPNinstaller] = useState(
-    sessionStorage.getItem("PNinstaller") || ""
+    sessionStorage.getItem("PNinstaller") || 0
   );
   const [EndCostumer, setEndCostumer] = useState(
     sessionStorage.getItem("EndCostumer") || ""
   );
   const [projectNumberEC, setProjectnumberEC] = useState(
-    sessionStorage.getItem("projectNumberEC") || ""
+    sessionStorage.getItem("projectNumberEC") || 0
   );
   const [pageState, setPageState] = useState(1);
 
@@ -75,32 +75,31 @@ const ProjectInfo = () => {
   const handleSave = () => {
     // Validering for tallfeltene
     const isValidNumber = (value) => {
-      return value !== "" && !isNaN(value);
+      return !isNaN(value);
     };
 
     if (
-      projectName === "" ||
-      (isValidNumber(projectNumber) &&
-        isValidNumber(PNinstaller) &&
-        isValidNumber(projectNumberEC))
+      isValidNumber(projectNumber) &&
+      isValidNumber(PNinstaller) &&
+      isValidNumber(projectNumberEC)
     ) {
       if (projectName === "") {
         setProjectName("Project");
       }
       if (projectNumber === "") {
-        setProjectNumber("1");
+        setProjectNumber(0);
       }
       if (installer === "") {
         setInstaller("");
       }
       if (PNinstaller === "") {
-        setPNinstaller("1");
+        setPNinstaller(0);
       }
       if (EndCostumer === "") {
-        setEndCostumer("1");
+        setEndCostumer("");
       }
       if (projectNumberEC === "") {
-        setProjectnumberEC("1");
+        setProjectnumberEC(0);
       }
 
       console.log(

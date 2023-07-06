@@ -49,6 +49,7 @@
   margin-top: 5px;
 }
 
+
 .draggable {
   position: absolute;
   top: 0;
@@ -70,4 +71,8 @@
   height: 20px;
   background-color: #ccc;
   border-radius: 50%;
+
+.vertex {
+  cursor: grab;
+
 }

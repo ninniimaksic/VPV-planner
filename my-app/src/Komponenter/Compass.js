@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/Compass.css";
 import { TextField } from "@navikt/ds-react";
 import CompassImg from "../img/Compass.png";
@@ -11,6 +11,10 @@ const Compass = () => {
     setAngle(newAngle);
   };
 
+  useEffect(() => {
+    sessionStorage.setItem("azimuth", angle);
+  }, [angle]);
+
   const compassStyle = {
     transform: `rotate(${angle}deg)`,
     transition: "transform 0.5s ease-in-out",
@@ -20,7 +24,7 @@ const Compass = () => {
   return (
     <div>
       <TextField
-        label=" skriv en fornuftig tekst"
+        label="Set angle of north in the image"
         id="angle-input"
         type="number"
         min="0"
