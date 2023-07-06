@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { supabase } from "../supabaseClient";
+import { Auth } from "@supabase/auth-ui-react";
 import "../css/App.css";
 import React from "react";
 import Forside from "./Forside";
