@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import Draggable from "react-draggable";
 import "../css/SetScale.css";
 import PVgrid from "./PVgrid";
@@ -6,23 +6,31 @@ import { DragHorizontalIcon } from "@navikt/aksel-icons";
 import { Button, TextField } from "@navikt/ds-react";
 
 const UnitPlacer = ({ sections, scale }) => {
-  /*Real cm unit dimensions scaled to pixel dimensions, scale is cm/px */
-  const [grids, setGrids] = useState([]); // Array of grid items
+  const [grids, setGrids] = useState([]);
   const [ncol, setNcol] = useState(0);
   const [nrow, setNrow] = useState(0);
   const [selectedGrid, setSelectedGrid] = useState(null);
+
+  const [rotationDegrees, setRotationDegrees] = useState(0);
+
   const [layouts, setLayouts] = useState([]); // Array of grid items
+
   const unitLength = 160 / scale;
   const unitWidth = 150 / scale;
-  console.log(unitLength, unitWidth, "px");
-  console.log(unitLength * scale, unitWidth * scale, "cm");
 
   const addGrid = (ncol, nrow, angle) => {
     if (ncol <= 0 || nrow <= 0) {
       return;
     }
     setGrids([...grids, [ncol, nrow, angle]]);
+
+    sessionStorage.setItem(
+      "grids",
+      JSON.stringify([...grids, [ncol, nrow, angle]])
+    );
+
     sessionStorage.setItem("grids", grids);
+
   };
 
   const handleNcolChange = (event) => {
@@ -33,19 +41,27 @@ const UnitPlacer = ({ sections, scale }) => {
     setNrow(parseInt(event.target.value));
   };
 
+
+  const handleRotationChange = (event) => {
+    setRotationDegrees(parseInt(event.target.value));
+
   const handleAngleChange = (event, index) => {
     const updatedGrids = [...grids];
     updatedGrids[index][2] = parseInt(event.target.value);
     setGrids(updatedGrids);
     sessionStorage.setItem("grids", updatedGrids);
+
   };
 
   const deleteGrid = () => {
     if (selectedGrid !== null) {
-      const updatedGrids = [...grids];
-      updatedGrids.splice(selectedGrid, 1);
+      const updatedGrids = grids.filter((_, index) => index !== selectedGrid);
       setGrids(updatedGrids);
+
+      sessionStorage.setItem("grids", JSON.stringify(updatedGrids));
+
       sessionStorage.setItem("grids", updatedGrids);
+
       setSelectedGrid(null);
     }
   };
@@ -58,6 +74,7 @@ const UnitPlacer = ({ sections, scale }) => {
     <div>
       {grids.map((grid, i) => (
         <div
+          key={`new-grid-${i}`}
           style={{
             position: "relative",
             top: "50%",
@@ -65,22 +82,22 @@ const UnitPlacer = ({ sections, scale }) => {
             transform: "translate(-50%, -50%)",
           }}
         >
-          <div
-            style={{
-              position: "absolute",
-              transform: `rotate(${grid[2]}deg)`,
-            }}
+          <Draggable
+            handle=".draggable"
+            defaultPosition={{ x: 0, y: 0 }}
+            grid={[1, 1]}
+            scale={1}
           >
-            <Draggable handle=".draggable" key={`new-grid-${i}`}>
+            <div style={{ position: "relative", display: "inline-block" }}>
               <div
                 style={{
                   position: "absolute",
-                  transform: `rotate(${grid[2]}deg)`,
+                  transform: `rotate(${rotationDegrees}deg)`,
                 }}
-                className="rotatable"
               >
                 <div
                   style={{
+                    position: "absolute",
                     border: i === selectedGrid ? "2px solid red" : "none",
                   }}
                 >
@@ -91,17 +108,28 @@ const UnitPlacer = ({ sections, scale }) => {
                     ncol={grid[0]}
                     nrow={grid[1]}
                     layoutid={i}
+
+                  />
+                  <DragHorizontalIcon
+                    className="draggable"
+                    fontSize={48}
+                    style={{
+                      position: "absolute",
+                      left: "50%",
+                      top: "100%",
+                      transform: "translateX(-50%)",
+                      marginTop: "10px",
+                      cursor: "grab",
+                      transition: "transform 0.3s ease-in-out",
+                      backgroundColor: "yellow",
+                    }}
+                    onMouseDown={() => selectGrid(i)}
+
                   />
                 </div>
-                <DragHorizontalIcon
-                  className="draggable"
-                  fontSize={48}
-                  style={{ cursor: "grab" }}
-                  onMouseDown={() => selectGrid(i)}
-                />
               </div>
-            </Draggable>
-          </div>
+            </div>
+          </Draggable>
         </div>
       ))}
       <div style={{ marginTop: "10%" }}>
@@ -117,8 +145,14 @@ const UnitPlacer = ({ sections, scale }) => {
           value={nrow}
           onChange={handleNrowChange}
         />
+        <TextField
+          type="number"
+          label="Rotation degrees"
+          value={rotationDegrees}
+          onChange={handleRotationChange}
+        />
         <Button
-          onClick={() => addGrid(ncol, nrow, 0)}
+          onClick={() => addGrid(ncol, nrow, rotationDegrees)}
           style={{
             marginRight: "1rem",
             marginBottom: "1rem",
@@ -138,16 +172,6 @@ const UnitPlacer = ({ sections, scale }) => {
         >
           Delete grid
         </Button>
-        {grids.map((grid, i) => (
-          <div key={`grid-${i}`}>
-            <TextField
-              type="number"
-              label={`Angle of grid ${i + 1}`}
-              value={grid[2]}
-              onChange={(event) => handleAngleChange(event, i)}
-            />
-          </div>
-        ))}
       </div>
     </div>
   );
