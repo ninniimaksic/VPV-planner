@@ -45,15 +45,9 @@ const PVgrid = ({ points, l, w, ncol, nrow, layoutid }) => {
       const { x, y, selected } = i;
       grid[y][x] = selected ? 1 : 0;
     });
-    sessionStorage.setItem(`layout${layoutid}`, grid);
+    sessionStorage.setItem(`layout${layoutid}`, JSON.stringify(grid));
     console.log("Saved layout:", grid);
   };
-
-  useEffect(() => {
-    const griddy = generateGridItems();
-    // setLayout(griddy);
-    // saveLayout(griddy);
-  }, [numColumns, numRows, generateGridItems, layoutid, saveLayout]);
 
   const handleGridItemClick = (itemId) => {
     const updatedLayout = layout.map((item) => {

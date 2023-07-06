@@ -33,6 +33,7 @@ export default function Results() {
     console.log("Project Number EC:", projectNumberEC);
     console.log("Sections:", sections);
     console.log("Grids:", grids, "Length:", grids.length);
+    console.log("Layout0:", layout0);
     console.log("Address:", address);
     console.log("Info:", info);
     console.log("Lat:", lat);
