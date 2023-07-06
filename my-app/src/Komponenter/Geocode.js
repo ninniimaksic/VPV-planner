@@ -23,6 +23,8 @@ const Geocode = () => {
     const data = await response.json();
     setResponse(data[0]);
     setIsConfirmed(true);
+    sessionStorage.setItem("lat", data[0].lat);
+    sessionStorage.setItem("lon", data[0].lon);
   };
 
   useEffect(() => {

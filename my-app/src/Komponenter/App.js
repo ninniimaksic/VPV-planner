@@ -8,6 +8,7 @@ import PhotoImport from "./PhotoImport";
 import ProjectInfo from "./ProjectInfo";
 import RoofOutline from "./RoofOutline";
 import SetScale from "./SetScale";
+import Results from "./results";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="projectinfo" element={<ProjectInfo />} />
         <Route path="roofoutline" element={<RoofOutline />} />
         <Route path="SetScale" element={<SetScale />} />
+        <Route path="results" element={<Results />} />
       </Routes>
     </div>
   );

@@ -82,7 +82,7 @@ const SetScale = ({ selectedPhoto }) => {
                 translation: { x: 0, y: 0 },
               }}
               minScale={0.2}
-              maxScale={2}
+              maxScale={4}
               translationBounds={{
                 xMax: 1000,
                 yMax: 1000,
@@ -108,9 +108,10 @@ const SetScale = ({ selectedPhoto }) => {
                         key={index}
                         points={line[0]}
                         stroke="#df4b26"
-                        strokeWidth={3}
+                        strokeWidth={2}
                       />
                       <Circle
+                        className="vertex"
                         x={line[0][0]}
                         y={line[0][1]}
                         radius={12}
@@ -120,6 +121,7 @@ const SetScale = ({ selectedPhoto }) => {
                         onMouseDown={(e) => e.evt.stopPropagation()}
                       />
                       <Circle
+                        className="vertex"
                         x={line[0][2]}
                         y={line[0][3]}
                         radius={12}
@@ -183,6 +185,7 @@ const SetScale = ({ selectedPhoto }) => {
                           (parseFloat(lines[0][1]) * 100) /
                             getImgLen(lines[0][0])
                         );
+                        sessionStorage.setItem(scale, imgScale);
                       }}
                     >
                       Continue

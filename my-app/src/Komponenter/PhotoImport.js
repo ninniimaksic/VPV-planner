@@ -15,6 +15,7 @@ const PhotoImport = () => {
     const file = event.target.files[0];
     // Utfør nødvendig validering av filen her
     setSelectedPhoto(URL.createObjectURL(file));
+    sessionStorage.setItem("imgurl", URL.createObjectURL(file));
   };
 
   const handleClick = () => {
@@ -31,7 +32,7 @@ const PhotoImport = () => {
     <>
       <Navbar />
 
-      <div class="plassering1">
+      <div className="plassering1">
         <h2>Upload image </h2>
         <Button variant="primary" onClick={handleClick}>
           Choose image
