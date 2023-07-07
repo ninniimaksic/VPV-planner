@@ -10,11 +10,7 @@ const UnitPlacer = ({ sections, scale }) => {
   const [ncol, setNcol] = useState(0);
   const [nrow, setNrow] = useState(0);
   const [selectedGrid, setSelectedGrid] = useState(null);
-
   const [rotationDegrees, setRotationDegrees] = useState(0);
-
-  const [layouts, setLayouts] = useState([]); // Array of grid items
-
   const unitLength = 160 / scale;
   const unitWidth = 150 / scale;
 
@@ -23,14 +19,10 @@ const UnitPlacer = ({ sections, scale }) => {
       return;
     }
     setGrids([...grids, [ncol, nrow, angle]]);
-
     sessionStorage.setItem(
       "grids",
       JSON.stringify([...grids, [ncol, nrow, angle]])
     );
-
-    sessionStorage.setItem("grids", grids);
-
   };
 
   const handleNcolChange = (event) => {
@@ -41,27 +33,15 @@ const UnitPlacer = ({ sections, scale }) => {
     setNrow(parseInt(event.target.value));
   };
 
-
   const handleRotationChange = (event) => {
     setRotationDegrees(parseInt(event.target.value));
-
-  const handleAngleChange = (event, index) => {
-    const updatedGrids = [...grids];
-    updatedGrids[index][2] = parseInt(event.target.value);
-    setGrids(updatedGrids);
-    sessionStorage.setItem("grids", updatedGrids);
-
   };
 
   const deleteGrid = () => {
     if (selectedGrid !== null) {
       const updatedGrids = grids.filter((_, index) => index !== selectedGrid);
       setGrids(updatedGrids);
-
       sessionStorage.setItem("grids", JSON.stringify(updatedGrids));
-
-      sessionStorage.setItem("grids", updatedGrids);
-
       setSelectedGrid(null);
     }
   };
@@ -98,7 +78,16 @@ const UnitPlacer = ({ sections, scale }) => {
                 <div
                   style={{
                     position: "absolute",
-                    border: i === selectedGrid ? "2px solid red" : "none",
+                    borderTop: i === selectedGrid ? "4px solid red" : "none",
+                    borderRight:
+                      i === selectedGrid ? "2px solid black" : "none",
+                    borderBottom:
+                      i === selectedGrid ? "4px solid blue" : "none",
+                    borderLeft: i === selectedGrid ? "2px solid black" : "none",
+                    backgroundImage:
+                      i === selectedGrid
+                        ? "repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0px, rgba(0, 0, 0, 0.5) 10px, transparent 10px, transparent 20px)"
+                        : "none",
                   }}
                 >
                   <PVgrid
@@ -108,8 +97,23 @@ const UnitPlacer = ({ sections, scale }) => {
                     ncol={grid[0]}
                     nrow={grid[1]}
                     layoutid={i}
-
                   />
+                  {i === selectedGrid && (
+                    <div
+                      className="arrow-up"
+                      style={{
+                        position: "absolute",
+                        top: "-30px",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        width: "0",
+                        height: "0",
+                        borderLeft: "10px solid transparent",
+                        borderRight: "10px solid transparent",
+                        borderBottom: "10px solid red",
+                      }}
+                    />
+                  )}
                   <DragHorizontalIcon
                     className="draggable"
                     fontSize={48}
@@ -124,7 +128,6 @@ const UnitPlacer = ({ sections, scale }) => {
                       backgroundColor: "yellow",
                     }}
                     onMouseDown={() => selectGrid(i)}
-
                   />
                 </div>
               </div>
