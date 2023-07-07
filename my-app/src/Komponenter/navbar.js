@@ -25,7 +25,7 @@ const Navbar = () => {
                 className={location.pathname === "/" ? "active" : ""}
                 to="/"
               >
-                Old projets
+                Old projects
               </Link>
             </li>
           </ul>

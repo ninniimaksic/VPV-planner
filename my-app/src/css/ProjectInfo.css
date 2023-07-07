@@ -12,11 +12,11 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #e3e3cc; /* Erstatt med din ønskede farge */
+  background-color: #b2d0d5; /* Erstatt med din ønskede farge */
   padding: 20px;
   width: 50%;
   margin: auto; /* Sentrer div */
-  border-radius: 25px;
+  border-radius: 5px;
   margin-bottom: 20px;
 }
 
@@ -24,11 +24,11 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #e3e3cc; /* Erstatt med din ønskede farge */
+  background-color: #b2d0d5; /* Erstatt med din ønskede farge */
   padding: 20px;
   width: 50%;
   margin: auto; /* Sentrer div */
-  border-radius: 25px;
+  border-radius: 5px;
   margin-bottom: 20px;
 }
 
@@ -36,11 +36,11 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #e3e3cc; /* Erstatt med din ønskede farge */
+  background-color: #b2d0d5; /* Erstatt med din ønskede farge */
   padding: 20px;
   width: 50%;
   margin: auto; /* Sentrer div */
-  border-radius: 25px;
+  border-radius: 5px;
   margin-bottom: 20px;
 }
 
@@ -51,7 +51,7 @@
   margin-bottom: 20px;
 }
 .projectnamebox {
-  background-color: #a1d7cf;
+  background-color: #b3d5b2;
   border-radius: 25px;
   padding: 20px;
   width: 550px;

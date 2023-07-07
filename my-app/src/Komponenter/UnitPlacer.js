@@ -98,7 +98,16 @@ const UnitPlacer = ({ sections, scale }) => {
                 <div
                   style={{
                     position: "absolute",
-                    border: i === selectedGrid ? "2px solid red" : "none",
+                    borderTop: i === selectedGrid ? "4px solid red" : "none",
+                    borderRight:
+                      i === selectedGrid ? "2px solid black" : "none",
+                    borderBottom:
+                      i === selectedGrid ? "4px solid blue" : "none",
+                    borderLeft: i === selectedGrid ? "2px solid black" : "none",
+                    backgroundImage:
+                      i === selectedGrid
+                        ? "repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0px, rgba(0, 0, 0, 0.5) 10px, transparent 10px, transparent 20px)"
+                        : "none",
                   }}
                 >
                   <PVgrid
@@ -110,6 +119,22 @@ const UnitPlacer = ({ sections, scale }) => {
                     layoutid={i}
 
                   />
+                  {i === selectedGrid && (
+                    <div
+                      className="arrow-up"
+                      style={{
+                        position: "absolute",
+                        top: "-30px",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        width: "0",
+                        height: "0",
+                        borderLeft: "10px solid transparent",
+                        borderRight: "10px solid transparent",
+                        borderBottom: "10px solid red",
+                      }}
+                    />
+                  )}
                   <DragHorizontalIcon
                     className="draggable"
                     fontSize={48}
