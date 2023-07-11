@@ -95,7 +95,7 @@ export default function Results() {
             </ul>
             <p>
               Api query to PVGIS with peakpower=1, loss=14, aspect=14 and values
-              above.
+              above:
             </p>
             {apiData && <pre>{JSON.stringify(apiData, null, 2)}</pre>}
           </div>
