@@ -2,7 +2,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(0, 52, 125, 1);
+  background: #4682b4;
   padding: 20px 80px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.06);
 }
@@ -43,6 +43,12 @@ nav {
   left: 20px;
 }
 
+.leave-icon-hover:hover {
+  color: #c8a300;
+}
+.leave-icon-hover:hover {
+  text-decoration: underline;
+}
 #mobile {
   display: none;
 }
