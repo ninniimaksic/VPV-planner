@@ -22,9 +22,9 @@ const Navbar = () => {
   return (
     <>
       <nav>
-        <Link to="/" className="navbar-logo">
+        <div>
           <img src={logo1} alt="Logo" />
-        </Link>
+        </div>
 
         <div>
           <ul id="navbar" className={clicked ? "navbar active" : "navbar"}>
@@ -46,7 +46,7 @@ const Navbar = () => {
         <Link to="/" onClick={handleLeaveIconClick}>
           <LeaveIcon
             title="a11y-title"
-            fontSize="1.5rem"
+            fontSize="1.8rem"
             color="white"
             className="leave-icon-hover"
           />
