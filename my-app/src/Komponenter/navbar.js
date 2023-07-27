@@ -9,9 +9,13 @@ const Navbar = () => {
   const location = useLocation();
 
   const handleLeaveIconClick = (e) => {
-    if (!window.confirm("Are you sure you want to cancel?")) {
-      e.preventDefault();
-    } else {
+    // Check if the clicked element has the "leave-icon-hover" class
+    if (e.target.classList.contains("leave-icon-hover")) {
+      if (!window.confirm("Are you sure you want to cancel?")) {
+        e.preventDefault();
+      } else {
+        // Perform any necessary actions before leaving here (if needed)
+      }
     }
   };
 
@@ -24,16 +28,24 @@ const Navbar = () => {
       <nav>
         <div>
           <img src={logo1} alt="Logo" />
+          <span>VPV Planner</span>
         </div>
-
         <div>
           <ul id="navbar" className={clicked ? "navbar active" : "navbar"}>
-            <li>
+            <li style={{ display: "flex", alignItems: "center" }}>
               <Link
                 className={location.pathname === "/" ? "active" : ""}
                 to="/"
               >
                 Old projects
+              </Link>
+              <Link to="/" onClick={handleLeaveIconClick}>
+                <LeaveIcon
+                  title="a11y-title"
+                  fontSize="1.8rem"
+                  color="white"
+                  className="leave-icon-hover"
+                />
               </Link>
             </li>
           </ul>
@@ -42,15 +54,6 @@ const Navbar = () => {
         <div id="mobile" onClick={handleMobileIconClick}>
           <i id="bar" className={clicked ? "fas fa-times" : "fas fa-bars"}></i>
         </div>
-
-        <Link to="/" onClick={handleLeaveIconClick}>
-          <LeaveIcon
-            title="a11y-title"
-            fontSize="1.8rem"
-            color="white"
-            className="leave-icon-hover"
-          />
-        </Link>
       </nav>
     </>
   );

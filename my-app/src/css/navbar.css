@@ -17,6 +17,8 @@ nav {
   list-style: none;
   padding: 0 15px;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 #navbar li a {
@@ -27,13 +29,26 @@ nav {
   transition: 0.3s ease-in-out;
 }
 
-#navbar li a:hover,
-#navbar li a.active {
+#navbar li a:first-child:hover,
+#navbar li a:first-child.active {
   color: #c8a300;
 }
 
-#navbar li a:hover::after,
-#navbar li a.active::after {
+nav div span {
+  color: white;
+}
+
+#navbar a {
+  display: flex;
+  align-items: center;
+}
+
+#navbar a .leave-icon-hover {
+  margin-left: 30px;
+}
+
+#navbar li a:first-child:hover::after,
+#navbar li a:first-child.active::after {
   content: "";
   width: 30%;
   height: 2px;
@@ -46,9 +61,7 @@ nav {
 .leave-icon-hover:hover {
   color: #c8a300;
 }
-.leave-icon-hover:hover {
-  text-decoration: underline;
-}
+
 #mobile {
   display: none;
 }
