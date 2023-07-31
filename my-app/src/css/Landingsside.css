@@ -1,0 +1,47 @@
+.center {
+  margin: 50;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  gap: 300px;
+}
+
+.btn-new {
+  width: 160px;
+  height: 80px;
+  transition: transform 0.2s ease;
+  font-size: 36px;
+}
+
+.Nyttprosjekt {
+  transition: transform 0.2s ease;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.Nyttprosjekt:hover {
+  transform: scale(1.25);
+  background-color: transparent;
+}
+
+.btn-new1 {
+  width: 160px;
+  height: 80px;
+  transition: transform 0.2s ease;
+  font-size: 16px;
+}
+
+.Prosjekter {
+  transition: transform 0.2s ease;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.Prosjekter:hover {
+  transform: scale(1.25);
+  background-color: transparent;
+}
