@@ -10,11 +10,7 @@ const UnitPlacer = ({ sections, scale }) => {
   const [ncol, setNcol] = useState(0);
   const [nrow, setNrow] = useState(0);
   const [selectedGrid, setSelectedGrid] = useState(null);
-
   const [rotationDegrees, setRotationDegrees] = useState(0);
-
-  const [layouts, setLayouts] = useState([]); // Array of grid items
-
   const unitLength = 160 / scale;
   const unitWidth = 150 / scale;
 
@@ -23,13 +19,12 @@ const UnitPlacer = ({ sections, scale }) => {
       return;
     }
     setGrids([...grids, [ncol, nrow, angle]]);
-
     sessionStorage.setItem(
       "grids",
       JSON.stringify([...grids, [ncol, nrow, angle]])
     );
 
-    sessionStorage.setItem("grids", grids);
+
   };
 
   const handleNcolChange = (event) => {
@@ -42,6 +37,7 @@ const UnitPlacer = ({ sections, scale }) => {
 
   const handleRotationChange = (event) => {
     setRotationDegrees(parseInt(event.target.value));
+
 
     const handleAngleChange = (event, index) => {
       const updatedGrids = [...grids];
@@ -78,6 +74,7 @@ const UnitPlacer = ({ sections, scale }) => {
               left: "50%",
               transform: "translate(-50%, -50%)",
             }}
+
           >
             <Draggable
               handle=".draggable"
@@ -89,10 +86,12 @@ const UnitPlacer = ({ sections, scale }) => {
                 <div
                   style={{
                     position: "absolute",
+
                     transform: `rotate(${rotationDegrees}deg)`,
                   }}
                 >
                   <div
+
                     style={{
                       position: "absolute",
                       borderTop: i === selectedGrid ? "4px solid red" : "none",
@@ -107,6 +106,7 @@ const UnitPlacer = ({ sections, scale }) => {
                           ? "repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0px, rgba(0, 0, 0, 0.5) 10px, transparent 10px, transparent 20px)"
                           : "none",
                     }}
+
                   >
                     <PVgrid
                       points={sections[0]}
@@ -148,6 +148,7 @@ const UnitPlacer = ({ sections, scale }) => {
                       onMouseDown={() => selectGrid(i)}
                     />
                   </div>
+
                 </div>
               </div>
             </Draggable>
