@@ -2,9 +2,11 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #005b82;
+
+  background: #4682b4;
+
   padding: 20px 80px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.06);
 }
 
 #navbar {
@@ -17,6 +19,8 @@ nav {
   list-style: none;
   padding: 0 15px;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 #navbar li a {
@@ -27,13 +31,26 @@ nav {
   transition: 0.3s ease-in-out;
 }
 
-#navbar li a:hover,
-#navbar li a.active {
+#navbar li a:first-child:hover,
+#navbar li a:first-child.active {
   color: #c8a300;
 }
 
-#navbar li a:hover::after,
-#navbar li a.active::after {
+nav div span {
+  color: white;
+}
+
+#navbar a {
+  display: flex;
+  align-items: center;
+}
+
+#navbar a .leave-icon-hover {
+  margin-left: 30px;
+}
+
+#navbar li a:first-child:hover::after,
+#navbar li a:first-child.active::after {
   content: "";
   width: 30%;
   height: 2px;
@@ -41,6 +58,10 @@ nav {
   position: absolute;
   bottom: -4px;
   left: 20px;
+}
+
+.leave-icon-hover:hover {
+  color: #c8a300;
 }
 
 #mobile {

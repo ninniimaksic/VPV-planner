@@ -1,5 +1,7 @@
 html {
-  background-color: #e6f1f8;
+
+  background-color: rgb(211, 226, 238);
+
 }
 
 .centeredTitle {
@@ -16,11 +18,13 @@ html {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #99c4dd; /* Erstatt med din ønskede farge */
+
+  background-color: #c5d7e7; /* Erstatt med  ønskede farge */
   padding: 20px;
   width: 50%;
   margin: auto; /* Sentrer div */
-  border-radius: 5px;
+  border-radius: 10px;
+
   margin-bottom: 20px;
 }
 
@@ -28,11 +32,13 @@ html {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #99c4dd; /* Erstatt med din ønskede farge */
+
+  background-color: #c5d7e7; /* Erstatt med  ønskede farge */
   padding: 20px;
   width: 50%;
   margin: auto; /* Sentrer div */
-  border-radius: 5px;
+  border-radius: 10px;
+
   margin-bottom: 20px;
 }
 
@@ -40,11 +46,13 @@ html {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #99c4dd; /* Erstatt med din ønskede farge */
+
+  background-color: #c5d7e7; /* Erstatt med din ønskede farge */
   padding: 20px;
   width: 50%;
   margin: auto; /* Sentrer div */
-  border-radius: 5px;
+  border-radius: 10px;
+
   margin-bottom: 20px;
 }
 
@@ -55,7 +63,7 @@ html {
   margin-bottom: 20px;
 }
 .projectnamebox {
-  background-color: #a1d7cf;
+  background-color: #c5d7e7;
   border-radius: 25px;
   padding: 20px;
   width: 550px;

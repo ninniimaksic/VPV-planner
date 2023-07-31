@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import ReactGridLayout, { WidthProvider } from "react-grid-layout";
 import "../css/PVgrid.css";
-import { Button } from "@navikt/ds-react";
 
 const GridLayout = WidthProvider(ReactGridLayout);
 
