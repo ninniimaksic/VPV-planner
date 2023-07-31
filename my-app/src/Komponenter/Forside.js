@@ -13,7 +13,7 @@ const Forside = () => {
   const { event, session } = supabase.auth.onAuthStateChange(
     (event, session) => {
       if (event === "SIGNED_IN") {
-        navigate("/projectinfo");
+        navigate("/Landingsside");
       }
     }
   );
