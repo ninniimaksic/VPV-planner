@@ -31,7 +31,7 @@ const Compass = () => {
         max="360"
         onChange={handleAngleChange}
       />
-
+      <br></br>
       <div id="compass-container">
         <img id="compass" src={CompassImg} alt="Compass" style={compassStyle} />
       </div>
