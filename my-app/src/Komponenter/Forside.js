@@ -28,7 +28,7 @@ const Forside = () => {
         <Auth
           supabaseClient={supabase}
           view="sign_in"
-          redirectTo="http://localhost:3000/projectinfo"
+          redirectTo="/Landingsside."
           appearance={{ theme: ThemeSupa }}
           providers={[]}
           localization={{

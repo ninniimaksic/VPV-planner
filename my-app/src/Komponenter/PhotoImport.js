@@ -32,13 +32,17 @@ const PhotoImport = () => {
       <Navbar />
 
       <div className="plassering1">
-        {!selectedPhoto && <h2>Upload image </h2>}
+        <div classname="uploadknapp">
+          {!selectedPhoto && <h2>Upload image </h2>}
+        </div>
         {!selectedPhoto && (
           <Button variant="primary" onClick={handleClick}>
             Choose image
           </Button>
         )}
+
         <input
+          label="test"
           type="file"
           ref={fileInput}
           style={{ display: "none" }}
