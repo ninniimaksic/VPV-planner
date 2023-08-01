@@ -250,7 +250,6 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                               htmlSize={10}
                             />
                           </Table.DataCell>
-
                           <Table.DataCell>{l.length / 2}</Table.DataCell>
                           <Table.DataCell>
                             <Button
@@ -271,9 +270,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
           </div>
         </div>
       ) : (
-        <>
-          <UnitPlacer sections={lines} scale={scale} />
-        </>
+        <UnitPlacer sections={lines} scale={scale} />
       )}
       <div style={{ marginTop: "auto" }}>
         <Button

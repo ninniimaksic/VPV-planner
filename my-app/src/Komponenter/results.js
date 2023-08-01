@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./navbar";
-import useImage from "use-image";
 import "../css/results.css";
-import { Image } from "react-konva";
-// import ProjectInfo from "./Komponenter/ProjectInfo";
-// import UnitPlacer from "./Komponenter/UnitPlacer";
 
 export default function Results() {
   const projectName = sessionStorage.getItem("projectName");
