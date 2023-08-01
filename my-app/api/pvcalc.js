@@ -15,7 +15,7 @@ export default async function handler(req, res) {
           peakpower,
           loss,
           angle: 90,
-          aspect: azimuth,
+          aspect: (azimuth + 180) % 360,
         },
       }
     );
