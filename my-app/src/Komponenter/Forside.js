@@ -9,14 +9,20 @@ import { useNavigate } from "react-router-dom";
 
 const Forside = () => {
   const navigate = useNavigate();
+  let session = null;
 
-  const { event, session } = supabase.auth.onAuthStateChange(
-    (event, session) => {
-      if (event === "SIGNED_IN") {
-        navigate("/Landingsside");
-      }
+  supabase.auth.getSession().then(async ({ data }) => {
+    if (data) {
+      session = data.session;
     }
-  );
+  });
+
+  supabase.auth.onAuthStateChange((event, _session) => {
+    if (event === "SIGNED_IN" && !session && _session) {
+      navigate("/Landingsside");
+    }
+    session = _session;
+  });
 
   return (
     <>
@@ -28,7 +34,7 @@ const Forside = () => {
         <Auth
           supabaseClient={supabase}
           view="sign_in"
-          redirectTo="http://localhost:3000/projectinfo"
+          redirectTo="/Landingsside"
           appearance={{ theme: ThemeSupa }}
           providers={[]}
           localization={{
