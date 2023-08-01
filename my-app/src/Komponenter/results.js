@@ -27,7 +27,7 @@ export default function Results() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://re.jrc.ec.europa.eu/api/v5_2/PVcalc?outputformat=json&lat=${lat}&lon=${lon}&peakpower=${1}&loss=${14}&angle=${azimuth}&aspect=0`
+          `https://vpv-planner.vercel.app/api/PVcalc?lat=${lat}&lon=${lon}&peakpower=${1}&loss=${14}&azimuth=${azimuth}`
         );
         if (response.ok) {
           const data = await response.json();
@@ -93,7 +93,11 @@ export default function Results() {
               Api query to PVGIS with peakpower=1, loss=14, aspect=14 and values
               above:
             </p>
-            {apiData && <pre>{JSON.stringify(apiData, null, 2)}</pre>}
+            {apiData ? (
+              <pre>{JSON.stringify(apiData, null, 2)}</pre>
+            ) : (
+              <p>Loading...</p>
+            )}
           </div>
           {imgurl && <img src={imgurl} alt="Uploaded" />}
         </div>
