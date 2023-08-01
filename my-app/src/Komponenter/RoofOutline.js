@@ -174,15 +174,18 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
           </Layer>
         </Stage>
       </div>
+
       {!showUnitPlacer ? (
-        <div className="Line">
-          <>
+        <div classname="Fargeboks">
+          <div className="Line">
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
               }}
             >
+              <br></br>
+              <br></br>
               <h4>
                 Outline roof/PV module section <br /> Click to add points, drag
                 to adjust.
@@ -225,7 +228,9 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
               </div>
               {lines.length > 0 && (
                 <div>
-                  <Table>
+                  <br></br>
+                  <br></br>
+                  <Table style={{ margin: "5px" }}>
                     <Table.Header>
                       <Table.Row>
                         <Table.HeaderCell scope="col">Section</Table.HeaderCell>
@@ -241,7 +246,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                               label="Section name"
                               hideLabel
                               defaultValue={`Section ${i + 1}`}
-                              size="small"
+                              size="xsmall"
                               htmlSize={10}
                             />
                           </Table.DataCell>
@@ -251,7 +256,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                               variant="tertiary"
                               icon={<WrenchIcon aria-hidden />}
                               onClick={() => editSection(i)}
-                              size="small"
+                              size="xsmall"
                             ></Button>
                           </Table.DataCell>
                         </Table.Row>
@@ -261,8 +266,8 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                 </div>
               )}
             </div>
-            <div style={{ height: "50%" }}></div>
-          </>
+            <div style={{ height: "40%" }}></div>
+          </div>
         </div>
       ) : (
         <UnitPlacer sections={lines} scale={scale} />

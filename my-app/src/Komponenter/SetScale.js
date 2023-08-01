@@ -144,7 +144,8 @@ const SetScale = ({ selectedPhoto }) => {
           </div>
           <div className="Line">
             {lines.length >= 1 && (
-              <div>
+              <div className="Fargetest">
+                <h2> Fill in</h2>
                 <HelpText id="lineHelp">
                   Longer lines reduce the effect of errors
                 </HelpText>
@@ -171,6 +172,7 @@ const SetScale = ({ selectedPhoto }) => {
                 </div>
 
                 <div>
+                  <br></br>
                   <br></br>
                   <Compass />
                 </div>
