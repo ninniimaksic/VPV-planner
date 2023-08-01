@@ -147,7 +147,7 @@ const UnitPlacer = ({ sections, scale }) => {
           </Draggable>
         </div>
       ))}
-      <div style={{ marginTop: "10%" }}>
+      <div style={{ marginTop: "10%", paddingLeft: "5%" }}>
         <TextField
           type="number"
           label="Number of columns"
