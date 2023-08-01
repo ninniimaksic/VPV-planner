@@ -1,8 +1,8 @@
 .geocodeStyle #plassering {
   text-align: left;
-  background-color: #d1dacb;
+  background-color: #c5d7e7;
   border-radius: 25px;
-  height: 400px;
+  height: 540px;
   margin-top: 30px;
   display: flex;
   flex-direction: row;

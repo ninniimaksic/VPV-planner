@@ -101,7 +101,7 @@ const Geocode = () => {
           siblingCount={1}
           size="medium"
         />
-        <h1>L O C A T I O N</h1> <br />
+        <h1>I N F O R M A T I O N - 2</h1> <br />
         <div className={"geocodeStyle"}>
           <div id="plassering">
             <form onSubmit={handleSubmit} className="form-container">
@@ -135,23 +135,22 @@ const Geocode = () => {
                   <br />
                   {isSaved ? (
                     <div className="pop-up-container">
-                      <div className="info-container">
-                        <TextField
-                          label="Add information"
-                          id="info"
-                          name="info"
-                          value={info}
-                          onChange={(e) => setInfo(e.target.value)}
-                          className="input-field"
-                        />
-                        <Button
-                          variant="primary"
-                          onClick={handleSave}
-                          style={{ display: isSaved ? "block" : "none" }}
-                        >
-                          Save
-                        </Button>
-                      </div>
+                      <TextField
+                        label="Add additional information to the project"
+                        description="optional"
+                        id="info"
+                        name="info"
+                        value={info}
+                        onChange={(e) => setInfo(e.target.value)}
+                        className="input-field"
+                      />
+                      <Button
+                        variant="primary"
+                        onClick={handleSave}
+                        style={{ display: isSaved ? "block" : "none" }}
+                      >
+                        Save
+                      </Button>
                     </div>
                   ) : (
                     <Button

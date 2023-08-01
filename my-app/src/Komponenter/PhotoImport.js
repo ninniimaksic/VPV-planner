@@ -13,7 +13,6 @@ const PhotoImport = () => {
 
   const handlePhotoUpload = (event) => {
     const file = event.target.files[0];
-    // Utfør nødvendig validering av filen her
     setSelectedPhoto(URL.createObjectURL(file));
     sessionStorage.setItem("imgurl", URL.createObjectURL(file));
   };
@@ -25,7 +24,7 @@ const PhotoImport = () => {
   const navigate = useNavigate();
 
   const handleBackPage = () => {
-    navigate("/geocode");
+    navigate("/photoimport");
   };
 
   return (
@@ -33,10 +32,12 @@ const PhotoImport = () => {
       <Navbar />
 
       <div className="plassering1">
-        <h2>Upload image </h2>
-        <Button variant="primary" onClick={handleClick}>
-          Choose image
-        </Button>
+        {!selectedPhoto && <h2>Upload image </h2>}
+        {!selectedPhoto && (
+          <Button variant="primary" onClick={handleClick}>
+            Choose image
+          </Button>
+        )}
         <input
           type="file"
           ref={fileInput}
