@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Draggable from "react-draggable";
 import "../css/SetScale.css";
 import PVgrid from "./PVgrid";
@@ -18,10 +18,6 @@ const UnitPlacer = ({ sections, scale }) => {
       return;
     }
     setGrids([...grids, { ncol, nrow, rotation: angle }]);
-    sessionStorage.setItem(
-      "grids",
-      JSON.stringify([...grids, { ncol, nrow, rotation: angle }])
-    );
   };
 
   const handleNcolChange = (event) => {
@@ -37,15 +33,13 @@ const UnitPlacer = ({ sections, scale }) => {
       const newGrids = [...grids];
       newGrids[selectedGrid].rotation = parseInt(event.target.value);
       setGrids(newGrids);
-      sessionStorage.setItem("grids", JSON.stringify(newGrids));
     }
   };
 
   const deleteGrid = () => {
     if (selectedGrid !== null) {
-      const updatedGrids = grids.filter((_, index) => index !== selectedGrid);
-      setGrids(updatedGrids);
-      sessionStorage.setItem("grids", JSON.stringify(updatedGrids));
+      const newGrids = grids.filter((_, index) => index !== selectedGrid);
+      setGrids(newGrids);
       setSelectedGrid(null);
     }
   };
@@ -53,6 +47,11 @@ const UnitPlacer = ({ sections, scale }) => {
   const selectGrid = (index) => {
     setSelectedGrid(index);
   };
+
+  // Hver gang 'grids' staten oppdateres, lagrer vi den nye staten i sessionStorage.
+  useEffect(() => {
+    sessionStorage.setItem("grids", JSON.stringify(grids));
+  }, [grids]);
 
   return (
     <div>
@@ -169,7 +168,7 @@ const UnitPlacer = ({ sections, scale }) => {
           Add grid
         </Button>
         <Button
-          onClick={deleteGrid}
+          onClick={() => deleteGrid(selectedGrid)}
           disabled={selectedGrid === null}
           style={{
             marginRight: "1rem",

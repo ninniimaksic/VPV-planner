@@ -33,12 +33,8 @@ const Navbar = () => {
         <div>
           <ul id="navbar" className={clicked ? "navbar active" : "navbar"}>
             <li style={{ display: "flex", alignItems: "center" }}>
-              <Link
-                className={location.pathname === "/" ? "active" : ""}
-                to="/"
-              >
-                Old projects
-              </Link>
+              <span> Projects</span>
+
               <Link to="/" onClick={handleLeaveIconClick}>
                 <LeaveIcon
                   title="a11y-title"
