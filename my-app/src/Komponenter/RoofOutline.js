@@ -255,7 +255,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                     <Table.Header>
                       <Table.Row>
                         <Table.HeaderCell scope="col">Section</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Sides</Table.HeaderCell>
+
                         <Table.HeaderCell scope="col">Edit</Table.HeaderCell>
                       </Table.Row>
                     </Table.Header>
@@ -271,7 +271,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                               htmlSize={10}
                             />
                           </Table.DataCell>
-                          <Table.DataCell>{l.length / 2}</Table.DataCell>
+
                           <Table.DataCell>
                             <Button
                               variant="tertiary"
