@@ -29,7 +29,7 @@ export default function Results() {
         const response = await fetch(
           `https://vpv-planner.vercel.app/api/pvcalc.js?lat=${lat}&lon=${lon}&peakpower=${1}&loss=${14}&azimuth=${azimuth}`
         );
-        console.log("Raw response:", response);
+        console.log("Raw response:", response.json());
         if (
           response.ok &&
           response.headers.get("content-type").includes("json")
