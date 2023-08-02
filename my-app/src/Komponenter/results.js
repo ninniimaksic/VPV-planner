@@ -27,7 +27,7 @@ export default function Results() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://vpv-planner.vercel.app/api/PVcalc?lat=${lat}&lon=${lon}&peakpower=${1}&loss=${14}&azimuth=${azimuth}`
+          `https://vpv-planner.vercel.app/api/pvcalc?lat=${lat}&lon=${lon}&peakpower=${1}&loss=${14}&azimuth=${azimuth}`
         );
         console.log("Raw response:", response);
         if (response.ok) {
