@@ -73,45 +73,28 @@ const ProjectInfo = () => {
   ]);
 
   const handleSave = () => {
-    // Validering for tallfeltene
-    const isValidNumber = (value) => {
-      return !isNaN(value);
-    };
-
-    if (
-      isValidNumber(projectNumber) &&
-      isValidNumber(PNinstaller) &&
-      isValidNumber(projectNumberEC)
-    ) {
-      if (projectName === "") {
-        setProjectName("Project");
-      }
-      if (projectNumber === "") {
-        setProjectNumber(0);
-      }
-      if (installer === "") {
-        setInstaller("");
-      }
-      if (PNinstaller === "") {
-        setPNinstaller(0);
-      }
-      if (EndCostumer === "") {
-        setEndCostumer("");
-      }
-      if (projectNumberEC === "") {
-        setProjectnumberEC(0);
-      }
-
-      console.log(
-        "Saving project name and number:",
-        projectName,
-        projectNumber
-      );
-      navigate("/geocode");
-    } else {
-      // Vis en feilmelding eller utfør en annen handling
-      console.log("Vennligst fyll inn gyldige tallverdier.");
+    if (projectName === "") {
+      setProjectName("Project");
     }
+    if (projectNumber === "") {
+      setProjectNumber("");
+    }
+    if (installer === "") {
+      setInstaller("");
+    }
+    if (PNinstaller === "") {
+      setPNinstaller("");
+    }
+    if (EndCostumer === "") {
+      setEndCostumer("");
+    }
+    if (projectNumberEC === "") {
+      setProjectnumberEC("");
+    }
+
+    console.log("Saving project name and number:", projectName, projectNumber);
+
+    navigate("/geocode");
   };
 
   return (
@@ -135,6 +118,7 @@ const ProjectInfo = () => {
             <h2>Project number(Over Easy)</h2>
             <TextField
               description="Her kommer det noe viktig info"
+              type="text"
               id="Projectnumber"
               value={projectNumber}
               onChange={(e) => setProjectNumber(e.target.value)}
