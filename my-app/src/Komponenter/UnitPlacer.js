@@ -4,6 +4,7 @@ import "../css/SetScale.css";
 import PVgrid from "./PVgrid";
 import { DragHorizontalIcon } from "@navikt/aksel-icons";
 import { Button, TextField } from "@navikt/ds-react";
+import Units from "./Units.js";
 
 const UnitPlacer = ({ sections, scale }) => {
   const [grids, setGrids] = useState([]);
@@ -55,6 +56,10 @@ const UnitPlacer = ({ sections, scale }) => {
 
   return (
     <div>
+      {" "}
+      <div>
+        <Units />
+      </div>
       {grids.map((grid, i) => (
         <div
           key={`new-grid-${i}`}
