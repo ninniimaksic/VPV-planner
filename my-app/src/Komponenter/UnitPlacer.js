@@ -10,7 +10,6 @@ const UnitPlacer = ({ sections, scale }) => {
   const [ncol, setNcol] = useState(0);
   const [nrow, setNrow] = useState(0);
   const [selectedGrid, setSelectedGrid] = useState(null);
-  const [rotationDegrees, setRotationDegrees] = useState(0);
   const unitLength = 160 / scale;
   const unitWidth = 150 / scale;
 
@@ -18,10 +17,10 @@ const UnitPlacer = ({ sections, scale }) => {
     if (ncol <= 0 || nrow <= 0) {
       return;
     }
-    setGrids([...grids, [ncol, nrow, angle]]);
+    setGrids([...grids, { ncol, nrow, rotation: angle }]);
     sessionStorage.setItem(
       "grids",
-      JSON.stringify([...grids, [ncol, nrow, angle]])
+      JSON.stringify([...grids, { ncol, nrow, rotation: angle }])
     );
   };
 
@@ -34,25 +33,19 @@ const UnitPlacer = ({ sections, scale }) => {
   };
 
   const handleRotationChange = (event) => {
-    setRotationDegrees(parseInt(event.target.value));
-
-    const handleAngleChange = (event, index) => {
-      const updatedGrids = [...grids];
-      updatedGrids[index][2] = parseInt(event.target.value);
-      setGrids(updatedGrids);
-      sessionStorage.setItem("grids", updatedGrids);
-    };
+    if (selectedGrid !== null) {
+      const newGrids = [...grids];
+      newGrids[selectedGrid].rotation = parseInt(event.target.value);
+      setGrids(newGrids);
+      sessionStorage.setItem("grids", JSON.stringify(newGrids));
+    }
   };
 
   const deleteGrid = () => {
     if (selectedGrid !== null) {
       const updatedGrids = grids.filter((_, index) => index !== selectedGrid);
       setGrids(updatedGrids);
-
       sessionStorage.setItem("grids", JSON.stringify(updatedGrids));
-
-      sessionStorage.setItem("grids", updatedGrids);
-
       setSelectedGrid(null);
     }
   };
@@ -83,8 +76,7 @@ const UnitPlacer = ({ sections, scale }) => {
               <div
                 style={{
                   position: "absolute",
-
-                  transform: `rotate(${rotationDegrees}deg)`,
+                  transform: `rotate(${grid.rotation}deg)`,
                 }}
               >
                 <div
@@ -106,8 +98,8 @@ const UnitPlacer = ({ sections, scale }) => {
                     points={sections[0]}
                     l={unitLength}
                     w={unitWidth}
-                    ncol={grid[0]}
-                    nrow={grid[1]}
+                    ncol={grid.ncol}
+                    nrow={grid.nrow}
                     layoutid={i}
                   />
                   {i === selectedGrid && (
@@ -163,11 +155,11 @@ const UnitPlacer = ({ sections, scale }) => {
         <TextField
           type="number"
           label="Rotation degrees"
-          value={rotationDegrees}
+          value={selectedGrid !== null ? grids[selectedGrid].rotation : ""}
           onChange={handleRotationChange}
         />
         <Button
-          onClick={() => addGrid(ncol, nrow, rotationDegrees)}
+          onClick={() => addGrid(ncol, nrow, 0)}
           style={{
             marginRight: "1rem",
             marginBottom: "1rem",
