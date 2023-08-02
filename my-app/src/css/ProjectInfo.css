@@ -1,7 +1,5 @@
 html {
-
   background-color: rgb(211, 226, 238);
-
 }
 
 .centeredTitle {
@@ -14,45 +12,16 @@ html {
   height: 10vh;
 }
 
-.side-by-side {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  background-color: #c5d7e7; /* Erstatt med  ønskede farge */
-  padding: 20px;
-  width: 50%;
-  margin: auto; /* Sentrer div */
-  border-radius: 10px;
-
-  margin-bottom: 20px;
-}
-
-.side-by-side2 {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  background-color: #c5d7e7; /* Erstatt med  ønskede farge */
-  padding: 20px;
-  width: 50%;
-  margin: auto; /* Sentrer div */
-  border-radius: 10px;
-
-  margin-bottom: 20px;
-}
-
+.side-by-side,
+.side-by-side2,
 .side-by-side3 {
   display: flex;
   flex-direction: row;
   justify-content: center;
-
-  background-color: #c5d7e7; /* Erstatt med din ønskede farge */
+  background-color: #c5d7e7;
   padding: 20px;
-  width: 50%;
-  margin: auto; /* Sentrer div */
+  margin: auto;
   border-radius: 10px;
-
   margin-bottom: 20px;
 }
 
@@ -87,4 +56,32 @@ html {
   bottom: 0;
   width: 100%;
   background: none;
+}
+
+/* Regler for skjermer mindre enn 600px */
+@media (max-width: 600px) {
+  .side-by-side,
+  .side-by-side2,
+  .side-by-side3 {
+    width: 100%;
+    flex-direction: column;
+  }
+}
+
+/* Regler for skjermer mellom 600px og 1200px */
+@media (min-width: 601px) and (max-width: 1200px) {
+  .side-by-side,
+  .side-by-side2,
+  .side-by-side3 {
+    width: 75%;
+  }
+}
+
+/* Regler for skjermer større enn 1200px */
+@media (min-width: 1201px) {
+  .side-by-side,
+  .side-by-side2,
+  .side-by-side3 {
+    width: 50%;
+  }
 }
