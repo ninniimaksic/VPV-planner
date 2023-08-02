@@ -224,17 +224,14 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                 >
                   {addPoints ? "Save section" : "New Section"}
                 </Button>
-                <Button
-                  variant="primary"
-                  onClick={() => setShowDims((prev) => !prev)}
-                  style={{
-                    marginRight: "1rem",
-                    marginBottom: "1rem",
-                    marginTop: "1rem",
-                  }}
-                >
-                  {showDims ? "Hide dimensions" : "Show dimensions"}
-                </Button>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={showDims}
+                    onChange={() => setShowDims((prev) => !prev)}
+                  />
+                  Show dimensions
+                </label>
               </div>
               <div>
                 <Button
