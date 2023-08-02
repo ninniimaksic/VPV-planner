@@ -30,11 +30,14 @@ export default function Results() {
           `https://vpv-planner.vercel.app/api/pvcalc?lat=${lat}&lon=${lon}&peakpower=${1}&loss=${14}&azimuth=${azimuth}`
         );
         console.log("Raw response:", response);
-        if (response.ok) {
+        if (
+          response.ok &&
+          response.headers.get("content-type").includes("json")
+        ) {
           const data = await response.json();
           setApiData(data);
         } else {
-          console.log("API request failed");
+          console.log("API request failed or returned non-JSON response");
         }
       } catch (error) {
         console.log("API request failed:", error);
