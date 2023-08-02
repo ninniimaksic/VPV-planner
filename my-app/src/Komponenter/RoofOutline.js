@@ -120,6 +120,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                   stroke="blue"
                   draggable
                   onDragMove={(e) => handleCircleDragMove(e, i * 2)}
+                  onMouseDown={(e) => e.evt.stopPropagation()}
                 />
               ))}
               <Line
