@@ -5,7 +5,6 @@ import UnitPlacer from "./UnitPlacer";
 import { Stage, Layer, Image, Line, Circle, Text, Rect } from "react-konva";
 import { Button, Table, TextField } from "@navikt/ds-react";
 import { WrenchIcon, ArrowRightIcon } from "@navikt/aksel-icons";
-import { MapInteractionCSS } from "react-map-interaction";
 
 const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
   const [line, setLine] = useState([]);
@@ -92,108 +91,88 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
   return (
     <div className="lenScale">
       <div className="drawStage">
-        <MapInteractionCSS
-          showControls
-          defaultValue={{
-            scale: 1,
-            translation: { x: 0, y: 0 },
-          }}
-          minScale={0.2}
-          maxScale={4}
-          translationBounds={{
-            xMax: 1000,
-            yMax: 1000,
-          }}
-        >
-          <Stage width={1000} height={750} onClick={handleStageClick}>
-            <Layer>
-              {img && (
-                <Image height={imageHeight} width={imageWidth} image={img} />
-              )}
-              {line.map((_, i) => (
-                <Circle
-                  key={i}
-                  x={line[i * 2]}
-                  y={line[i * 2 + 1]}
-                  radius={10}
-                  zIndex={10}
-                  stroke="blue"
-                  draggable
-                  onDragMove={(e) => handleCircleDragMove(e, i * 2)}
-                />
-              ))}
-              <Line
-                ref={lineRef}
-                points={line}
-                zIndex={9}
-                stroke="red"
-                fill="#00D2FF"
-                opacity={0.55}
-                strokeWidth={4}
-                closed={true}
+        <Stage width={1000} height={750} onClick={handleStageClick}>
+          <Layer>
+            {img && (
+              <Image height={imageHeight} width={imageWidth} image={img} />
+            )}
+            {line.map((_, i) => (
+              <Circle
+                key={i}
+                x={line[i * 2]}
+                y={line[i * 2 + 1]}
+                radius={10}
+                zIndex={10}
+                stroke="blue"
+                draggable
+                onDragMove={(e) => handleCircleDragMove(e, i * 2)}
               />
-              {showDims &&
-                line.length > 0 &&
-                getSideLengths(line).map((len, j) => {
-                  const l = [...line, line[0], line[1]];
-                  const x = (l[j * 2] + l[j * 2 + 2]) / 2;
-                  const y = (l[j * 2 + 1] + l[j * 2 + 3]) / 2;
-                  return (
-                    <React.Fragment key={j}>
-                      <Rect x={x} y={y} width={75} height={20} fill="white" />
-                      <Text
-                        key={j}
-                        text={`${len.toFixed(2)} m`}
-                        x={x}
-                        y={y}
-                        fontSize={20}
-                        fill="black"
-                      />
-                    </React.Fragment>
-                  );
-                })}
-              {lines.map((p, i) => (
-                <React.Fragment key={i}>
-                  <Line
-                    key={i}
-                    points={p}
-                    zIndex={9}
-                    stroke="red"
-                    fill="#00D2FF"
-                    opacity={0.4}
-                    strokeWidth={3}
-                    closed={true}
-                  />
-                  {showDims &&
-                    getSideLengths(p).map((len, j) => {
-                      const l = [...p, p[0], p[1]];
-                      const x = (l[j * 2] + l[j * 2 + 2]) / 2;
-                      const y = (l[j * 2 + 1] + l[j * 2 + 3]) / 2;
-                      return (
-                        <React.Fragment key={j}>
-                          <Rect
-                            x={x}
-                            y={y}
-                            width={75}
-                            height={20}
-                            fill="white"
-                          />
-                          <Text
-                            key={j}
-                            text={`${len.toFixed(2)} m`}
-                            x={x}
-                            y={y}
-                            fontSize={20}
-                            fill="black"
-                          />
-                        </React.Fragment>
-                      );
-                    })}
-                </React.Fragment>
-              ))}
-            </Layer>
-          </Stage>
-        </MapInteractionCSS>
+            ))}
+            <Line
+              ref={lineRef}
+              points={line}
+              zIndex={9}
+              stroke="red"
+              fill="#00D2FF"
+              opacity={0.55}
+              strokeWidth={4}
+              closed={true}
+            />
+            {showDims &&
+              line.length > 0 &&
+              getSideLengths(line).map((len, j) => {
+                const l = [...line, line[0], line[1]];
+                const x = (l[j * 2] + l[j * 2 + 2]) / 2;
+                const y = (l[j * 2 + 1] + l[j * 2 + 3]) / 2;
+                return (
+                  <React.Fragment key={j}>
+                    <Rect x={x} y={y} width={75} height={20} fill="white" />
+                    <Text
+                      key={j}
+                      text={`${len.toFixed(2)} m`}
+                      x={x}
+                      y={y}
+                      fontSize={20}
+                      fill="black"
+                    />
+                  </React.Fragment>
+                );
+              })}
+            {lines.map((p, i) => (
+              <React.Fragment key={i}>
+                <Line
+                  key={i}
+                  points={p}
+                  zIndex={9}
+                  stroke="red"
+                  fill="#00D2FF"
+                  opacity={0.4}
+                  strokeWidth={3}
+                  closed={true}
+                />
+                {showDims &&
+                  getSideLengths(p).map((len, j) => {
+                    const l = [...p, p[0], p[1]];
+                    const x = (l[j * 2] + l[j * 2 + 2]) / 2;
+                    const y = (l[j * 2 + 1] + l[j * 2 + 3]) / 2;
+                    return (
+                      <React.Fragment key={j}>
+                        <Rect x={x} y={y} width={75} height={20} fill="white" />
+                        <Text
+                          key={j}
+                          text={`${len.toFixed(2)} m`}
+                          x={x}
+                          y={y}
+                          fontSize={20}
+                          fill="black"
+                        />
+                      </React.Fragment>
+                    );
+                  })}
+              </React.Fragment>
+            ))}
+          </Layer>
+        </Stage>
       </div>
 
       {!showUnitPlacer ? (
@@ -252,7 +231,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                     <Table.Header>
                       <Table.Row>
                         <Table.HeaderCell scope="col">Section</Table.HeaderCell>
-
+                        <Table.HeaderCell scope="col">Height</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Edit</Table.HeaderCell>
                       </Table.Row>
                     </Table.Header>
@@ -268,7 +247,15 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
                               htmlSize={10}
                             />
                           </Table.DataCell>
-
+                          <Table.DataCell>
+                            <TextField
+                              label="Height"
+                              hideLabel
+                              defaultValue={` m`}
+                              size="xsmall"
+                              htmlSize={10}
+                            />
+                          </Table.DataCell>
                           <Table.DataCell>
                             <Button
                               variant="tertiary"
