@@ -21,7 +21,7 @@ export default async function handler(req, res) {
     );
 
     // Return the API response data to the client
-    res.status(200).json(response.data);
+    res.status(200).json(response);
   } catch (error) {
     console.error("API request failed:", error);
     res.status(500).json({ error: "API request failed" });
