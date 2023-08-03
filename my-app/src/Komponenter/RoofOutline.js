@@ -104,8 +104,8 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
     <div className={`lenScale ${isNewSectionClicked ? "drawn-cursor" : ""}`}>
       <div className="drawStage">
         <Stage
-          width={1000}
-          height={750}
+          width={900}
+          height={650}
           onClick={handleStageClick}
           ref={stageRef}
         >

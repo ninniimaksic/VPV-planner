@@ -14,7 +14,7 @@ export default function Results() {
   const grids = JSON.parse(sessionStorage.getItem("grids"));
   var layouts = [];
   for (let i = 0; i < grids.length; i++) {
-    layouts.push(JSON.parse(sessionStorage.getItem(`layout${i}`)));
+    layouts.push(JSON.parse(sessionStorage.getItem(`layout${i}`)) || []);
   }
   // Count num of units in layout [1, 0] array
   let nUnits = layouts.reduce((total, layout) => {
