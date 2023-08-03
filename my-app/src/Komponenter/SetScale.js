@@ -152,7 +152,7 @@ const SetScale = ({ selectedPhoto, opacity }) => {
                 </HelpText>
                 <TextField
                   id="lineLengthInput"
-                  type="text"
+                  type="number"
                   label="Set length of line"
                   description="Drag to adjust"
                   onChange={handleInputChange}

@@ -41,9 +41,9 @@ const UnitPlacer = ({ sections, scale }) => {
     }
   };
 
-  const deleteGrid = () => {
-    if (selectedGrid !== null) {
-      const newGrids = grids.filter((_, index) => index !== selectedGrid);
+  const deleteGrid = (index) => {
+    if (index !== null) {
+      const newGrids = grids.filter((_, i) => i !== index);
       setGrids(newGrids);
       setSelectedGrid(null);
     }
