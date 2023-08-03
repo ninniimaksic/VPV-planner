@@ -18,6 +18,8 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
     lineRef.current.getLayer().batchDraw();
   }, [line]);
 
+  const [isNewSectionClicked, setIsNewSectionClicked] = useState(false);
+
   const handleStageClick = () => {
     if (addPoints) {
       const liner = lineRef.current;
@@ -50,9 +52,11 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
       }
       setLine([]);
       setAddPoints(false);
+      setIsNewSectionClicked(false);
     }
     if (!addPoints) {
       setAddPoints(true);
+      setIsNewSectionClicked(true);
     }
   };
 
@@ -89,7 +93,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
   };
 
   return (
-    <div className="lenScale">
+    <div className={`lenScale ${isNewSectionClicked ? "drawn-cursor" : ""}`}>
       <div className="drawStage">
         <Stage width={1000} height={750} onClick={handleStageClick}>
           <Layer>

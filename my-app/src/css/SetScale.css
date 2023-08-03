@@ -85,3 +85,7 @@
 .vertex {
   cursor: grab;
 }
+
+.drawn-cursor {
+  cursor: crosshair;
+}
