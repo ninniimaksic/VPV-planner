@@ -5,18 +5,11 @@ export default async function handler(req, res) {
     const response = await fetch(
       `https://re.jrc.ec.europa.eu/api/v5_2/PVcalc?outputformat=json&lat=${lat}&lon=${lon}&peakpower=${peakpower}&loss=${loss}&angle=90&aspect=${
         (parseInt(azimuth) + 180) % 360
-      }`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      }
+      }`
     );
 
     if (response.ok) {
-      const data = await response;
+      const data = await response.json();
       res.status(200).json(data);
     } else {
       console.log("API request failed");
