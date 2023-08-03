@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./navbar";
+import { Table } from "@navikt/ds-react";
 import "../css/results.css";
 
 export default function Results() {
@@ -87,35 +88,90 @@ export default function Results() {
         <div className="row">
           <div className="col-12">
             <h1>Results</h1>
-            <ul>
-              <li>Project Name: {projectName}</li>
-              <li>Project Number: {projectNumber}</li>
-              <li>Installer: {installer}</li>
-              <li>PN Installer: {PNinstaller}</li>
-              <li>End Customer: {EndCostumer}</li>
-              <li>Project Number EC: {projectNumberEC}</li>
-              <li>Sections: {sections}</li>
-              {/* <li>Grids: {grids}</li> */}
-              <li>Address: {address}</li>
-              {info !== "" && <li>Info: {info}</li>}
-              <li>Lat: {lat}</li>
-              <li>Lon: {lon}</li>
-              <li>Azimuth: {azimuth}</li>
-              {layouts.map((layout, i) => (
-                <li key={i}>
-                  Layout{i}: {JSON.stringify(layout)}
-                </li>
-              ))}
-              <li>Total number of units: {nUnits}</li>
-            </ul>
-            <p>
+            <Table>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell scope="col">Project Name</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">
+                    Project Number
+                  </Table.HeaderCell>
+                  <Table.HeaderCell scope="col">Installer</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">PN Installer</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">End Customer</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">
+                    Project Number EC
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                <Table.Row>
+                  <Table.DataCell>{projectName}</Table.DataCell>
+                  <Table.DataCell>{projectNumber}</Table.DataCell>
+                  <Table.DataCell>{installer}</Table.DataCell>
+                  <Table.DataCell>{PNinstaller}</Table.DataCell>
+                  <Table.DataCell>{EndCostumer}</Table.DataCell>
+                  <Table.DataCell>{projectNumberEC}</Table.DataCell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
+            <br />
+            <Table>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell scope="col">Address</Table.HeaderCell>
+                  {info !== "" && (
+                    <Table.HeaderCell scope="col">Info</Table.HeaderCell>
+                  )}
+                  <Table.HeaderCell scope="col">Lat</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">Lon</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">Azimuth</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">Layout</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">
+                    Total number of units
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                <Table.Row>
+                  <Table.DataCell>{address}</Table.DataCell>
+                  {info !== "" && <Table.DataCell>{info}</Table.DataCell>}
+                  <Table.DataCell>{lat}</Table.DataCell>
+                  <Table.DataCell>{lon}</Table.DataCell>
+                  <Table.DataCell>{azimuth}</Table.DataCell>
+                  <Table.DataCell>
+                    <ul>
+                      {layouts.map((layout, i) => (
+                        <li key={i}>
+                          Layout{i}: {JSON.stringify(layout)}
+                        </li>
+                      ))}
+                    </ul>
+                  </Table.DataCell>
+                  <Table.DataCell>{nUnits}</Table.DataCell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
+            <br />
+            <h4>
               Yearly energy yield estimation with {kWp}kWp, {loss}% loss and{" "}
               {(azimuth + 180) % 360}° azimuth:
-            </p>
+            </h4>
             {apiData ? (
               <>
-                <pre>Per unit: {apiData} kWh</pre>
-                <pre>Total: {apiData * nUnits} kWh</pre>
+                <Table>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell scope="col">Per unit</Table.HeaderCell>
+                      <Table.HeaderCell scope="col">Total</Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    <Table.Row>
+                      <Table.DataCell>{apiData} kWh</Table.DataCell>
+                      <Table.DataCell>{apiData * nUnits} kWh</Table.DataCell>
+                    </Table.Row>
+                  </Table.Body>
+                </Table>
               </>
             ) : (
               <p>Loading...</p>
