@@ -6,7 +6,7 @@ import { Stage, Layer, Image, Line, Circle, Text, Rect } from "react-konva";
 import { Button, Table, TextField } from "@navikt/ds-react";
 import { WrenchIcon, ArrowRightIcon } from "@navikt/aksel-icons";
 
-const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
+const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
   const [line, setLine] = useState([]);
   const [lines, setLines] = useState([]);
   const [addPoints, setAddPoints] = useState(false);
@@ -17,6 +17,8 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
   useEffect(() => {
     lineRef.current.getLayer().batchDraw();
   }, [line]);
+
+  const [isNewSectionClicked, setIsNewSectionClicked] = useState(false);
 
   const handleStageClick = () => {
     if (addPoints) {
@@ -50,9 +52,11 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
       }
       setLine([]);
       setAddPoints(false);
+      setIsNewSectionClicked(false);
     }
     if (!addPoints) {
       setAddPoints(true);
+      setIsNewSectionClicked(true);
     }
   };
 
@@ -89,12 +93,17 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale }) => {
   };
 
   return (
-    <div className="lenScale">
+    <div className={`lenScale ${isNewSectionClicked ? "drawn-cursor" : ""}`}>
       <div className="drawStage">
         <Stage width={1000} height={750} onClick={handleStageClick}>
           <Layer>
             {img && (
-              <Image height={imageHeight} width={imageWidth} image={img} />
+              <Image
+                height={imageHeight}
+                width={imageWidth}
+                image={img}
+                opacity={opacity}
+              />
             )}
             {line.map((_, i) => (
               <Circle

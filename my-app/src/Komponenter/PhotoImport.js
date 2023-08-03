@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const PhotoImport = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [opacity, setOpacity] = useState(1); // New state for controlling opacity
   const fileInput = useRef();
 
   const handlePhotoUpload = (event) => {
@@ -19,6 +20,10 @@ const PhotoImport = () => {
 
   const handleClick = () => {
     fileInput.current.click();
+  };
+
+  const handleOpacityChange = (value) => {
+    setOpacity(value);
   };
 
   const navigate = useNavigate();
@@ -49,7 +54,24 @@ const PhotoImport = () => {
           accept="image/*"
           onChange={handlePhotoUpload}
         />
-        {selectedPhoto && <SetScale selectedPhoto={selectedPhoto} />}
+        {selectedPhoto && (
+          <SetScale selectedPhoto={selectedPhoto} opacity={opacity} />
+        )}
+
+        {/* Add the slider here */}
+        {selectedPhoto && (
+          <div>
+            <p>Image Transparency</p>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={opacity}
+              onChange={(e) => handleOpacityChange(parseFloat(e.target.value))}
+            />
+          </div>
+        )}
       </div>
       <Button
         variant="secondary"
