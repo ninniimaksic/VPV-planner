@@ -28,10 +28,12 @@ export default function Results() {
       try {
         const response = await fetch(
           `https://vpv-planner.vercel.app/api/pvcalc.js?lat=${lat}&lon=${lon}&peakpower=${1}&loss=${14}&azimuth=${azimuth}`
-        );
-        console.log("Raw response:", response);
+        ).then((res) => {
+          res.json();
+          console.log(res);
+        });
         if (response.ok) {
-          const data = await response.json();
+          const data = await response;
           setApiData(data);
         } else {
           console.log("API request failed or returned non-JSON response");
@@ -42,7 +44,7 @@ export default function Results() {
     };
 
     fetchData();
-  }, []);
+  }, [azimuth, lat, lon]);
 
   useEffect(() => {
     // Do something with the retrieved data
