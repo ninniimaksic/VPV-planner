@@ -32,7 +32,7 @@ export default function Results() {
         if (response.ok) {
           const body = await response.text();
           const data = JSON.parse(body);
-          setApiData(data);
+          setApiData(data.output.totals);
         } else {
           console.log("API request failed or returned non-JSON response");
         }
