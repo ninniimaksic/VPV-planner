@@ -81,7 +81,7 @@ export default function Results() {
               <li>End Customer: {EndCostumer}</li>
               <li>Project Number EC: {projectNumberEC}</li>
               <li>Sections: {sections}</li>
-              <li>Grids: {grids}</li>
+              {/* <li>Grids: {grids}</li> */}
               {layouts.map((layout, i) => (
                 <li key={i}>
                   Layout{i}: {JSON.stringify(layout)}
