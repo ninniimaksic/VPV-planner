@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     );
 
     if (response.ok) {
-      const data = await response.json();
+      const data = await response;
       res.status(200).json(data);
     } else {
       console.log("API request failed");
