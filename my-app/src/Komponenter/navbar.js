@@ -30,6 +30,11 @@ const Navbar = () => {
           <img src={logo1} alt="Logo" />
           <span>VPV Planner</span>
         </div>
+        <h2>
+          {sessionStorage.getItem("projectName")}
+          {" - "}
+          {sessionStorage.getItem("projectNumber")}
+        </h2>
         <div>
           <ul id="navbar" className={clicked ? "navbar active" : "navbar"}>
             <li style={{ display: "flex", alignItems: "center" }}>

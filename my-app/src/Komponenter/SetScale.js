@@ -157,7 +157,7 @@ const SetScale = ({ selectedPhoto }) => {
                   onChange={handleInputChange}
                 ></TextField>
                 <span id="unitlabel">m</span>
-                <div className="showScale">
+                {/* <div className="showScale">
                   <p>Line: {lines && getImgLen(lines[0][0]).toFixed(2)} px</p>
                   <br />
                   <p>
@@ -169,7 +169,7 @@ const SetScale = ({ selectedPhoto }) => {
                       ).toFixed(2)}{" "}
                     cm/px
                   </p>
-                </div>
+                </div> */}
 
                 <div>
                   <br></br>
