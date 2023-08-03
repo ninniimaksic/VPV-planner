@@ -5,6 +5,8 @@ import PVgrid from "./PVgrid";
 import { DragHorizontalIcon } from "@navikt/aksel-icons";
 import { Button, TextField } from "@navikt/ds-react";
 import Units from "./Units.js";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 
 const UnitPlacer = ({ sections, scale }) => {
   const [grids, setGrids] = useState([]);
@@ -13,6 +15,7 @@ const UnitPlacer = ({ sections, scale }) => {
   const [selectedGrid, setSelectedGrid] = useState(null);
   const unitLength = 160 / scale;
   const unitWidth = 150 / scale;
+  const [sliderValue, setSliderValue] = useState(0); //
 
   const addGrid = (ncol, nrow, angle) => {
     if (ncol <= 0 || nrow <= 0) {
@@ -29,11 +32,12 @@ const UnitPlacer = ({ sections, scale }) => {
     setNrow(parseInt(event.target.value));
   };
 
-  const handleRotationChange = (event) => {
+  const handleSliderChange = (value) => {
     if (selectedGrid !== null) {
       const newGrids = [...grids];
-      newGrids[selectedGrid].rotation = parseInt(event.target.value);
+      newGrids[selectedGrid].rotation = value;
       setGrids(newGrids);
+      setSliderValue(value); // Oppdater sliderValue når slider-verdien endres
     }
   };
 
@@ -156,11 +160,17 @@ const UnitPlacer = ({ sections, scale }) => {
           value={nrow}
           onChange={handleNrowChange}
         />
-        <TextField
-          type="number"
-          label="Rotation degrees"
-          value={selectedGrid !== null ? grids[selectedGrid].rotation : ""}
-          onChange={handleRotationChange}
+        <div style={{ textAlign: "center", marginTop: "10px" }}>
+          Rotation: {sliderValue} degrees
+        </div>
+
+        <Slider
+          label="Rotate"
+          value={selectedGrid !== null ? grids[selectedGrid].rotation : 0}
+          onChange={handleSliderChange}
+          min={0}
+          max={360}
+          step={1}
         />
         <Button
           onClick={() => addGrid(ncol, nrow, 0)}
