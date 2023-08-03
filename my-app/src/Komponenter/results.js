@@ -15,11 +15,27 @@ export default function Results() {
   for (let i = 0; i < grids.length; i++) {
     layouts.push(JSON.parse(sessionStorage.getItem(`layout${i}`)));
   }
+  // Count num of units in layout [1, 0] array
+  let nUnits = layouts.reduce((total, layout) => {
+    return (
+      total +
+      layout.reduce((rowTotal, row) => {
+        return (
+          rowTotal +
+          row.reduce((unitTotal, unit) => {
+            return unitTotal + unit;
+          }, 0)
+        );
+      }, 0)
+    );
+  }, 0);
   const address = sessionStorage.getItem("address");
   const info = sessionStorage.getItem("info");
   const lat = sessionStorage.getItem("lat");
   const lon = sessionStorage.getItem("lon");
   const azimuth = sessionStorage.getItem("azimuth") || 0;
+  const kWp = 0.2;
+  const loss = 14;
   const imgurl = sessionStorage.getItem("imgurl");
   const [apiData, setApiData] = useState(null);
 
@@ -27,12 +43,12 @@ export default function Results() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://vpv-planner.vercel.app/api/pvcalc.js?lat=${lat}&lon=${lon}&peakpower=${1}&loss=${14}&azimuth=${azimuth}`
+          `https://vpv-planner.vercel.app/api/pvcalc.js?lat=${lat}&lon=${lon}&peakpower=${kWp}&loss=${loss}&azimuth=${azimuth}`
         );
         if (response.ok) {
           const body = await response.text();
           const data = JSON.parse(body);
-          setApiData(data.outputs.totals.fixed.E_y);
+          setApiData(parseFloat(data.outputs.totals.fixed.E_y));
         } else {
           console.log("API request failed or returned non-JSON response");
         }
@@ -59,6 +75,7 @@ export default function Results() {
     console.log("Info:", info);
     console.log("Lat:", lat);
     console.log("Lon:", lon);
+    console.log("nUnits:", nUnits);
     console.log("Azimuth:", azimuth);
     console.log("Imgurl:", imgurl);
   }, []);
@@ -79,23 +96,27 @@ export default function Results() {
               <li>Project Number EC: {projectNumberEC}</li>
               <li>Sections: {sections}</li>
               {/* <li>Grids: {grids}</li> */}
-              {layouts.map((layout, i) => (
-                <li key={i}>
-                  Layout{i}: {JSON.stringify(layout)}
-                </li>
-              ))}
               <li>Address: {address}</li>
               {info !== "" && <li>Info: {info}</li>}
               <li>Lat: {lat}</li>
               <li>Lon: {lon}</li>
               <li>Azimuth: {azimuth}</li>
+              {layouts.map((layout, i) => (
+                <li key={i}>
+                  Layout{i}: {JSON.stringify(layout)}
+                </li>
+              ))}
+              <li>Total number of units: {nUnits}</li>
             </ul>
             <p>
-              Api query to PVGIS with peakpower=1, loss=14, aspect=14 and values
-              above:
+              Yearly energy yield estimation with {kWp}kWp, {loss}% loss and{" "}
+              {(azimuth + 180) % 360}° azimuth:
             </p>
             {apiData ? (
-              <pre>{JSON.stringify(apiData, null, 2)} kWp</pre>
+              <>
+                <pre>Per unit: {apiData} kWp</pre>
+                <pre>Total: {apiData * nUnits} kWp</pre>
+              </>
             ) : (
               <p>Loading...</p>
             )}
