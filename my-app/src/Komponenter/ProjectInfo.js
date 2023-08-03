@@ -12,27 +12,27 @@ const ProjectInfo = () => {
     sessionStorage.getItem("projectName") || ""
   );
   const [projectNumber, setProjectNumber] = useState(
-    sessionStorage.getItem("projectNumber") || 0
+    sessionStorage.getItem("projectNumber") || ""
   );
   const [installer, setInstaller] = useState(
     sessionStorage.getItem("installer") || ""
   );
   const [PNinstaller, setPNinstaller] = useState(
-    sessionStorage.getItem("PNinstaller") || 0
+    sessionStorage.getItem("PNinstaller") || ""
   );
   const [EndCostumer, setEndCostumer] = useState(
     sessionStorage.getItem("EndCostumer") || ""
   );
   const [projectNumberEC, setProjectnumberEC] = useState(
-    sessionStorage.getItem("projectNumberEC") || 0
+    sessionStorage.getItem("projectNumberEC") || ""
   );
   const [pageState, setPageState] = useState(1);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    sessionStorage.setItem("projectName", projectName);
-    sessionStorage.setItem("projectNumber", projectNumber);
+    sessionStorage.setItem("projectName", projectName || "New Project");
+    sessionStorage.setItem("projectNumber", projectNumber || 1);
     sessionStorage.setItem("installer", installer);
     sessionStorage.setItem("PNinstaller", PNinstaller);
     sessionStorage.setItem("EndCostumer", EndCostumer);

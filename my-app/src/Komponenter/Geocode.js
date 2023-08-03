@@ -154,7 +154,7 @@ const Geocode = () => {
                 />
               </div>
               <Button variant="primary" type="submit" className="submit-button">
-                Check if it's the correct address or lat/lon
+                Check address/coords
               </Button>
               {response && isConfirmed && (
                 <div>
