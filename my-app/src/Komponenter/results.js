@@ -114,8 +114,8 @@ export default function Results() {
             </p>
             {apiData ? (
               <>
-                <pre>Per unit: {apiData} kWp</pre>
-                <pre>Total: {apiData * nUnits} kWp</pre>
+                <pre>Per unit: {apiData} kWh</pre>
+                <pre>Total: {apiData * nUnits} kWh</pre>
               </>
             ) : (
               <p>Loading...</p>
