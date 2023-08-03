@@ -38,6 +38,7 @@ export default function Results() {
   const kWp = 0.2;
   const loss = 14;
   const imgurl = sessionStorage.getItem("imgurl");
+  const image = sessionStorage.getItem("screenshot");
   const [apiData, setApiData] = useState(null);
 
   useEffect(() => {
@@ -177,6 +178,7 @@ export default function Results() {
               <p>Loading...</p>
             )}
           </div>
+          <img src={image} />
           {imgurl && <img src={imgurl} alt="Uploaded" />}
         </div>
       </div>
