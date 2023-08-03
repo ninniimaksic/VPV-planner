@@ -4,15 +4,16 @@ import RoofOutline from "./RoofOutline";
 import useImage from "use-image";
 import { Stage, Layer, Image, Line, Circle } from "react-konva";
 import { TextField, HelpText, Button } from "@navikt/ds-react";
+import "@navikt/ds-css";
 import Compass from "../Komponenter/Compass";
 import { MapInteractionCSS } from "react-map-interaction";
 
-const SetScale = ({ selectedPhoto }) => {
+const SetScale = ({ selectedPhoto, opacity }) => {
   const [lines, setLines] = useState([]);
   const [line, setLine] = useState([]);
   const [imgScale, setImgScale] = useState(0.2);
-  const lineRef = useRef(); // Ref to access the line component
-  const circleLayerRef = useRef(); // Ref to access the circle layer
+  const lineRef = useRef();
+  const circleLayerRef = useRef();
   const [wimage] = useImage(selectedPhoto);
   const [showNextButton, setShowNextButton] = useState(false);
   const [showRoofOutline, setShowRoofOutline] = useState(false);
@@ -59,7 +60,6 @@ const SetScale = ({ selectedPhoto }) => {
       const stage = liner.getStage();
       const point = stage.getPointerPosition();
       setLine([...line, point.x, point.y]);
-      console.log("Added sum points", line);
     }
   };
 
@@ -97,6 +97,7 @@ const SetScale = ({ selectedPhoto }) => {
                       height={imageHeight}
                       width={imageWidth}
                       image={img}
+                      opacity={opacity} // Set the opacity of the image
                     />
                   )}
                   {line.length === 2 && (
@@ -134,7 +135,7 @@ const SetScale = ({ selectedPhoto }) => {
                   ))}
                   <Line
                     ref={lineRef}
-                    points={[]}
+                    points={line}
                     stroke="red"
                     strokeWidth={3}
                   />
@@ -210,6 +211,7 @@ const SetScale = ({ selectedPhoto }) => {
           imageHeight={imageHeight}
           imageWidth={imageWidth}
           scale={imgScale}
+          opacity={opacity}
         />
       )}
     </>
