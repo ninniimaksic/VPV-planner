@@ -40,6 +40,8 @@ export default function Results() {
   const imgurl = sessionStorage.getItem("imgurl");
   const [apiData, setApiData] = useState(null);
 
+  const image = sessionStorage.getItem("screenshot");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -177,6 +179,7 @@ export default function Results() {
               <p>Loading...</p>
             )}
           </div>
+          <img src={image} />
           {imgurl && <img src={imgurl} alt="Uploaded" />}
         </div>
       </div>
