@@ -15,10 +15,11 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
   const lineRef = useRef(); // Ref to access the line component
 
   useEffect(() => {
-    lineRef.current.getLayer().batchDraw();
-  }, [line]);
-
+    setTransparency(opacity);
+  }, [opacity]);
   const [isNewSectionClicked, setIsNewSectionClicked] = useState(false);
+  const [transparency, setTransparency] = useState(opacity);
+  const stageRef = React.useRef();
 
   const handleStageClick = () => {
     if (addPoints) {
@@ -88,21 +89,33 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
   const navigate = useNavigate();
 
   const handleSaveCont = () => {
-    sessionStorage.setItem("sections", JSON.stringify(lines));
-    navigate("/results");
+    setTransparency(0);
+    setShowUnitPlacer(true);
+
+    setTimeout(() => {
+      const dataUrl = stageRef.current.toDataURL();
+      sessionStorage.setItem("screenshot", dataUrl);
+      sessionStorage.setItem("sections", JSON.stringify(lines));
+      navigate("/results");
+    }, 100);
   };
 
   return (
     <div className={`lenScale ${isNewSectionClicked ? "drawn-cursor" : ""}`}>
       <div className="drawStage">
-        <Stage width={1000} height={750} onClick={handleStageClick}>
+        <Stage
+          width={1000}
+          height={750}
+          onClick={handleStageClick}
+          ref={stageRef}
+        >
           <Layer>
             {img && (
               <Image
                 height={imageHeight}
                 width={imageWidth}
                 image={img}
-                opacity={opacity}
+                opacity={transparency}
               />
             )}
             {line.map((_, i) => (

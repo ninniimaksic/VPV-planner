@@ -41,9 +41,9 @@ const UnitPlacer = ({ sections, scale }) => {
     }
   };
 
-  const deleteGrid = (index) => {
-    if (index !== null) {
-      const newGrids = grids.filter((_, i) => i !== index);
+  const deleteGrid = (indexToDelete) => {
+    if (indexToDelete !== null) {
+      const newGrids = grids.filter((_, index) => index !== indexToDelete);
       setGrids(newGrids);
       setSelectedGrid(null);
     }
@@ -66,7 +66,7 @@ const UnitPlacer = ({ sections, scale }) => {
       </div>
       {grids.map((grid, i) => (
         <div
-          key={`new-grid-${i}`}
+          key={`grid-${i}`}
           style={{
             position: "relative",
             top: "50%",
