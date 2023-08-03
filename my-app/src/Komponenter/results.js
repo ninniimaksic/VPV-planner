@@ -45,7 +45,7 @@ export default function Results() {
     };
 
     fetchData();
-  }, [lat, lon, azimuth, apiData]);
+  }, []);
 
   useEffect(() => {
     // Do something with the retrieved data
