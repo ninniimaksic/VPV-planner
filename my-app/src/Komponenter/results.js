@@ -95,7 +95,7 @@ export default function Results() {
               above:
             </p>
             {apiData ? (
-              <pre>{JSON.stringify(apiData, null, 2)}</pre>
+              <pre>{JSON.stringify(apiData, null, 2)} kWp</pre>
             ) : (
               <p>Loading...</p>
             )}
