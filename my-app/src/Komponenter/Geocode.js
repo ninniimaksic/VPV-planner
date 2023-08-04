@@ -122,6 +122,7 @@ const Geocode = () => {
 
   return (
     <>
+
       <div className={"geocodeStyle"}>
         <div id="plassering">
           <form className="form-container">
@@ -161,6 +162,7 @@ const Geocode = () => {
                 <br />
                 {isSaved ? (
                   <div className="pop-up-container">
+
                     <Button
                       variant="primary"
                       onClick={handleSave}

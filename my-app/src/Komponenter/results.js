@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./navbar";
+import { Table } from "@navikt/ds-react";
 import "../css/results.css";
 
 export default function Results() {
@@ -13,28 +14,43 @@ export default function Results() {
   const grids = JSON.parse(sessionStorage.getItem("grids"));
   var layouts = [];
   for (let i = 0; i < grids.length; i++) {
-    layouts.push(JSON.parse(sessionStorage.getItem(`layout${i}`)));
+    layouts.push(JSON.parse(sessionStorage.getItem(`layout${i}`)) || []);
   }
+  // Count num of units in layout [1, 0] array
+  let nUnits = layouts.reduce((total, layout) => {
+    return (
+      total +
+      layout.reduce((rowTotal, row) => {
+        return (
+          rowTotal +
+          row.reduce((unitTotal, unit) => {
+            return unitTotal + unit;
+          }, 0)
+        );
+      }, 0)
+    );
+  }, 0);
   const address = sessionStorage.getItem("address");
   const info = sessionStorage.getItem("info");
   const lat = sessionStorage.getItem("lat");
   const lon = sessionStorage.getItem("lon");
   const azimuth = sessionStorage.getItem("azimuth") || 0;
+  const kWp = 1;
+  const loss = 14;
   const imgurl = sessionStorage.getItem("imgurl");
   const [apiData, setApiData] = useState(null);
-
   const image = sessionStorage.getItem("screenshot");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://vpv-planner.vercel.app/api/pvcalc.js?lat=${lat}&lon=${lon}&peakpower=${1}&loss=${14}&azimuth=${azimuth}`
+          `https://vpv-planner.vercel.app/api/pvcalc.js?lat=${lat}&lon=${lon}&peakpower=${kWp}&loss=${loss}&azimuth=${azimuth}`
         );
-        console.log("Raw response:", response);
         if (response.ok) {
-          const data = await response.json();
-          setApiData(data);
+          const body = await response.text();
+          const data = JSON.parse(body);
+          setApiData(parseFloat(data.outputs.totals.fixed.E_y));
         } else {
           console.log("API request failed or returned non-JSON response");
         }
@@ -44,7 +60,43 @@ export default function Results() {
     };
 
     fetchData();
-  }, []);
+  }, [azimuth, lat, lon]);
+
+  function get(grid, i, j) {
+    // Return value of (i, j) if it exists, else 0
+    try {
+      return grid[i][j] || 0;
+    } catch (error) {
+      return 0;
+    }
+  }
+
+  function countFeet(grid, i, j) {
+    // Count the number of feet needed for cell (i, j)
+    const currentCell = grid[i][j];
+    if (!currentCell) {
+      // No unit => no feet
+      return 0;
+    }
+
+    const tl =
+      !get(grid, i - 1, j) && !get(grid, i, j - 1) && !get(grid, i - 1, j - 1);
+    const tr = !get(grid, i - 1, j);
+    const bl = !get(grid, i, j - 1);
+
+    return tl + tr + bl + 1;
+  }
+
+  function totCount(grid) {
+    // Return the total number of feet needed for the grid
+    let totalFeet = 0;
+    for (let i = 0; i < grid.length; i++) {
+      for (let j = 0; j < grid[0].length; j++) {
+        totalFeet += countFeet(grid, i, j);
+      }
+    }
+    return totalFeet;
+  }
 
   useEffect(() => {
     // Do something with the retrieved data
@@ -61,6 +113,7 @@ export default function Results() {
     console.log("Info:", info);
     console.log("Lat:", lat);
     console.log("Lon:", lon);
+    console.log("nUnits:", nUnits);
     console.log("Azimuth:", azimuth);
     console.log("Imgurl:", imgurl);
   }, []);
@@ -72,32 +125,91 @@ export default function Results() {
         <div className="row">
           <div className="col-12">
             <h1>Results</h1>
-            <ul>
-              <li>Project Name: {projectName}</li>
-              <li>Project Number: {projectNumber}</li>
-              <li>Installer: {installer}</li>
-              <li>PN Installer: {PNinstaller}</li>
-              <li>End Customer: {EndCostumer}</li>
-              <li>Project Number EC: {projectNumberEC}</li>
-              <li>Sections: {sections}</li>
-              {/* <li>Grids: {grids}</li> */}
-              {layouts.map((layout, i) => (
-                <li key={i}>
-                  Layout{i}: {JSON.stringify(layout)}
-                </li>
-              ))}
-              <li>Address: {address}</li>
-              {info !== "" && <li>Info: {info}</li>}
-              <li>Lat: {lat}</li>
-              <li>Lon: {lon}</li>
-              <li>Azimuth: {azimuth}</li>
-            </ul>
-            <p>
-              Api query to PVGIS with peakpower=1, loss=14, aspect=14 and values
-              above:
-            </p>
+            <Table>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell scope="col">Project Name</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">
+                    Project Number
+                  </Table.HeaderCell>
+                  <Table.HeaderCell scope="col">Installer</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">PN Installer</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">End Customer</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">
+                    Project Number EC
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                <Table.Row>
+                  <Table.DataCell>{projectName}</Table.DataCell>
+                  <Table.DataCell>{projectNumber}</Table.DataCell>
+                  <Table.DataCell>{installer}</Table.DataCell>
+                  <Table.DataCell>{PNinstaller}</Table.DataCell>
+                  <Table.DataCell>{EndCostumer}</Table.DataCell>
+                  <Table.DataCell>{projectNumberEC}</Table.DataCell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
+            <br />
+            <Table>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell scope="col">Address</Table.HeaderCell>
+                  {info !== "" && (
+                    <Table.HeaderCell scope="col">Info</Table.HeaderCell>
+                  )}
+                  <Table.HeaderCell scope="col">Lat</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">Lon</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">Azimuth</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">Layout</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">
+                    Total number of units
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                <Table.Row>
+                  <Table.DataCell>{address}</Table.DataCell>
+                  {info !== "" && <Table.DataCell>{info}</Table.DataCell>}
+                  <Table.DataCell>{lat}</Table.DataCell>
+                  <Table.DataCell>{lon}</Table.DataCell>
+                  <Table.DataCell>{azimuth}</Table.DataCell>
+                  <Table.DataCell>
+                    <ul>
+                      {layouts.map((layout, i) => (
+                        <li key={i}>
+                          Layout{i}: {JSON.stringify(layout)}
+                        </li>
+                      ))}
+                    </ul>
+                  </Table.DataCell>
+                  <Table.DataCell>{nUnits}</Table.DataCell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
+            <br />
+            <h4>
+              Yearly energy yield estimation with {kWp}kWp, {loss}% loss and{" "}
+              {(azimuth + 180) % 360}° azimuth:
+            </h4>
             {apiData ? (
-              <pre>{JSON.stringify(apiData, null, 2)}</pre>
+              <>
+                <Table>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell scope="col">Per unit</Table.HeaderCell>
+                      <Table.HeaderCell scope="col">Total</Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    <Table.Row>
+                      <Table.DataCell>{apiData} kWh</Table.DataCell>
+                      <Table.DataCell>{apiData * nUnits} kWh</Table.DataCell>
+                    </Table.Row>
+                  </Table.Body>
+                </Table>
+              </>
             ) : (
               <p>Loading...</p>
             )}
