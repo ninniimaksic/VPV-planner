@@ -35,11 +35,10 @@ export default function Results() {
   const lat = sessionStorage.getItem("lat");
   const lon = sessionStorage.getItem("lon");
   const azimuth = sessionStorage.getItem("azimuth") || 0;
-  const kWp = 0.2;
+  const kWp = 1;
   const loss = 14;
   const imgurl = sessionStorage.getItem("imgurl");
   const [apiData, setApiData] = useState(null);
-
   const image = sessionStorage.getItem("screenshot");
 
   useEffect(() => {
@@ -62,6 +61,42 @@ export default function Results() {
 
     fetchData();
   }, [azimuth, lat, lon]);
+
+  function get(grid, i, j) {
+    // Return value of (i, j) if it exists, else 0
+    try {
+      return grid[i][j] || 0;
+    } catch (error) {
+      return 0;
+    }
+  }
+
+  function countFeet(grid, i, j) {
+    // Count the number of feet needed for cell (i, j)
+    const currentCell = grid[i][j];
+    if (!currentCell) {
+      // No unit => no feet
+      return 0;
+    }
+
+    const tl =
+      !get(grid, i - 1, j) && !get(grid, i, j - 1) && !get(grid, i - 1, j - 1);
+    const tr = !get(grid, i - 1, j);
+    const bl = !get(grid, i, j - 1);
+
+    return tl + tr + bl + 1;
+  }
+
+  function totCount(grid) {
+    // Return the total number of feet needed for the grid
+    let totalFeet = 0;
+    for (let i = 0; i < grid.length; i++) {
+      for (let j = 0; j < grid[0].length; j++) {
+        totalFeet += countFeet(grid, i, j);
+      }
+    }
+    return totalFeet;
+  }
 
   useEffect(() => {
     // Do something with the retrieved data
