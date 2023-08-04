@@ -7,6 +7,7 @@ import { TextField, HelpText, Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
 import Compass from "../Komponenter/Compass";
 import { MapInteractionCSS } from "react-map-interaction";
+import Geocode from "./Geocode";
 
 const SetScale = ({ selectedPhoto, opacity }) => {
   const [lines, setLines] = useState([]);
@@ -176,6 +177,8 @@ const SetScale = ({ selectedPhoto, opacity }) => {
                   <br></br>
                   <br></br>
                   <Compass />
+                  <br></br>
+                  <Geocode />
                 </div>
                 <div className="nextButton">
                   {showNextButton && (
