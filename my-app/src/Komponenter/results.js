@@ -189,9 +189,26 @@ export default function Results() {
               </Table.Body>
             </Table>
             <br />
+            <h3>Bill Of Materials</h3>
+            <div>
+              <h4> Total amount of feet (support): </h4>
+              {layouts.map((layout, i) => (
+                <p key={i}>
+                  Layout {i}: {totCount(layout)}
+                </p>
+              ))}
+            </div>
+            <h4>Cable cradles:</h4>
+            {layouts.map((layout, i) => (
+              <p key={i}>
+                Layout {i}: {layout.length * 2}
+              </p>
+            ))}
+            <br />
+            <h3>Energy yield estimation</h3>
             <h4>
-              Yearly energy yield estimation with {kWp}kWp, {loss}% loss and{" "}
-              {(azimuth + 180) % 360}° azimuth:
+              Using {kWp} kWp, {loss}% loss and {(azimuth + 180) % 360}° main
+              side direction:
             </h4>
             {apiData ? (
               <>
