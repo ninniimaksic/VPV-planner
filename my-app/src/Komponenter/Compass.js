@@ -19,10 +19,13 @@ const Compass = () => {
     transform: `rotate(${angle}deg)`,
     transition: "transform 0.5s ease-in-out",
     transformOrigin: "center",
+    width: "70px", // modify to make image smaller
+    height: "70px", // modify to make image smaller
   };
 
   return (
-    <div>
+    <div style={{ display: "flex", alignItems: "center" }}>
+      {" "}
       <TextField
         label="Set angle of north in the image"
         id="angle-input"
@@ -30,6 +33,7 @@ const Compass = () => {
         min="0"
         max="360"
         onChange={handleAngleChange}
+        style={{ width: "200px" }}
       />
       <br></br>
       <div id="compass-container">

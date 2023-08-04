@@ -3,9 +3,10 @@ import { TextField, Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
 import "../css/ProjectInfo.css";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
-import { Pagination } from "@navikt/ds-react";
+
 import Navbar from "./navbar";
 import { useNavigate } from "react-router-dom";
+import StepperInd from "./Stepper";
 
 const ProjectInfo = () => {
   const [projectName, setProjectName] = useState(
@@ -94,7 +95,7 @@ const ProjectInfo = () => {
 
     console.log("Saving project name and number:", projectName, projectNumber);
 
-    navigate("/geocode");
+    navigate("/photoimport");
   };
 
   return (
@@ -178,16 +179,8 @@ const ProjectInfo = () => {
             </span>
           </Button>
         </div>
-        <Pagination
-          className="pagination-container"
-          page={pageState}
-          onPageChange={(x) => setPageState(x)}
-          count={5}
-          boundaryCount={1}
-          siblingCount={1}
-          size="medium"
-        />
       </>
+      <StepperInd />
       <br /> <br />
       <br></br>
     </>
