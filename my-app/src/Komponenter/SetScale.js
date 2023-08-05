@@ -147,7 +147,6 @@ const SetScale = ({ selectedPhoto, opacity }) => {
           <div className="Line">
             {lines.length >= 1 && (
               <div className="Fargetest">
-                <h2> Fill in</h2>
                 <HelpText id="lineHelp">
                   Longer lines reduce the effect of errors
                 </HelpText>

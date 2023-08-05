@@ -116,13 +116,12 @@ const Geocode = () => {
     navigate("/photoimport");
   };
 
-  const handleBackPage = () => {
-    navigate("/projectinfo");
-  };
+  // const handleBackPage = () => {
+  //   navigate("/projectinfo");
+  // };
 
   return (
     <>
-
       <div className={"geocodeStyle"}>
         <div id="plassering">
           <form className="form-container">
@@ -162,7 +161,6 @@ const Geocode = () => {
                 <br />
                 {isSaved ? (
                   <div className="pop-up-container">
-
                     <Button
                       variant="primary"
                       onClick={handleSave}
@@ -198,7 +196,7 @@ const Geocode = () => {
           </span>
         </Button>
       )}
-      <Button
+      {/* <Button
         variant="secondary"
         className="back-button"
         onClick={handleBackPage}
@@ -207,7 +205,7 @@ const Geocode = () => {
           <ArrowLeftIcon />
           Back page
         </span>
-      </Button>
+      </Button> */}
     </>
   );
 };
