@@ -8,6 +8,7 @@ import "@navikt/ds-css";
 import Compass from "../Komponenter/Compass";
 import { MapInteractionCSS } from "react-map-interaction";
 import Geocode from "./Geocode";
+import StepperInd from "./Stepper";
 
 const SetScale = ({ selectedPhoto, opacity }) => {
   const [lines, setLines] = useState([]);
@@ -196,6 +197,7 @@ const SetScale = ({ selectedPhoto, opacity }) => {
                       Continue
                     </Button>
                   )}
+                  <StepperInd />
                 </div>
               </div>
             )}

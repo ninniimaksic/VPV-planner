@@ -93,10 +93,15 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
     setShowUnitPlacer(true);
 
     setTimeout(() => {
-      const dataUrl = stageRef.current.toDataURL();
-      sessionStorage.setItem("screenshot", dataUrl);
-      sessionStorage.setItem("sections", JSON.stringify(lines));
-      navigate("/results");
+      const dataUrlTransparent = stageRef.current.toDataURL();
+      sessionStorage.setItem("screenshotTransparent", dataUrlTransparent);
+      setTransparency(1);
+      setTimeout(() => {
+        const dataUrlOpaque = stageRef.current.toDataURL();
+        sessionStorage.setItem("screenshotOpaque", dataUrlOpaque);
+        sessionStorage.setItem("sections", JSON.stringify(lines));
+        navigate("/results");
+      }, 100);
     }, 100);
   };
 
