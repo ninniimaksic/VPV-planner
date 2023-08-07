@@ -47,6 +47,7 @@ const PVgrid = ({ l, w, ncol, nrow, layoutid }) => {
     sessionStorage.setItem(`layout${layoutid}`, JSON.stringify(grid));
     console.log("Saved layout:", grid);
   };
+  saveLayout(layout);
 
   const handleGridItemClick = (itemId) => {
     const updatedLayout = layout.map((item) => {

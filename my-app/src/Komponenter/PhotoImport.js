@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import SetScale from "./SetScale";
 import Navbar from "./navbar";
 import "../css/photoimport.css";
@@ -12,11 +12,26 @@ const PhotoImport = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [opacity, setOpacity] = useState(1); // New state for controlling opacity
   const fileInput = useRef();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const imgData = sessionStorage.getItem("imgData");
+    if (imgData) {
+      setSelectedPhoto(imgData);
+    }
+  }, []);
 
   const handlePhotoUpload = (event) => {
-    const file = event.target.files[0];
-    setSelectedPhoto(URL.createObjectURL(file));
-    sessionStorage.setItem("imgurl", URL.createObjectURL(file));
+    const file = URL.createObjectURL(event.target.files[0]);
+    const imgurl = event.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      sessionStorage.setItem("imgurl", reader.result);
+    };
+    if (imgurl) {
+      reader.readAsDataURL(imgurl);
+    }
+    setSelectedPhoto(file);
   };
 
   const handleClick = () => {
@@ -27,8 +42,6 @@ const PhotoImport = () => {
     setOpacity(value);
   };
 
-  const navigate = useNavigate();
-
   const handleBackPage = () => {
     navigate("/projectinfo");
   };
@@ -38,7 +51,7 @@ const PhotoImport = () => {
       <Navbar />
 
       <div className="plassering1">
-        <div classname="uploadknapp">
+        <div className="uploadknapp">
           {!selectedPhoto && <h2>Upload image </h2>}
         </div>
         {!selectedPhoto && (
