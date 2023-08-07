@@ -137,6 +137,7 @@ const Geocode = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               className="input-field"
+              required
             />
             {response && response.address && isConfirmed && (
               <div>
