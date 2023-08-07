@@ -4,7 +4,7 @@ import "../css/PVgrid.css";
 
 const GridLayout = WidthProvider(ReactGridLayout);
 
-const PVgrid = ({ points, l, w, ncol, nrow, layoutid }) => {
+const PVgrid = ({ l, w, ncol, nrow, layoutid }) => {
   const numColumns = ncol; // Number of columns in the grid
   const numRows = nrow; // Number of rows in the grid
 

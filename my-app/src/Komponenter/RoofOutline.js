@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/SetScale.css";
 import UnitPlacer from "./UnitPlacer";
+import PVgrids from "./PVgrids";
+import html2canvas from "html2canvas";
 import { Stage, Layer, Image, Line, Circle, Text, Rect } from "react-konva";
 import { Button, Table, TextField } from "@navikt/ds-react";
 import { WrenchIcon, ArrowRightIcon } from "@navikt/aksel-icons";
@@ -9,6 +11,8 @@ import { WrenchIcon, ArrowRightIcon } from "@navikt/aksel-icons";
 const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
   const [line, setLine] = useState([]);
   const [lines, setLines] = useState([]);
+  const [grids, setGrids] = useState([]);
+  const [selectedGrid, setSelectedGrid] = useState(null);
   const [addPoints, setAddPoints] = useState(false);
   const [showUnitPlacer, setShowUnitPlacer] = useState(false); // Show unit placer
   const [showDims, setShowDims] = useState(true); // Show dimensions of each section
@@ -44,6 +48,10 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
 
   const undo = () => {
     setLine((prevLine) => prevLine.slice(0, -2));
+  };
+
+  const selectGrid = (index) => {
+    setSelectedGrid(index);
   };
 
   const toggleAddingPoints = () => {
@@ -88,21 +96,35 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
 
   const navigate = useNavigate();
 
-  const handleSaveCont = () => {
+  const handleSaveCont = async () => {
     setTransparency(0);
     setShowUnitPlacer(true);
 
-    setTimeout(() => {
-      const dataUrlTransparent = stageRef.current.toDataURL();
-      sessionStorage.setItem("screenshotTransparent", dataUrlTransparent);
-      setTransparency(1);
-      setTimeout(() => {
-        const dataUrlOpaque = stageRef.current.toDataURL();
-        sessionStorage.setItem("screenshotOpaque", dataUrlOpaque);
-        sessionStorage.setItem("sections", JSON.stringify(lines));
-        navigate("/results");
+    try {
+      setTimeout(async () => {
+        document.querySelector(".drawStage").style.backgroundColor =
+          "transparent";
+
+        const drawStageCanvasTransparent = await html2canvas(
+          document.querySelector(".drawStage")
+        );
+        const dataUrlTransparent = drawStageCanvasTransparent.toDataURL();
+        sessionStorage.setItem("screenshotTransparent", dataUrlTransparent);
+
+        setTransparency(1);
+        setTimeout(async () => {
+          const drawStageCanvasOpaque = await html2canvas(
+            document.querySelector(".drawStage")
+          );
+          const dataUrlOpaque = drawStageCanvasOpaque.toDataURL();
+          sessionStorage.setItem("screenshotOpaque", dataUrlOpaque);
+          sessionStorage.setItem("sections", JSON.stringify(lines));
+          navigate("/results");
+        }, 100);
       }, 100);
-    }, 100);
+    } catch (error) {
+      console.log("Error capturing screenshot: ", error);
+    }
   };
 
   return (
@@ -200,6 +222,12 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
             ))}
           </Layer>
         </Stage>
+        <PVgrids
+          grids={grids}
+          scale={scale}
+          selectGrid={selectGrid}
+          selectedGrid={selectedGrid}
+        />
       </div>
 
       {!showUnitPlacer ? (
@@ -302,7 +330,12 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
           </div>
         </div>
       ) : (
-        <UnitPlacer sections={lines} scale={scale} />
+        <UnitPlacer
+          grids={grids}
+          setGrids={setGrids}
+          selectedGrid={selectedGrid}
+          setSelectedGrid={setSelectedGrid}
+        />
       )}
       <div style={{ marginTop: "auto" }}>
         <Button

@@ -155,25 +155,6 @@ const Geocode = () => {
                   or correct the lat/lon.
                 </p>
                 <br />
-                {isSaved ? (
-                  <div className="pop-up-container">
-                    <Button
-                      variant="primary"
-                      onClick={handleSaveAndContinue}
-                      style={{ display: isSaved ? "block" : "none" }}
-                    >
-                      Save
-                    </Button>
-                  </div>
-                ) : (
-                  <Button
-                    variant="primary"
-                    onClick={handleSaveAndContinue}
-                    style={{ display: isConfirmed ? "block" : "none" }}
-                  >
-                    Next
-                  </Button>
-                )}
               </div>
             )}
             <br />

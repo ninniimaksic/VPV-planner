@@ -233,10 +233,10 @@ export default function Results() {
               <p>Loading...</p>
             )}
           </div>
-
           {screenshotTransparent && (
             <img src={screenshotTransparent} alt="Transparent Screenshot" />
           )}
+          <div style={{ marginBottom: "1rem" }}></div>
 
           {screenshotOpaque && (
             <img src={screenshotOpaque} alt="Opaque Screenshot" />
