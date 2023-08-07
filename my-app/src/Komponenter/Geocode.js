@@ -121,7 +121,7 @@ const Geocode = () => {
       <div className={"geocodeStyle"}>
         <div id="plassering">
           <form className="form-container">
-            <TextField
+            {/* <TextField
               label="Add additional information to the project"
               description="optional"
               id="info"
@@ -129,7 +129,7 @@ const Geocode = () => {
               value={info}
               onChange={(e) => setInfo(e.target.value)}
               className="input-field"
-            />
+            /> */}
             <TextField
               label="Type in your address or lat,lon"
               id="address"
