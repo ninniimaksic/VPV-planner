@@ -27,8 +27,7 @@ const Navbar = () => {
     <>
       <nav>
         <div>
-          <img src={logo1} alt="Logo" />
-          <span>VPV Planner</span>
+          <img src={logo1} alt="Logo" height="40px" width="150px" />
         </div>
         <h2>
           {sessionStorage.getItem("projectName")}
