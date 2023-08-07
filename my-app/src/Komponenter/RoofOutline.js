@@ -102,14 +102,21 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
 
     try {
       setTimeout(async () => {
-        const drawStageImg = await html2canvas(
+        document.querySelector(".drawStage").style.backgroundColor =
+          "transparent";
+
+        const drawStageCanvasTransparent = await html2canvas(
           document.querySelector(".drawStage")
         );
-        const dataUrlTransparent = drawStageImg.toDataURL(); // Change to use drawStageImg
+        const dataUrlTransparent = drawStageCanvasTransparent.toDataURL();
         sessionStorage.setItem("screenshotTransparent", dataUrlTransparent);
+
         setTransparency(1);
-        setTimeout(() => {
-          const dataUrlOpaque = drawStageImg.toDataURL(); // Change to use drawStageImg
+        setTimeout(async () => {
+          const drawStageCanvasOpaque = await html2canvas(
+            document.querySelector(".drawStage")
+          );
+          const dataUrlOpaque = drawStageCanvasOpaque.toDataURL();
           sessionStorage.setItem("screenshotOpaque", dataUrlOpaque);
           sessionStorage.setItem("sections", JSON.stringify(lines));
           navigate("/results");
