@@ -15,7 +15,7 @@ const PhotoImport = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const imgData = sessionStorage.getItem("imgData");
+    const imgData = sessionStorage.getItem("imgurl");
     if (imgData) {
       setSelectedPhoto(imgData);
     }
