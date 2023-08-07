@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "@navikt/ds-css";
 import { Button, TextField } from "@navikt/ds-react";
 import { useNavigate } from "react-router-dom";
-import { ArrowRightIcon, ArrowLeftIcon } from "@navikt/aksel-icons";
 
 const Geocode = () => {
   const [address, setAddress] = useState(
@@ -100,7 +99,7 @@ const Geocode = () => {
 
   const navigate = useNavigate();
 
-  const handleSave = () => {
+  const handleSaveAndContinue = () => {
     console.log(
       "Bekreft og lagre: Latitude:",
       response.lat,
@@ -110,19 +109,15 @@ const Geocode = () => {
 
     setIsSaved(true);
     setIsConfirmed(false);
+    navigate("/photoimport"); // Navigate to the next page after saving
   };
 
-  const handleNextPage = () => {
-    navigate("/photoimport");
-  };
-
-  const handleBackPage = () => {
-    navigate("/projectinfo");
-  };
+  // const handleBackPage = () => {
+  //   navigate("/projectinfo");
+  // };
 
   return (
     <>
-
       <div className={"geocodeStyle"}>
         <div id="plassering">
           <form className="form-container">
@@ -162,10 +157,9 @@ const Geocode = () => {
                 <br />
                 {isSaved ? (
                   <div className="pop-up-container">
-
                     <Button
                       variant="primary"
-                      onClick={handleSave}
+                      onClick={handleSaveAndContinue}
                       style={{ display: isSaved ? "block" : "none" }}
                     >
                       Save
@@ -174,10 +168,10 @@ const Geocode = () => {
                 ) : (
                   <Button
                     variant="primary"
-                    onClick={handleSave}
+                    onClick={handleSaveAndContinue}
                     style={{ display: isConfirmed ? "block" : "none" }}
                   >
-                    Save & Confirm
+                    Next
                   </Button>
                 )}
               </div>
@@ -186,19 +180,8 @@ const Geocode = () => {
           </form>
         </div>
       </div>
-      {isSaved && (
-        <Button
-          variant="secondary"
-          className="next-button"
-          onClick={handleNextPage}
-        >
-          <span className="next-button-content">
-            Next page
-            <ArrowRightIcon />
-          </span>
-        </Button>
-      )}
-      <Button
+
+      {/* <Button
         variant="secondary"
         className="back-button"
         onClick={handleBackPage}
@@ -207,7 +190,7 @@ const Geocode = () => {
           <ArrowLeftIcon />
           Back page
         </span>
-      </Button>
+      </Button> */}
     </>
   );
 };

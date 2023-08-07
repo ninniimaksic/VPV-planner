@@ -29,7 +29,7 @@ const PhotoImport = () => {
   const navigate = useNavigate();
 
   const handleBackPage = () => {
-    navigate("/photoimport");
+    navigate("/projectinfo");
   };
 
   return (
@@ -58,7 +58,6 @@ const PhotoImport = () => {
           <SetScale selectedPhoto={selectedPhoto} opacity={opacity} />
         )}
 
-        {/* Add the slider here */}
         {selectedPhoto && (
           <div>
             <p>Image Transparency</p>

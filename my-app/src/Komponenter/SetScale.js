@@ -8,6 +8,7 @@ import "@navikt/ds-css";
 import Compass from "../Komponenter/Compass";
 import { MapInteractionCSS } from "react-map-interaction";
 import Geocode from "./Geocode";
+import StepperInd from "./Stepper";
 
 const SetScale = ({ selectedPhoto, opacity }) => {
   const [lines, setLines] = useState([]);
@@ -147,7 +148,6 @@ const SetScale = ({ selectedPhoto, opacity }) => {
           <div className="Line">
             {lines.length >= 1 && (
               <div className="Fargetest">
-                <h2> Fill in</h2>
                 <HelpText id="lineHelp">
                   Longer lines reduce the effect of errors
                 </HelpText>
@@ -197,6 +197,7 @@ const SetScale = ({ selectedPhoto, opacity }) => {
                       Continue
                     </Button>
                   )}
+                  <StepperInd />
                 </div>
               </div>
             )}

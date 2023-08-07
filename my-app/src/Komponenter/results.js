@@ -39,7 +39,8 @@ export default function Results() {
   const loss = 14;
   const imgurl = sessionStorage.getItem("imgurl");
   const [apiData, setApiData] = useState(null);
-  const image = sessionStorage.getItem("screenshot");
+  const screenshotTransparent = sessionStorage.getItem("screenshotTransparent");
+  const screenshotOpaque = sessionStorage.getItem("screenshotOpaque");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -231,8 +232,14 @@ export default function Results() {
               <p>Loading...</p>
             )}
           </div>
-          <img src={image} />
-          {imgurl && <img src={imgurl} alt="Uploaded" />}
+
+          {screenshotTransparent && (
+            <img src={screenshotTransparent} alt="Transparent Screenshot" />
+          )}
+
+          {screenshotOpaque && (
+            <img src={screenshotOpaque} alt="Opaque Screenshot" />
+          )}
         </div>
       </div>
     </>

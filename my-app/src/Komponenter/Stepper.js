@@ -26,9 +26,7 @@ const StepperInd = () => {
         orientation="horizontal"
       >
         <Stepper.Step href="/projectinfo"></Stepper.Step>
-        <Stepper.Step href="/Geocode"></Stepper.Step>
         <Stepper.Step href="/Photoimport"></Stepper.Step>
-        <Stepper.Step href="#"></Stepper.Step>
         <Stepper.Step href="#"></Stepper.Step>
       </Stepper>
     </>
