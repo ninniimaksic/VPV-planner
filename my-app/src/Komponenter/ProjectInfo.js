@@ -94,13 +94,14 @@ const ProjectInfo = () => {
     }
 
     console.log("Saving project name and number:", projectName, projectNumber);
-
+    setPageState((prev) => prev + 1);
     navigate("/photoimport");
   };
 
   return (
     <>
       <Navbar />
+      <StepperInd currentStep={1} />
       <br />
       <>
         <h1 className="centeredTitle"> I N F O R M A T I O N</h1>
@@ -180,7 +181,6 @@ const ProjectInfo = () => {
           </Button>
         </div>
       </>
-      <StepperInd />
       <br /> <br />
       <br></br>
     </>

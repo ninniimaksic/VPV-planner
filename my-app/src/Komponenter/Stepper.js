@@ -1,9 +1,15 @@
 import { Stepper } from "@navikt/ds-react";
 import { useState, useEffect } from "react";
 
-const StepperInd = () => {
+const StepperInd = ({ currentStep }) => {
   const storedStep = localStorage.getItem("activeStep") || 1;
-  const [activeStep, setActiveStep] = useState(storedStep);
+  const [activeStep, setActiveStep] = useState(currentStep || storedStep);
+
+  useEffect(() => {
+    if (currentStep) {
+      setActiveStep(currentStep);
+    }
+  }, [currentStep]);
 
   useEffect(() => () => localStorage.removeItem("activeStep"), []);
 

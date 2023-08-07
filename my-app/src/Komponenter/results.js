@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./navbar";
 import { Table } from "@navikt/ds-react";
 import "../css/results.css";
+import StepperInd from "./Stepper";
 
 export default function Results() {
   const projectName = sessionStorage.getItem("projectName");

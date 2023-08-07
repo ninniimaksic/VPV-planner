@@ -73,7 +73,7 @@ const PhotoImport = () => {
           </div>
         )}
       </div>
-      <StepperInd />
+      <StepperInd currentStep={2} />
       <Button
         variant="secondary"
         className="back-button"
