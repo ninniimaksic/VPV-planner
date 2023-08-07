@@ -157,6 +157,7 @@ const SetScale = ({ selectedPhoto, opacity }) => {
                   label="Set length of line"
                   description="Drag to adjust"
                   onChange={handleInputChange}
+                  required
                 ></TextField>
                 <span id="unitlabel">m</span>
                 {/* <div className="showScale">
