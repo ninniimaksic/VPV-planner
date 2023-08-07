@@ -6,6 +6,7 @@ import { Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
 import { ArrowLeftIcon } from "@navikt/aksel-icons";
 import { useNavigate } from "react-router-dom";
+import StepperInd from "./Stepper";
 
 const PhotoImport = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -72,6 +73,7 @@ const PhotoImport = () => {
           </div>
         )}
       </div>
+      <StepperInd />
       <Button
         variant="secondary"
         className="back-button"

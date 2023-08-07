@@ -197,7 +197,6 @@ const SetScale = ({ selectedPhoto, opacity }) => {
                       Continue
                     </Button>
                   )}
-                  <StepperInd />
                 </div>
               </div>
             )}
