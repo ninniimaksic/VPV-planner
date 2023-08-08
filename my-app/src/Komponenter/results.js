@@ -102,13 +102,13 @@ export default function Results() {
 
   function handleDownload() {
     const link1 = document.createElement("a");
-    link1.href = screenshotTransparent; // use variable directly
-    link1.download = "screenshotTransparent.png";
+    link1.href = screenshotTransparent;
+    link1.download = "screenshot1.png";
     link1.click();
 
     const link2 = document.createElement("a");
-    link2.href = screenshotOpaque; // use variable directly
-    link2.download = "screenshotOpaque.png";
+    link2.href = screenshotOpaque;
+    link2.download = "screenshot2.png";
     link2.click();
   }
 
