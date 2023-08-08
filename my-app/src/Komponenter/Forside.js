@@ -19,7 +19,7 @@ const Forside = () => {
 
   supabase.auth.onAuthStateChange((event, _session) => {
     if (event === "SIGNED_IN" && !session && _session) {
-      navigate("/Landingsside");
+      navigate("/Home");
     }
     session = _session;
   });
@@ -34,7 +34,7 @@ const Forside = () => {
         <Auth
           supabaseClient={supabase}
           view="sign_in"
-          redirectTo="/Landingsside"
+          redirectTo="/Home"
           appearance={{ theme: ThemeSupa }}
           providers={[]}
           localization={{

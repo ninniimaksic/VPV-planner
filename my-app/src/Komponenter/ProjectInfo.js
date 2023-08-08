@@ -173,7 +173,7 @@ const ProjectInfo = () => {
           </div>
         </div>
         <div className="container">
-          <Button classname="NesteKnapp" variant="primary" onClick={handleSave}>
+          <Button className="NesteKnapp" variant="primary" onClick={handleSave}>
             <span className="next-button-content">
               Next page
               <ArrowRightIcon />

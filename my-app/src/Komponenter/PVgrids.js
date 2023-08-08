@@ -1,13 +1,24 @@
+import React, { useState } from "react";
 import PVgrid from "./PVgrid";
 import { DragHorizontalIcon } from "@navikt/aksel-icons";
+import { useEffect } from "react";
 import Draggable from "react-draggable";
 
 const PVgrids = ({ grids, scale, selectGrid, selectedGrid }) => {
   const unitLength = 160 / scale;
   const unitWidth = 150 / scale;
+  const [arrays, setArrays] = useState([]);
+  useEffect(() => {
+    for (let i = 0; i < grids.length; i++) {
+      setArrays([...arrays, JSON.parse(sessionStorage.getItem(`array${i}`))]);
+    }
+    console.log("grids:", grids);
+    console.log("arrays:", arrays);
+  }, []);
+
   return (
     <>
-      {grids.map((grid, i) => (
+      {grids.map((grid, i, angle) => (
         <div
           key={`grid-${i}`}
           style={{
@@ -51,6 +62,7 @@ const PVgrids = ({ grids, scale, selectGrid, selectedGrid }) => {
                     ncol={grid.ncol}
                     nrow={grid.nrow}
                     layoutid={i}
+                    array={arrays[i] || null}
                   />
                   {i === selectedGrid && (
                     <div

@@ -4,7 +4,7 @@ import "../css/PVgrid.css";
 
 const GridLayout = WidthProvider(ReactGridLayout);
 
-const PVgrid = ({ l, w, ncol, nrow, layoutid }) => {
+const PVgrid = ({ l, w, ncol, nrow, layoutid, array }) => {
   const numColumns = ncol; // Number of columns in the grid
   const numRows = nrow; // Number of rows in the grid
 
@@ -36,7 +36,7 @@ const PVgrid = ({ l, w, ncol, nrow, layoutid }) => {
     return gridItems;
   }, [numColumns, numRows]);
 
-  const [layout, setLayout] = useState(generateGridItems());
+  const [layout, setLayout] = useState(array || generateGridItems());
 
   const saveLayout = (l) => {
     const grid = Array.from({ length: nrow }, () => Array(ncol).fill(0));
@@ -45,6 +45,7 @@ const PVgrid = ({ l, w, ncol, nrow, layoutid }) => {
       grid[y][x] = selected ? 1 : 0;
     });
     sessionStorage.setItem(`layout${layoutid}`, JSON.stringify(grid));
+    sessionStorage.setItem(`array${layoutid}`, JSON.stringify(l));
     console.log("Saved layout:", grid);
   };
   saveLayout(layout);
@@ -99,33 +100,32 @@ const PVgrid = ({ l, w, ncol, nrow, layoutid }) => {
     }
   };
 
+  const handleMouseLeave = () => {
+    if (isMouseDown.current) {
+      const updatedLayout = layout.map((item) => {
+        if (selectedCells.current.includes(item.i)) {
+          return {
+            ...item,
+            selected: false,
+          };
+        }
+        return item;
+      });
+
+      setLayout(updatedLayout);
+      saveLayout(updatedLayout);
+      console.log("layout:", layout);
+      selectedCells.current = [];
+    }
+  };
   useEffect(() => {
-    const handleMouseLeave = () => {
-      if (isMouseDown.current) {
-        const updatedLayout = layout.map((item) => {
-          if (selectedCells.current.includes(item.i)) {
-            return {
-              ...item,
-              selected: false,
-            };
-          }
-          return item;
-        });
-
-        setLayout(updatedLayout);
-        saveLayout(updatedLayout);
-        console.log("layout:", layout);
-        selectedCells.current = [];
-      }
-    };
-
     const gridContainer = gridRef.current;
     gridContainer.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       gridContainer.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [layout, layoutid]);
+  });
 
   return (
     <div

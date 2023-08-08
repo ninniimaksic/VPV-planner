@@ -83,14 +83,33 @@ export default function Results() {
   function handleDownload() {
     const link1 = document.createElement("a");
     link1.href = screenshotTransparent;
-    link1.download = "screenshot1.png";
+    link1.download = `${(projectName || "Project").replace(
+      " ",
+      "_"
+    )}_layout1.png`;
     link1.click();
 
     const link2 = document.createElement("a");
     link2.href = screenshotOpaque;
-    link2.download = "screenshot2.png";
+    link2.download = `${(projectName || "Project").replace(
+      " ",
+      "_"
+    )}_layout2.png`;
     link2.click();
   }
+
+  const transposeTable = (data) => {
+    const rows = [];
+    for (const key in data) {
+      rows.push(
+        <Table.Row key={key}>
+          <Table.DataCell>{key}</Table.DataCell>
+          <Table.DataCell>{data[key]}</Table.DataCell>
+        </Table.Row>
+      );
+    }
+    return rows;
+  };
 
   useEffect(() => {
     // Do something with the retrieved data
@@ -119,69 +138,47 @@ export default function Results() {
         <div className="row">
           <div className="col-12">
             <h1>Results</h1>
-            <Table>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell scope="col">Project Name</Table.HeaderCell>
-                  <Table.HeaderCell scope="col">
-                    Project Number
-                  </Table.HeaderCell>
-                  <Table.HeaderCell scope="col">Installer</Table.HeaderCell>
-                  <Table.HeaderCell scope="col">PN Installer</Table.HeaderCell>
-                  <Table.HeaderCell scope="col">End Customer</Table.HeaderCell>
-                  <Table.HeaderCell scope="col">
-                    Project Number EC
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                <Table.Row>
-                  <Table.DataCell>{projectName}</Table.DataCell>
-                  <Table.DataCell>{projectNumber}</Table.DataCell>
-                  <Table.DataCell>{installer}</Table.DataCell>
-                  <Table.DataCell>{PNinstaller}</Table.DataCell>
-                  <Table.DataCell>{EndCostumer}</Table.DataCell>
-                  <Table.DataCell>{projectNumberEC}</Table.DataCell>
-                </Table.Row>
-              </Table.Body>
-            </Table>
-            <br />
-            <Table>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell scope="col">Address</Table.HeaderCell>
-                  {info !== "" && (
-                    <Table.HeaderCell scope="col">Info</Table.HeaderCell>
-                  )}
-                  <Table.HeaderCell scope="col">Lat</Table.HeaderCell>
-                  <Table.HeaderCell scope="col">Lon</Table.HeaderCell>
-                  <Table.HeaderCell scope="col">Azimuth</Table.HeaderCell>
-                  <Table.HeaderCell scope="col">Layout</Table.HeaderCell>
-                  <Table.HeaderCell scope="col">
-                    Total number of units
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                <Table.Row>
-                  <Table.DataCell>{address}</Table.DataCell>
-                  {info !== "" && <Table.DataCell>{info}</Table.DataCell>}
-                  <Table.DataCell>{lat}</Table.DataCell>
-                  <Table.DataCell>{lon}</Table.DataCell>
-                  <Table.DataCell>{azimuth}</Table.DataCell>
-                  <Table.DataCell>
-                    <ul>
-                      {layouts.map((layout, i) => (
-                        <li key={i}>
-                          Layout{i}: {JSON.stringify(layout)}
-                        </li>
-                      ))}
-                    </ul>
-                  </Table.DataCell>
-                  <Table.DataCell>{nUnits}</Table.DataCell>
-                </Table.Row>
-              </Table.Body>
-            </Table>
+            <div>
+              <Table>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Property</Table.HeaderCell>
+                    <Table.HeaderCell>Value</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  {transposeTable({
+                    "Project Name": projectName,
+                    "Project Number": projectNumber,
+                    Installer: installer,
+                    "PN Installer": PNinstaller,
+                    "End Customer": EndCostumer,
+                    "Project Number EC": projectNumberEC,
+                  })}
+                </Table.Body>
+              </Table>
+              <Table>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Property</Table.HeaderCell>
+                    <Table.HeaderCell>Value</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  {transposeTable({
+                    Address: address,
+                    Info: info,
+                    Lat: lat,
+                    Lon: lon,
+                    Azimuth: azimuth,
+                    Arrays: layouts.map(
+                      (layout, i) => ` Array ${i}: ${getUnitCount([layout])},`
+                    ),
+                    "Total number of units": nUnits,
+                  })}
+                </Table.Body>
+              </Table>
+            </div>
             <br />
             <h3>Bill Of Materials</h3>
             <div>
