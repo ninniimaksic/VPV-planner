@@ -9,7 +9,7 @@ import ProjectInfo from "./ProjectInfo";
 import RoofOutline from "./RoofOutline";
 import SetScale from "./SetScale";
 import Results from "./results";
-import Landingsside from "./Landingsside";
+import Landingsside from "./Home";
 
 function App() {
   return (
