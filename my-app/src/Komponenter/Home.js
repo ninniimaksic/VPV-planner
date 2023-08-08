@@ -4,7 +4,7 @@ import "../css/Landingsside.css";
 import ProjectInfo from "./ProjectInfo";
 import { useNavigate } from "react-router-dom";
 
-function Landingsside() {
+function Home() {
   const navigate = useNavigate();
   const handleNewProjectClick = () => {
     sessionStorage.clear();
@@ -41,4 +41,4 @@ function Landingsside() {
   );
 }
 
-export default Landingsside;
+export default Home;
