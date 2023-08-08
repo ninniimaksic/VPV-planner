@@ -3,9 +3,11 @@ import SetScale from "./SetScale";
 import Navbar from "./navbar";
 import "../css/photoimport.css";
 import { Button } from "@navikt/ds-react";
+import { supabase } from "../supabaseClient";
 import "@navikt/ds-css";
 import { ArrowLeftIcon } from "@navikt/aksel-icons";
 import { useNavigate } from "react-router-dom";
+import { uploadImage } from "./storageUtils";
 import StepperInd from "./Stepper";
 
 const PhotoImport = () => {
@@ -21,9 +23,10 @@ const PhotoImport = () => {
     }
   }, []);
 
-  const handlePhotoUpload = (event) => {
-    const file = URL.createObjectURL(event.target.files[0]);
-    const imgurl = event.target.files[0];
+  const handlePhotoUpload = (e) => {
+    uploadImage(e.target.files[0]);
+    const file = URL.createObjectURL(e.target.files[0]);
+    const imgurl = e.target.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
       sessionStorage.setItem("imgurl", reader.result);

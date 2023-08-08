@@ -3,66 +3,46 @@ import Navbar from "./navbar";
 import { Table } from "@navikt/ds-react";
 import "../css/results.css";
 import StepperInd from "./Stepper";
+import {
+  getSessionStorageAll,
+  getUnitCount,
+  fetchEnergyYield,
+} from "./storageUtils";
 
 export default function Results() {
-  const projectName = sessionStorage.getItem("projectName");
-  const projectNumber = sessionStorage.getItem("projectNumber");
-  const installer = sessionStorage.getItem("installer");
-  const PNinstaller = sessionStorage.getItem("PNinstaller");
-  const EndCostumer = sessionStorage.getItem("EndCostumer");
-  const projectNumberEC = sessionStorage.getItem("projectNumberEC");
-  const sections = sessionStorage.getItem("sections");
-  const grids = JSON.parse(sessionStorage.getItem("grids"));
-  var layouts = [];
-  for (let i = 0; i < grids.length; i++) {
-    layouts.push(JSON.parse(sessionStorage.getItem(`layout${i}`)) || []);
-  }
-  // Count num of units in layout [1, 0] array
-  let nUnits = layouts.reduce((total, layout) => {
-    return (
-      total +
-      layout.reduce((rowTotal, row) => {
-        return (
-          rowTotal +
-          row.reduce((unitTotal, unit) => {
-            return unitTotal + unit;
-          }, 0)
-        );
-      }, 0)
-    );
-  }, 0);
-  const address = sessionStorage.getItem("address");
-  const info = sessionStorage.getItem("info");
-  const lat = sessionStorage.getItem("lat");
-  const lon = sessionStorage.getItem("lon");
-  const azimuth = sessionStorage.getItem("azimuth") || 0;
-  const kWp = 1;
-  const loss = 14;
-  const imgurl = sessionStorage.getItem("imgurl");
   const [apiData, setApiData] = useState(null);
-  const screenshotTransparent = sessionStorage.getItem("screenshotTransparent");
-  const screenshotOpaque = sessionStorage.getItem("screenshotOpaque");
+
+  const {
+    projectName,
+    projectNumber,
+    installer,
+    PNinstaller,
+    EndCostumer,
+    projectNumberEC,
+    sections,
+    grids,
+    layouts,
+    address,
+    info,
+    lat,
+    lon,
+    azimuth,
+    kWp,
+    loss,
+    imgurl,
+    screenshotTransparent,
+    screenshotOpaque,
+  } = getSessionStorageAll();
+
+  const nUnits = getUnitCount(layouts);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://vpv-planner.vercel.app/api/pvcalc.js?lat=${lat}&lon=${lon}&peakpower=${kWp}&loss=${loss}&azimuth=${azimuth}`
-        );
-        if (response.ok) {
-          const body = await response.text();
-          const data = JSON.parse(body);
-          setApiData(parseFloat(data.outputs.totals.fixed.E_y));
-        } else {
-          console.log("API request failed or returned non-JSON response");
-        }
-      } catch (error) {
-        console.log("API request failed:", error);
-      }
+      const apiData = await fetchEnergyYield(lat, lon, azimuth, kWp, loss);
+      setApiData(parseFloat(apiData));
     };
-
     fetchData();
-  }, [azimuth, lat, lon]);
+  }, [azimuth, kWp, lat, lon, loss]);
 
   function get(grid, i, j) {
     // Return value of (i, j) if it exists, else 0
@@ -217,7 +197,9 @@ export default function Results() {
                 <Table>
                   <Table.Header>
                     <Table.Row>
-                      <Table.HeaderCell scope="col">Per unit</Table.HeaderCell>
+                      <Table.HeaderCell scope="col">
+                        Specific yield
+                      </Table.HeaderCell>
                       <Table.HeaderCell scope="col">Total</Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
