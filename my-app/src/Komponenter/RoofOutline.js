@@ -222,12 +222,14 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
             ))}
           </Layer>
         </Stage>
-        <PVgrids
-          grids={grids}
-          scale={scale}
-          selectGrid={selectGrid}
-          selectedGrid={selectedGrid}
-        />
+        <div style={{ position: "absolute", left: "20%", top: "20%" }}>
+          <PVgrids
+            grids={grids}
+            scale={scale}
+            selectGrid={selectGrid}
+            selectedGrid={selectedGrid}
+          />
+        </div>
       </div>
 
       {!showUnitPlacer ? (
