@@ -22,7 +22,9 @@ html {
   padding: 20px;
   margin: auto;
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
+
+  width: 75.67vh;
 }
 
 .container {
@@ -56,32 +58,4 @@ html {
   bottom: 0;
   width: 100%;
   background: none;
-}
-
-/* Regler for skjermer mindre enn 600px */
-@media (max-width: 600px) {
-  .side-by-side,
-  .side-by-side2,
-  .side-by-side3 {
-    width: 100%;
-    flex-direction: column;
-  }
-}
-
-/* Regler for skjermer mellom 600px og 1200px */
-@media (min-width: 601px) and (max-width: 1200px) {
-  .side-by-side,
-  .side-by-side2,
-  .side-by-side3 {
-    width: 75%;
-  }
-}
-
-/* Regler for skjermer større enn 1200px */
-@media (min-width: 1201px) {
-  .side-by-side,
-  .side-by-side2,
-  .side-by-side3 {
-    width: 50%;
-  }
 }

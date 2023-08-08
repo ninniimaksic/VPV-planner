@@ -9,7 +9,7 @@ import ProjectInfo from "./ProjectInfo";
 import RoofOutline from "./RoofOutline";
 import SetScale from "./SetScale";
 import Results from "./results";
-import Landingsside from "./Home";
+import Home from "./Home";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <Route path="compass" element={<Compass />} />
         <Route path="geocode" element={<Geocode />} />
         <Route path="photoimport" element={<PhotoImport />} />
-        <Route path="landingsside" element={<Landingsside />} />
+        <Route path="home" element={<Home />} />
         <Route path="projectinfo" element={<ProjectInfo />} />
         <Route path="roofoutline" element={<RoofOutline />} />
         <Route path="SetScale" element={<SetScale />} />

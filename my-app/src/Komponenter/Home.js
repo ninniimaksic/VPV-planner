@@ -3,6 +3,7 @@ import { Button } from "@navikt/ds-react";
 import "../css/Landingsside.css";
 import ProjectInfo from "./ProjectInfo";
 import { useNavigate } from "react-router-dom";
+
 import {
   getSessionStorageAll,
   getUnitCount,
@@ -11,7 +12,7 @@ import {
   fetchImage,
 } from "./storageUtils";
 
-function Landingsside() {
+function Home() {
   const [projects, setProjects] = useState([]);
   const [projectImgs, setProjectImgs] = useState([]);
   const navigate = useNavigate();
@@ -72,4 +73,5 @@ function Landingsside() {
   );
 }
 
-export default Landingsside;
+
+export default Home;
