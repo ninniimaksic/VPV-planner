@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./navbar";
-import { Table } from "@navikt/ds-react";
+import { Button, Table } from "@navikt/ds-react";
 import "../css/results.css";
 import StepperInd from "./Stepper";
 
@@ -98,6 +98,18 @@ export default function Results() {
       }
     }
     return totalFeet;
+  }
+
+  function handleDownload() {
+    const link1 = document.createElement("a");
+    link1.href = screenshotTransparent; // use variable directly
+    link1.download = "screenshotTransparent.png";
+    link1.click();
+
+    const link2 = document.createElement("a");
+    link2.href = screenshotOpaque; // use variable directly
+    link2.download = "screenshotOpaque.png";
+    link2.click();
   }
 
   useEffect(() => {
@@ -233,14 +245,43 @@ export default function Results() {
               <p>Loading...</p>
             )}
           </div>
-          {screenshotTransparent && (
-            <img src={screenshotTransparent} alt="Transparent Screenshot" />
-          )}
-          <div style={{ marginBottom: "1rem" }}></div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div style={{ flex: 1, marginRight: "1rem" }}>
+              {screenshotTransparent && (
+                <img
+                  src={screenshotTransparent}
+                  alt="Transparent Screenshot"
+                  style={{ width: "100%", maxWidth: "500px" }}
+                />
+              )}
+            </div>
 
-          {screenshotOpaque && (
-            <img src={screenshotOpaque} alt="Opaque Screenshot" />
-          )}
+            <div style={{ flex: 1 }}>
+              {screenshotOpaque && (
+                <img
+                  src={screenshotOpaque}
+                  alt="Opaque Screenshot"
+                  style={{ width: "100%", maxWidth: "500px" }}
+                />
+              )}
+            </div>
+
+            {screenshotTransparent && screenshotOpaque && (
+              <Button
+                variant="primary"
+                style={{ marginTop: "1rem" }}
+                onClick={handleDownload}
+              >
+                Download imgs
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </>
