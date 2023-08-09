@@ -10,7 +10,9 @@ import { WrenchIcon, ArrowRightIcon } from "@navikt/aksel-icons";
 
 const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
   const [line, setLine] = useState([]);
-  const [lines, setLines] = useState([]);
+  const [lines, setLines] = useState(
+    JSON.parse(sessionStorage.getItem("sections")) || []
+  );
   const [grids, setGrids] = useState(
     JSON.parse(sessionStorage.getItem("grids")) || []
   );
