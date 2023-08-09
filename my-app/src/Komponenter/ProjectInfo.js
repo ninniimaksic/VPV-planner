@@ -32,6 +32,14 @@ const ProjectInfo = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
+  useEffect(() => {
     sessionStorage.setItem("projectName", projectName || "New Project");
     sessionStorage.setItem("projectNumber", projectNumber || 1);
     sessionStorage.setItem("installer", installer);
