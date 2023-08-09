@@ -10,7 +10,15 @@ import { Stage, Layer, Image, Line, Circle, Text, Rect } from "react-konva";
 import { Button, Table, TextField } from "@navikt/ds-react";
 import { WrenchIcon, ArrowRightIcon } from "@navikt/aksel-icons";
 
-const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
+const RoofOutline = ({
+  img,
+  imageHeight,
+  imageWidth,
+  height,
+  width,
+  scale,
+  opacity,
+}) => {
   const [line, setLine] = useState([]);
   const [lines, setLines] = useState(
     JSON.parse(sessionStorage.getItem("sections")) || []
@@ -137,8 +145,8 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
     <div className={`lenScale ${isNewSectionClicked ? "drawn-cursor" : ""}`}>
       <div className="drawStage">
         <Stage
-          width={900}
-          height={650}
+          width={width}
+          height={height}
           onClick={handleStageClick}
           ref={stageRef}
         >
