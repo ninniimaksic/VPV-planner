@@ -40,12 +40,11 @@ const PVgrids = ({ grids, scale, selectGrid, selectedGrid }) => {
                 <div
                   style={{
                     position: "absolute",
-                    borderTop: i === selectedGrid ? "4px solid red" : "none",
-                    borderRight:
-                      i === selectedGrid ? "2px solid black" : "none",
+                    borderRight: i === selectedGrid ? "4px solid red" : "none",
                     borderBottom:
-                      i === selectedGrid ? "4px solid blue" : "none",
-                    borderLeft: i === selectedGrid ? "2px solid black" : "none",
+                      i === selectedGrid ? "2px solid black" : "none",
+                    borderLeft: i === selectedGrid ? "4px solid blue" : "none",
+                    borderTop: i === selectedGrid ? "2px solid black" : "none",
                     backgroundImage:
                       i === selectedGrid
                         ? "repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0px, rgba(0, 0, 0, 0.5) 10px, transparent 10px, transparent 20px)"
@@ -65,17 +64,18 @@ const PVgrids = ({ grids, scale, selectGrid, selectedGrid }) => {
                       className="arrow-up"
                       style={{
                         position: "absolute",
-                        top: "-30px",
-                        left: "50%",
-                        transform: "translateX(-50%)",
+                        top: "50%",
+                        right: "-20px",
+                        transform: "translateX(20%)",
                         width: "0",
                         height: "0",
-                        borderLeft: "10px solid transparent",
-                        borderRight: "10px solid transparent",
-                        borderBottom: "10px solid red",
+                        borderTop: "10px solid transparent",
+                        borderBottom: "10px solid transparent",
+                        borderLeft: "10px solid red",
                       }}
                     />
                   )}
+
                   <DragHorizontalIcon
                     className="draggable"
                     fontSize={48}
