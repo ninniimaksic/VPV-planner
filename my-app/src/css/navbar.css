@@ -17,18 +17,10 @@ nav {
 
 #navbar li {
   list-style: none;
-  padding: 0 3px;
+  padding: 0 15px;
   position: relative;
   display: flex;
   align-items: center;
-}
-.icon-hover:hover {
-  cursor: pointer;
-  color: #c8a300;
-}
-
-.icon-hover:hover svg path {
-  fill: #c8a300;
 }
 
 #navbar li a {
@@ -57,8 +49,8 @@ nav div span {
   margin-left: 30px;
 }
 
-#navbar li a:not(.no-hover-line):first-child:hover::after,
-#navbar li a:not(.no-hover-line):first-child.active::after {
+#navbar li a:first-child:hover::after,
+#navbar li a:first-child.active::after {
   content: "";
   width: 30%;
   height: 2px;
@@ -67,6 +59,7 @@ nav div span {
   bottom: -4px;
   left: 20px;
 }
+
 .leave-icon-hover:hover {
   color: #c8a300;
 }
@@ -112,9 +105,4 @@ nav div span {
     font-size: 24px;
     cursor: pointer;
   }
-}
-
-.icon-hover,
-.no-hover-line {
-  margin-right: 30px;
 }
