@@ -235,7 +235,6 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
           selectedGrid={selectedGrid}
         />
       </div>
-
       {!showUnitPlacer ? (
         <RoofOutlineOptions
           lines={lines}
@@ -263,6 +262,9 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
         >
           {showUnitPlacer ? "Roof Segmentation" : "PV Unit Arrangement"}
         </Button>
+      </div>
+
+      <div style={{ position: "absolute", bottom: "70px", right: "70px" }}>
         {showUnitPlacer && (
           <Button variant="primary" onClick={handleSaveCont}>
             <span className="next-button-content">
