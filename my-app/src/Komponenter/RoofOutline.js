@@ -11,7 +11,9 @@ import { WrenchIcon, ArrowRightIcon } from "@navikt/aksel-icons";
 const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
   const [line, setLine] = useState([]);
   const [lines, setLines] = useState([]);
-  const [grids, setGrids] = useState([]);
+  const [grids, setGrids] = useState(
+    JSON.parse(sessionStorage.getItem("grids")) || []
+  );
   const [selectedGrid, setSelectedGrid] = useState(null);
   const [addPoints, setAddPoints] = useState(false);
   const [showUnitPlacer, setShowUnitPlacer] = useState(false); // Show unit placer
