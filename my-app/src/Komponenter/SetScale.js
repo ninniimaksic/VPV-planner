@@ -51,9 +51,8 @@ const SetScale = ({ selectedPhoto, opacity }) => {
 
   const img = new window.Image();
   img.src = wimage.src;
-  const targetW = 900;
-  const targetH = 650;
-
+  const targetW = window.screen.width - 600;
+  const targetH = window.screen.height - 400;
   const widthFit = targetW / img.width;
   const heightFit = targetH / img.height;
 
@@ -97,7 +96,11 @@ const SetScale = ({ selectedPhoto, opacity }) => {
                 yMax: 1000,
               }}
             >
-              <Stage width={900} height={650} onClick={handleStageClick}>
+              <Stage
+                width={targetW}
+                height={targetH}
+                onClick={handleStageClick}
+              >
                 <Layer>
                   {img && (
                     <Image
