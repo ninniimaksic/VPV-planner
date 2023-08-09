@@ -40,8 +40,31 @@ export default function Results() {
   const loss = 14;
   const imgurl = sessionStorage.getItem("imgurl");
   const [apiData, setApiData] = useState(null);
-  const screenshotTransparent = sessionStorage.getItem("screenshotTransparent");
-  const screenshotOpaque = sessionStorage.getItem("screenshotOpaque");
+
+  const {
+    projectName,
+    projectNumber,
+    installer,
+    PNinstaller,
+    EndCostumer,
+    projectNumberEC,
+    sections,
+    grids,
+    layouts,
+    address,
+    info,
+    lat,
+    lon,
+    azimuth,
+    kWp,
+    loss,
+    imgurl,
+    screenshotTransparent,
+    screenshotOpaque,
+  } = getSessionStorageAll();
+
+  const nUnits = getUnitCount(layouts);
+  const layoutCounts = layouts.map((layout) => getUnitCount([layout]));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -192,7 +215,7 @@ export default function Results() {
                     Lon: lon,
                     Azimuth: azimuth,
                     Arrays: layouts.map(
-                      (layout, i) => ` Array ${i}: ${getUnitCount([layout])},`
+                      (_, i) => ` Array ${i}: ${layoutCounts[i]},`
                     ),
                     "Total number of units": nUnits,
                   })}
