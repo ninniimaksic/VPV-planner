@@ -195,7 +195,7 @@ const SetScale = ({ selectedPhoto, opacity }) => {
                         sessionStorage.setItem(scale, imgScale);
                       }}
                     >
-                      Continue
+                      Next
                     </Button>
                   )}
                 </div>
