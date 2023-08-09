@@ -1,19 +1,5 @@
-.rc-slider-track {
-  background-color: #042c87;
-}
-
-/* Styling for the slider handle */
-.rc-slider-handle {
-  border: solid 2px #f3e93a;
-  background-color: #f3e93a;
-}
-
-/* Styling for the slider rail (the part of the slider not yet "filled") */
-.rc-slider-rail {
-  background-color: #50679c;
-}
-
-/* If you want to style the slider when it's active */
-.rc-slider-handle:active {
-  box-shadow: 0 0 5px #042c87;
+.slider-container {
+  border: 2px solid blue;
+  padding: 10px;
+  border-radius: 5px;
 }

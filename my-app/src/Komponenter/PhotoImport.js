@@ -9,8 +9,6 @@ import { ArrowLeftIcon } from "@navikt/aksel-icons";
 import { useNavigate } from "react-router-dom";
 import { uploadImage } from "./storageUtils";
 import StepperInd from "./Stepper";
-import Slider from "rc-slider";
-import "../css/slider.css";
 
 const PhotoImport = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -80,27 +78,14 @@ const PhotoImport = () => {
         {selectedPhoto && (
           <div>
             <p>Image Transparency</p>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                position: "absolute",
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Slider
-                min={0}
-                max={1}
-                step={0.01}
-                value={opacity}
-                onChange={handleOpacityChange}
-                style={{
-                  width: "200px",
-                }}
-              />
-            </div>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={opacity}
+              onChange={(e) => handleOpacityChange(parseFloat(e.target.value))}
+            />
           </div>
         )}
       </div>
