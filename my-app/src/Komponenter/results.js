@@ -64,6 +64,7 @@ export default function Results() {
   } = getSessionStorageAll();
 
   const nUnits = getUnitCount(layouts);
+  const layoutCounts = layouts.map((layout) => getUnitCount([layout]));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -214,7 +215,7 @@ export default function Results() {
                     Lon: lon,
                     Azimuth: azimuth,
                     Arrays: layouts.map(
-                      (layout, i) => ` Array ${i}: ${getUnitCount([layout])},`
+                      (_, i) => ` Array ${i}: ${layoutCounts[i]},`
                     ),
                     "Total number of units": nUnits,
                   })}
