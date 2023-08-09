@@ -49,7 +49,7 @@ const UnitPlacer = ({ grids, setGrids, selectedGrid, setSelectedGrid }) => {
   }, [grids]);
 
   return (
-    <div>
+    <div className="farge">
       {" "}
       <div>
         <Units />
