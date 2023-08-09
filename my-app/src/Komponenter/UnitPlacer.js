@@ -51,55 +51,57 @@ const UnitPlacer = ({ grids, setGrids, selectedGrid, setSelectedGrid }) => {
   return (
     <div className="farge">
       {" "}
-      <div>
-        <Units />
-      </div>
-      <div style={{ marginTop: "10%", paddingLeft: "5%" }}>
-        <TextField
-          type="number"
-          label="Number of columns"
-          value={ncol}
-          onChange={handleNcolChange}
-        />
-        <TextField
-          type="number"
-          label="Number of rows"
-          value={nrow}
-          onChange={handleNrowChange}
-        />
-        <div style={{ textAlign: "center", marginTop: "10px" }}>
-          Rotation: {sliderValue} degrees
-        </div>
+      <div className="Line">
+        <div style={{ marginBottom: "10vh", padding: "2vh" }}>
+          <div>
+            <Units />
+          </div>
+          <TextField
+            type="number"
+            label="Number of columns"
+            value={ncol}
+            onChange={handleNcolChange}
+          />
+          <TextField
+            type="number"
+            label="Number of rows"
+            value={nrow}
+            onChange={handleNrowChange}
+          />
+          <div style={{ textAlign: "center", marginTop: "10px" }}>
+            Rotation: {sliderValue} degrees
+          </div>
 
-        <Slider
-          label="Rotate"
-          value={selectedGrid !== null ? grids[selectedGrid].rotation : 0}
-          onChange={handleSliderChange}
-          min={-180}
-          max={180}
-          step={1}
-        />
-        <Button
-          onClick={() => addGrid(ncol, nrow, 0)}
-          style={{
-            marginRight: "1rem",
-            marginBottom: "1rem",
-            marginTop: "1rem",
-          }}
-        >
-          Add grid
-        </Button>
-        <Button
-          onClick={() => deleteGrid(selectedGrid)}
-          disabled={selectedGrid === null}
-          style={{
-            marginRight: "1rem",
-            marginBottom: "1rem",
-            marginTop: "1rem",
-          }}
-        >
-          Delete grid
-        </Button>
+          <Slider
+            label="Rotate"
+            value={selectedGrid !== null ? grids[selectedGrid].rotation : 0}
+            onChange={handleSliderChange}
+            min={-180}
+            max={180}
+            step={1}
+          />
+          <Button
+            onClick={() => addGrid(ncol, nrow, 0)}
+            style={{
+              marginRight: "1rem",
+              marginBottom: "1rem",
+              marginTop: "1rem",
+            }}
+          >
+            Add grid
+          </Button>
+          <Button
+            onClick={() => deleteGrid(selectedGrid)}
+            disabled={selectedGrid === null}
+            style={{
+              marginRight: "1rem",
+              marginBottom: "1rem",
+              marginTop: "1rem",
+            }}
+          >
+            Delete grid
+          </Button>
+        </div>
       </div>
     </div>
   );

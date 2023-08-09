@@ -51,8 +51,8 @@ const SetScale = ({ selectedPhoto, opacity }) => {
 
   const img = new window.Image();
   img.src = wimage.src;
-  const targetW = window.screen.width - 600;
-  const targetH = window.screen.height - 400;
+  const targetW = window.screen.width * 0.65;
+  const targetH = window.screen.height * 0.55;
   const widthFit = targetW / img.width;
   const heightFit = targetH / img.height;
 
@@ -222,6 +222,8 @@ const SetScale = ({ selectedPhoto, opacity }) => {
           img={img}
           imageHeight={imageHeight}
           imageWidth={imageWidth}
+          height={targetH}
+          width={targetW}
           scale={imgScale}
           opacity={opacity}
         />
