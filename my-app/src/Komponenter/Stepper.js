@@ -36,7 +36,7 @@ const StepperInd = ({ currentStep }) => {
 const styles = {
   container: {
     position: "absolute",
-    bottom: 0,
+    bottom: 30,
     left: "50%",
     transform: "translateX(-50%)",
     width: "50%",
