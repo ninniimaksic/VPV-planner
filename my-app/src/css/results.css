@@ -19,3 +19,22 @@
   list-style-type: circle;
   padding: 0;
 }
+
+.tables-container {
+  display: flex;
+}
+
+.table-container {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.subheader {
+  margin: 8vh 0 2vh 0;
+}
+
+.dlButtonContainer {
+  display: flex;
+  justify-content: center;
+  margin: 2vh 0;
+}

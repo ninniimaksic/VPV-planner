@@ -50,6 +50,8 @@ const Geocode = () => {
       setIsConfirmed(true);
       sessionStorage.setItem("lat", data[0].lat);
       sessionStorage.setItem("lon", data[0].lon);
+      sessionStorage.setItem("FullAdr", JSON.stringify(data[0].address));
+      console.log("Adr", data[0].address);
     } else {
       setResponse(null);
       setIsConfirmed(false);
@@ -67,6 +69,7 @@ const Geocode = () => {
       setIsConfirmed(true);
       sessionStorage.setItem("lat", lat);
       sessionStorage.setItem("lon", lon);
+      console.log("Adr", data);
     } else {
       setResponse(null);
       setIsConfirmed(false);

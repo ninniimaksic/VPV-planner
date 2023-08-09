@@ -17,10 +17,11 @@ export const getSessionStorageAll = () => {
     layouts.push(JSON.parse(layout));
   }
   const address = sessionStorage.getItem("address");
+  const fullAdr = JSON.parse(sessionStorage.getItem("FullAdr"));
   const info = sessionStorage.getItem("info");
   const lat = sessionStorage.getItem("lat");
   const lon = sessionStorage.getItem("lon");
-  const azimuth = sessionStorage.getItem("azimuth") || 0;
+  const azimuth = (sessionStorage.getItem("azimuth") || 0) % 360;
   const kWp = 1;
   const loss = 14;
   const imgurl = sessionStorage.getItem("imgurl");
@@ -38,6 +39,7 @@ export const getSessionStorageAll = () => {
     grids,
     layouts,
     address,
+    fullAdr,
     info,
     lat,
     lon,
