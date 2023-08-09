@@ -23,6 +23,7 @@ export default function Results() {
     grids,
     layouts,
     address,
+    fullAdr,
     info,
     lat,
     lon,
@@ -102,12 +103,16 @@ export default function Results() {
   const transposeTable = (data) => {
     const rows = [];
     for (const key in data) {
-      rows.push(
-        <Table.Row key={key}>
-          <Table.DataCell>{key}</Table.DataCell>
-          <Table.DataCell>{data[key]}</Table.DataCell>
-        </Table.Row>
-      );
+      if (data[key]) {
+        rows.push(
+          <Table.Row key={key}>
+            <Table.DataCell>
+              <b>{key}</b>
+            </Table.DataCell>
+            <Table.DataCell>{data[key]}</Table.DataCell>
+          </Table.Row>
+        );
+      }
     }
     return rows;
   };
@@ -123,6 +128,7 @@ export default function Results() {
     console.log("Sections:", sections);
     console.log("Grids:", grids, "Length:", grids.length);
     console.log("Layout0:", layouts[0]);
+    console.log("FullAdr:", fullAdr);
     console.log("Address:", address);
     console.log("Info:", info);
     console.log("Lat:", lat);
@@ -139,91 +145,139 @@ export default function Results() {
         <div className="row">
           <div className="col-12">
             <h1>Results</h1>
-            <div>
-              <Table>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell>Property</Table.HeaderCell>
-                    <Table.HeaderCell>Value</Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                  {transposeTable({
-                    "Project Name": projectName,
-                    "Project Number": projectNumber,
-                    Installer: installer,
-                    "PN Installer": PNinstaller,
-                    "End Customer": EndCostumer,
-                    "Project Number EC": projectNumberEC,
-                  })}
-                </Table.Body>
-              </Table>
-              <Table>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell>Property</Table.HeaderCell>
-                    <Table.HeaderCell>Value</Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                  {transposeTable({
-                    Address: address,
-                    Info: info,
-                    Lat: lat,
-                    Lon: lon,
-                    Azimuth: azimuth,
-                    Arrays: layouts.map(
-                      (_, i) => ` Array ${i}: ${layoutCounts[i]},`
-                    ),
-                    "Total number of units": nUnits,
-                  })}
-                </Table.Body>
-              </Table>
-            </div>
-            <br />
-            <h3>Bill Of Materials</h3>
-            <div>
-              <h4> Total amount of feet (support): </h4>
-              {layouts.map((layout, i) => (
-                <p key={i}>
-                  Layout {i}: {totCount(layout)}
-                </p>
-              ))}
-            </div>
-            <h4>Cable cradles:</h4>
-            {layouts.map((layout, i) => (
-              <p key={i}>
-                Layout {i}: {layout.length * 2}
-              </p>
-            ))}
-            <br />
-            <h3>Energy yield estimation</h3>
-            <h4>
-              Using {kWp} kWp, {loss}% loss and {(azimuth + 180) % 360}° main
-              side direction:
-            </h4>
-            {apiData ? (
-              <>
+            <div className="tables-container">
+              <div className="table-container">
                 <Table>
                   <Table.Header>
                     <Table.Row>
-                      <Table.HeaderCell scope="col">
-                        Specific yield
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">Total</Table.HeaderCell>
+                      <Table.HeaderCell>Project Information</Table.HeaderCell>
+                      <Table.HeaderCell></Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
                   <Table.Body>
-                    <Table.Row>
-                      <Table.DataCell>{apiData} kWh</Table.DataCell>
-                      <Table.DataCell>{apiData * nUnits} kWh</Table.DataCell>
-                    </Table.Row>
+                    {transposeTable({
+                      "Project Name": projectName,
+                      "Project Number": projectNumber,
+                      Installer: installer,
+                      "PN Installer": PNinstaller,
+                      "End Customer": EndCostumer,
+                      "Project Number EC": projectNumberEC,
+                      Date: new Date().toLocaleDateString(),
+                    })}
                   </Table.Body>
                 </Table>
-              </>
+              </div>
+              <div className="table-container">
+                <Table>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell>Location</Table.HeaderCell>
+                      <Table.HeaderCell></Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {transposeTable({
+                      Address: `${fullAdr?.road || ""} ${
+                        fullAdr?.house_number || ""
+                      }`,
+                      "ZIP code": `${fullAdr?.postcode || ""}`,
+                      City: ` ${fullAdr?.city || ""}`,
+                      Country: `${fullAdr?.country || ""}`,
+                      Latitude: lat,
+                      Longitude: lon,
+                    })}
+                  </Table.Body>
+                </Table>
+              </div>
+            </div>
+            <div className="subheader">
+              <h2>Energy yield estimation</h2>
+            </div>
+            {true ? (
+              <Table size="small">
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Array</Table.HeaderCell>
+                    <Table.HeaderCell># Units</Table.HeaderCell>
+                    <Table.HeaderCell>
+                      Installed Capacity [kWp]
+                    </Table.HeaderCell>
+                    <Table.HeaderCell>
+                      Specific yield [kWh/kWp]
+                    </Table.HeaderCell>
+                    <Table.HeaderCell>Yearly yield [kWh]</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  {layouts.map((layout, i) => (
+                    <Table.Row key={i}>
+                      <Table.DataCell>{i}</Table.DataCell>
+                      <Table.DataCell>{layoutCounts[i]}</Table.DataCell>
+                      <Table.DataCell>
+                        {apiData * layoutCounts[i]}
+                      </Table.DataCell>
+                      <Table.DataCell>{apiData * 0.2}</Table.DataCell>
+                      <Table.DataCell>
+                        {apiData * 0.2 * layoutCounts[i]}
+                      </Table.DataCell>
+                    </Table.Row>
+                  ))}
+                  <Table.Row>
+                    <Table.DataCell>Total</Table.DataCell>
+                    <Table.DataCell>{nUnits}</Table.DataCell>
+                    <Table.DataCell>{apiData * nUnits}</Table.DataCell>
+                    <Table.DataCell>{apiData * 0.2}</Table.DataCell>
+                    <Table.DataCell>{apiData * 0.2 * nUnits}</Table.DataCell>
+                  </Table.Row>
+                </Table.Body>
+              </Table>
             ) : (
               <p>Loading...</p>
             )}
+            <div className="subheader">
+              <h2>Bill Of Materials</h2>
+            </div>
+            <Table size="small">
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Layout</Table.HeaderCell>
+                  <Table.HeaderCell>Main Orientation</Table.HeaderCell>
+                  <Table.HeaderCell>Type</Table.HeaderCell>
+                  <Table.HeaderCell>Units</Table.HeaderCell>
+                  <Table.HeaderCell>Feet</Table.HeaderCell>
+                  <Table.HeaderCell>Cable Trays</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {layouts.map((layout, i) => (
+                  <Table.Row key={i}>
+                    <Table.DataCell>Layout {i}</Table.DataCell>
+                    <Table.DataCell>
+                      {grids[i].rotation + azimuth}
+                    </Table.DataCell>{" "}
+                    {/* Assuming azimuth is the main orientation */}
+                    <Table.DataCell>Type Value</Table.DataCell>{" "}
+                    {/* Replace with the actual type */}
+                    <Table.DataCell>{layoutCounts[i]}</Table.DataCell>
+                    <Table.DataCell>{totCount(layout)}</Table.DataCell>
+                    <Table.DataCell>{layout.length * 2}</Table.DataCell>
+                  </Table.Row>
+                ))}
+                <Table.Row>
+                  <Table.DataCell>Total</Table.DataCell>
+                  <Table.DataCell></Table.DataCell>
+                  <Table.DataCell></Table.DataCell>
+                  <Table.DataCell>{nUnits}</Table.DataCell>
+                  <Table.DataCell>
+                    {/* Total feet calculation */}
+                  </Table.DataCell>
+                  <Table.DataCell>{nUnits * 2 * layouts.length}</Table.DataCell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
+            <div className="subheader">
+              <h2>Layouts</h2>
+            </div>
           </div>
           <div
             style={{
@@ -251,17 +305,14 @@ export default function Results() {
                 />
               )}
             </div>
-
-            {screenshotTransparent && screenshotOpaque && (
-              <Button
-                variant="primary"
-                style={{ marginTop: "1rem" }}
-                onClick={handleDownload}
-              >
+          </div>
+          {screenshotTransparent && screenshotOpaque && (
+            <div className="dlButtonContainer">
+              <Button variant="primary" onClick={handleDownload}>
                 Download imgs
               </Button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </>
