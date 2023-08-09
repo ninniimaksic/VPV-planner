@@ -47,7 +47,7 @@ html {
   padding: 20px;
   margin: auto;
   border-radius: 10px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   width: 95%;
   max-width: 1200px;
   align-items: center;
@@ -58,7 +58,7 @@ html {
 .side-by-side2 > div,
 .side-by-side3 > div {
   flex: 1;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 #projectname,
@@ -128,16 +128,16 @@ html {
   .side-by-side,
   .side-by-side2,
   .side-by-side3 {
-    padding: 25px;
+    padding: 20px;
   }
 
   .centeredTitle {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 
   .side-by-side,
   .side-by-side2 {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
 }
 
@@ -146,11 +146,11 @@ html {
   .side-by-side,
   .side-by-side2,
   .side-by-side3 {
-    padding: 15px;
+    padding: 10px;
   }
 
   .centeredTitle {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
 
   .side-by-side,

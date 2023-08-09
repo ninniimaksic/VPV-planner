@@ -113,12 +113,13 @@ const ProjectInfo = () => {
       <br />
       <>
         <h1 className="centeredTitle"> I N F O R M A T I O N</h1>
+        <br></br>
         <div className="container-flex">
           <div className="input-container">
             <div className="side-by-side">
               <div style={{ marginRight: "20px" }}>
                 <h2>Project name</h2>
-                <p>Name on the cover of the report</p>
+                <br></br>
                 <TextField
                   id="projectname"
                   value={projectName}
@@ -128,7 +129,7 @@ const ProjectInfo = () => {
               </div>
               <div style={{ marginLeft: "20px" }}>
                 <h2>Project number(Over Easy)</h2>
-                <p>Her kommer det noe viktig info</p>
+                <br></br>
                 <TextField
                   type="text"
                   id="Projectnumber"
@@ -138,10 +139,11 @@ const ProjectInfo = () => {
                 />
               </div>
             </div>
+
             <div className="side-by-side2">
               <div style={{ marginRight: "20px" }}>
                 <h2>Installer</h2>
-                <p>Name on the cover of the report</p>
+                <br></br>
                 <TextField
                   id="installer"
                   value={installer}
@@ -151,7 +153,7 @@ const ProjectInfo = () => {
               </div>
               <div style={{ marginLeft: "20px" }}>
                 <h2>Project number(installer)</h2>
-                <p>Her kommer det noe viktig info</p>
+                <br></br>
                 <TextField
                   id="PNinstaller"
                   value={PNinstaller}
@@ -160,10 +162,11 @@ const ProjectInfo = () => {
                 />
               </div>
             </div>
+
             <div className="side-by-side3">
               <div style={{ marginRight: "20px" }}>
                 <h2>End customer</h2>
-                <p>Name on the cover of the report</p>
+                <br></br>
                 <TextField
                   id="EndCostumer"
                   value={EndCostumer}
@@ -173,7 +176,7 @@ const ProjectInfo = () => {
               </div>
               <div style={{ marginLeft: "20px" }}>
                 <h2>Project number(end customer)</h2>
-                <p>Her kommer det noe viktig info</p>
+                <br></br>
                 <TextField
                   id="ProjectnumberEC"
                   value={projectNumberEC}
