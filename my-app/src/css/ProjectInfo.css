@@ -5,6 +5,7 @@ html {
 .centeredTitle {
   text-align: center;
 }
+
 .info {
   display: flex;
   justify-content: center;
@@ -12,19 +13,62 @@ html {
   height: 10vh;
 }
 
+.container-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Overriding TextField component's default styles if necessary */
+.input-container input {
+  margin: 0 auto; /* Center the input field */
+}
+
+/* If the TextField description is not part of the TextField component, you can target it separately */
+.input-container p {
+  text-align: center;
+}
+
 .side-by-side,
 .side-by-side2,
 .side-by-side3 {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: #c5d7e7;
   padding: 20px;
   margin: auto;
   border-radius: 10px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
+  width: 95%;
+  max-width: 1200px;
+  align-items: center;
+  text-align: center;
+}
 
-  width: 75.67vh;
+.side-by-side > div,
+.side-by-side2 > div,
+.side-by-side3 > div {
+  flex: 1;
+  margin: 5px 0;
+}
+
+#projectname,
+#Projectnumber,
+#installer,
+#PNinstaller,
+#EndCostumer,
+#ProjectnumberEC {
+  width: 100%;
+  max-width: 300px;
 }
 
 .container {
@@ -33,6 +77,7 @@ html {
   margin-right: 100px;
   margin-bottom: 20px;
 }
+
 .projectnamebox {
   background-color: #c5d7e7;
   border-radius: 25px;
@@ -41,16 +86,11 @@ html {
   height: 550px;
 }
 
-.next-button-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.NesteKnapp {
+  position: absolute;
+  bottom: 70px;
+  right: 70px;
 }
-
-.next-button-content svg {
-  margin-left: 10px;
-}
-
 .pagination-container {
   display: flex;
   justify-content: center;
@@ -58,4 +98,63 @@ html {
   bottom: 0;
   width: 100%;
   background: none;
+}
+
+@media screen and (min-width: 768px) {
+  .side-by-side,
+  .side-by-side2,
+  .side-by-side3 {
+    flex-direction: row;
+  }
+
+  .side-by-side > div,
+  .side-by-side2 > div,
+  .side-by-side3 > div {
+    margin: 0 10px;
+  }
+
+  #projectname,
+  #Projectnumber,
+  #installer,
+  #PNinstaller,
+  #EndCostumer,
+  #ProjectnumberEC {
+    width: 70%;
+    max-width: 500px;
+  }
+}
+
+@media screen and (max-width: 1439px) and (min-width: 768px) {
+  .side-by-side,
+  .side-by-side2,
+  .side-by-side3 {
+    padding: 20px;
+  }
+
+  .centeredTitle {
+    margin-bottom: 20px;
+  }
+
+  .side-by-side,
+  .side-by-side2 {
+    margin-bottom: 30px;
+  }
+}
+
+/* Styles for small screens, e.g. mobile devices or small tablets */
+@media screen and (max-width: 767px) {
+  .side-by-side,
+  .side-by-side2,
+  .side-by-side3 {
+    padding: 10px;
+  }
+
+  .centeredTitle {
+    margin-bottom: 15px;
+  }
+
+  .side-by-side,
+  .side-by-side2 {
+    margin-bottom: 25px;
+  }
 }
