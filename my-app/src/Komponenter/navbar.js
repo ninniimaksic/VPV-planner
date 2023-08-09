@@ -37,7 +37,10 @@ const Navbar = () => {
         <div>
           <ul id="navbar" className={clicked ? "navbar active" : "navbar"}>
             <li style={{ display: "flex", alignItems: "center" }}>
-              <span> Projects</span>
+              <Link to="/Home" className="leave-icon-hover">
+                {" "}
+                <span> Projects</span>{" "}
+              </Link>
 
               <Link to="/" onClick={handleLeaveIconClick}>
                 <LeaveIcon
