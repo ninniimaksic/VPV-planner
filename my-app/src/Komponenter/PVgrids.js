@@ -21,12 +21,7 @@ const PVgrids = ({ grids, scale, selectGrid, selectedGrid }) => {
       {grids.map((grid, i, angle) => (
         <div
           key={`grid-${i}`}
-          style={{
-            position: "relative",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
+          style={{ position: "absolute", left: "20%", top: "20%" }}
         >
           <Draggable
             handle=".draggable"
