@@ -38,28 +38,29 @@ function Home() {
   }, []);
   const isproject = sessionStorage.getItem("imgurl");
   return (
-    <div className="center">
-      {isproject && (
-        <div className="Prosjekter">
-          <Button
-            variant="primary"
-            className="btn-new1"
-            onClick={handleContinue}
-          >
-            Continue project
+    <div className="Home">
+      <div className="center">
+        {isproject && (
+          <div className="Prosjekter">
+            <Button
+              variant="primary"
+              className="btn-new1"
+              onClick={handleContinue}
+            >
+              Continue project
+            </Button>
+          </div>
+        )}
+        <div className="Nyttprosjekt">
+          <Button className="btn-new" onClick={handleNewProjectClick}>
+            New project
           </Button>
         </div>
-      )}
-      <div className="Nyttprosjekt">
-        <Button className="btn-new" onClick={handleNewProjectClick}>
-          New project
-        </Button>
       </div>
-      <div className="Prosjekter">
-        <h2>Projects</h2>
-        <p>projects</p>
+      <div className="ProjectList">
+        <h1>Projects</h1>
         {projects.map((project) => (
-          <div className="Prosjekt">
+          <div className="Prosjekter">
             <h3>Project nr{project.id}</h3>
             <img
               src={projectImgs[project.id]}
@@ -72,6 +73,5 @@ function Home() {
     </div>
   );
 }
-
 
 export default Home;

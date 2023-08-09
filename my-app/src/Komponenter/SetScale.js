@@ -11,9 +11,12 @@ import Geocode from "./Geocode";
 import StepperInd from "./Stepper";
 
 const SetScale = ({ selectedPhoto, opacity }) => {
-  const [lines, setLines] = useState([]);
+  const [lines, setLines] = useState(
+    JSON.parse(sessionStorage.getItem("scaleLine")) || []
+  );
   const [line, setLine] = useState([]);
   const [imgScale, setImgScale] = useState(0.2);
+  const [length, setLength] = useState(0);
   const lineRef = useRef();
   const circleLayerRef = useRef();
   const [wimage] = useImage(selectedPhoto);
@@ -31,11 +34,15 @@ const SetScale = ({ selectedPhoto, opacity }) => {
     if (line.length === 4) {
       setLines([...lines, [line, (getImgLen(line) * imgScale).toFixed(2)]]);
       setLine([]);
+      sessionStorage.setItem("scaleLine", JSON.stringify(lines));
     }
   }, [line, lines, imgScale, getImgLen]);
 
   const handleInputChange = (e) => {
     setLines([[lines[0][0], e.target.value], ...lines.slice(1)]);
+    sessionStorage.setItem("scaleLine", JSON.stringify(lines));
+    setLength(e.target.value);
+    sessionStorage.setItem("lineLength", e.target.value);
     setImgScale(e.target.value / getImgLen(lines[0][0]));
     setShowNextButton(true);
   };
@@ -154,8 +161,9 @@ const SetScale = ({ selectedPhoto, opacity }) => {
                 <TextField
                   id="lineLengthInput"
                   type="number"
+                  value={length || ""}
                   label="Set length of line"
-                  description="Drag to adjust"
+                  description="Drag circles to adjust"
                   onChange={handleInputChange}
                   required
                 ></TextField>
@@ -182,22 +190,19 @@ const SetScale = ({ selectedPhoto, opacity }) => {
                   <Geocode />
                 </div>
                 <div className="nextButton">
-                  {showNextButton && (
-                    <Button
-                      variant="primary"
-                      onClick={() => {
-                        setShowNextButton(true);
-                        setShowRoofOutline(true);
-                        setImgScale(
-                          (parseFloat(lines[0][1]) * 100) /
-                            getImgLen(lines[0][0])
-                        );
-                        sessionStorage.setItem(scale, imgScale);
-                      }}
-                    >
-                      Next
-                    </Button>
-                  )}
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      setShowNextButton(true);
+                      setShowRoofOutline(true);
+                      setImgScale(
+                        (parseFloat(lines[0][1]) * 100) / getImgLen(lines[0][0])
+                      );
+                      sessionStorage.setItem(scale, imgScale);
+                    }}
+                  >
+                    Next
+                  </Button>
                 </div>
               </div>
             )}

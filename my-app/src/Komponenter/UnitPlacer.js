@@ -75,8 +75,8 @@ const UnitPlacer = ({ grids, setGrids, selectedGrid, setSelectedGrid }) => {
           label="Rotate"
           value={selectedGrid !== null ? grids[selectedGrid].rotation : 0}
           onChange={handleSliderChange}
-          min={0}
-          max={360}
+          min={-180}
+          max={180}
           step={1}
         />
         <Button
