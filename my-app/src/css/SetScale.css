@@ -69,7 +69,7 @@
 .rotatable {
   display: inline-block;
   position: relative;
-  transform-origin: top left;
+  transform-origin: center center;
 }
 
 .rotate-handle {
