@@ -105,71 +105,75 @@ const ProjectInfo = () => {
       <br />
       <>
         <h1 className="centeredTitle"> I N F O R M A T I O N</h1>
-        <div className="side-by-side">
-          <div style={{ marginRight: "20px" }}>
-            <h2>Project name</h2>
-            <TextField
-              description="Name on the cover of the report"
-              id="projectname"
-              value={projectName}
-              onChange={(e) => setProjectName(e.target.value)}
-              style={{ flex: "1" }}
-            />
-          </div>
-          <div style={{ marginLeft: "20px" }}>
-            <h2>Project number(Over Easy)</h2>
-            <TextField
-              description="Her kommer det noe viktig info"
-              type="text"
-              id="Projectnumber"
-              value={projectNumber}
-              onChange={(e) => setProjectNumber(e.target.value)}
-              style={{ flex: "1" }}
-            />
-          </div>
-        </div>
-        <div className="side-by-side2">
-          <div style={{ marginRight: "20px" }}>
-            <h2>Installer</h2>
-            <TextField
-              description="Name on the cover of the report"
-              id="installer"
-              value={installer}
-              onChange={(e) => setInstaller(e.target.value)}
-              style={{ flex: "1" }}
-            />
-          </div>
-          <div style={{ marginLeft: "20px" }}>
-            <h2>Project number(installer)</h2>
-            <TextField
-              description="Her kommer det noe viktig info"
-              id="PNinstaller"
-              value={PNinstaller}
-              onChange={(e) => setPNinstaller(e.target.value)}
-              style={{ flex: "1" }}
-            />
-          </div>
-        </div>
-        <div className="side-by-side3">
-          <div style={{ marginRight: "20px" }}>
-            <h2>End customer</h2>
-            <TextField
-              description="Name on the cover of the report"
-              id="EndCostumer"
-              value={EndCostumer}
-              onChange={(e) => setEndCostumer(e.target.value)}
-              style={{ flex: "1" }}
-            />
-          </div>
-          <div style={{ marginLeft: "20px" }}>
-            <h2>Project number(end customer)</h2>
-            <TextField
-              description="Her kommer det noe viktig info"
-              id="ProjectnumberEC"
-              value={projectNumberEC}
-              onChange={(e) => setProjectnumberEC(e.target.value)}
-              style={{ flex: "1" }}
-            />
+        <div className="container-flex">
+          <div className="input-container">
+            <div className="side-by-side">
+              <div style={{ marginRight: "20px" }}>
+                <h2>Project name</h2>
+                <p>Name on the cover of the report</p>
+                <TextField
+                  id="projectname"
+                  value={projectName}
+                  onChange={(e) => setProjectName(e.target.value)}
+                  style={{ flex: "1" }}
+                />
+              </div>
+              <div style={{ marginLeft: "20px" }}>
+                <h2>Project number(Over Easy)</h2>
+                <p>Her kommer det noe viktig info</p>
+                <TextField
+                  type="text"
+                  id="Projectnumber"
+                  value={projectNumber}
+                  onChange={(e) => setProjectNumber(e.target.value)}
+                  style={{ flex: "1" }}
+                />
+              </div>
+            </div>
+            <div className="side-by-side2">
+              <div style={{ marginRight: "20px" }}>
+                <h2>Installer</h2>
+                <p>Name on the cover of the report</p>
+                <TextField
+                  id="installer"
+                  value={installer}
+                  onChange={(e) => setInstaller(e.target.value)}
+                  style={{ flex: "1" }}
+                />
+              </div>
+              <div style={{ marginLeft: "20px" }}>
+                <h2>Project number(installer)</h2>
+                <p>Her kommer det noe viktig info</p>
+                <TextField
+                  id="PNinstaller"
+                  value={PNinstaller}
+                  onChange={(e) => setPNinstaller(e.target.value)}
+                  style={{ flex: "1" }}
+                />
+              </div>
+            </div>
+            <div className="side-by-side3">
+              <div style={{ marginRight: "20px" }}>
+                <h2>End customer</h2>
+                <p>Name on the cover of the report</p>
+                <TextField
+                  id="EndCostumer"
+                  value={EndCostumer}
+                  onChange={(e) => setEndCostumer(e.target.value)}
+                  style={{ flex: "1" }}
+                />
+              </div>
+              <div style={{ marginLeft: "20px" }}>
+                <h2>Project number(end customer)</h2>
+                <p>Her kommer det noe viktig info</p>
+                <TextField
+                  id="ProjectnumberEC"
+                  value={projectNumberEC}
+                  onChange={(e) => setProjectnumberEC(e.target.value)}
+                  style={{ flex: "1" }}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <div className="container">
