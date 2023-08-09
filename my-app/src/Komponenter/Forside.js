@@ -34,7 +34,7 @@ const Forside = () => {
         <Auth
           supabaseClient={supabase}
           view="sign_in"
-          redirectTo="/Landingsside"
+          redirectTo="/Home"
           appearance={{ theme: ThemeSupa }}
           providers={[]}
           localization={{
