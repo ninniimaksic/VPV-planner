@@ -41,9 +41,6 @@ const RoofOutlineOptions = ({
             >
               {addPoints ? "Save section" : "New Section"}
             </Button>
-            <div onClick={() => setShowDims((prev) => !prev)}>
-              <Switch checked={showDims}>Dimensions</Switch>
-            </div>
           </div>
           <div>
             <Button
@@ -58,6 +55,12 @@ const RoofOutlineOptions = ({
             <Button variant="secondary" onClick={deleteLine}>
               Delete
             </Button>
+          </div>
+          <div
+            className="dimension-toggle"
+            onClick={() => setShowDims((prev) => !prev)}
+          >
+            <Switch checked={showDims}>Dimensions</Switch>
           </div>
           {lines.length > 0 && (
             <div>

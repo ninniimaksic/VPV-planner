@@ -13,6 +13,12 @@
   margin-left: 40px;
   background-color: aliceblue;
 }
+.dimension-toggle {
+  margin-top: 10px; /* adjust as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .showScale {
   display: flex;
@@ -27,6 +33,7 @@
 
 .Fargetest {
   margin: 20px;
+  min-height: 350px;
 }
 
 .Fargeboks {
@@ -85,4 +92,22 @@
 
 .drawn-cursor {
   cursor: crosshair;
+}
+
+/* Standard styling for alle skjermer */
+.lenScale {
+  display: flex;
+  flex-direction: row; /* Endret fra column til row */
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Forhindrer scrolling */
+  flex-wrap: wrap; /* Dette sikrer at elementene flytter til neste linje dersom de ikke får plass ved siden av hverandre */
+}
+
+/* Media query for skjermer større enn 13 tommer (ca. 1050px i bredde) */
+@media screen and (min-width: 1050px) {
+  /* Legg til flere regler her for å øke størrelsen på andre elementer, f.eks. bilder, knapper osv. */
+}
+
+@media screen and (max-width: 600px) {
 }
