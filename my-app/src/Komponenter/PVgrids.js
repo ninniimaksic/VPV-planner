@@ -5,8 +5,9 @@ import { useEffect } from "react";
 import Draggable from "react-draggable";
 
 const PVgrids = ({ grids, scale, selectGrid, selectedGrid }) => {
-  const unitLength = 160 / scale;
-  const unitWidth = 150 / scale;
+  const unitLength = 150 / scale;
+  const unitWidth = 160 / scale;
+  const azimuth = parseInt(sessionStorage.getItem("azimuth")) || 0;
   const [arrays, setArrays] = useState([]);
   useEffect(() => {
     for (let i = 0; i < grids.length; i++) {
@@ -33,7 +34,7 @@ const PVgrids = ({ grids, scale, selectGrid, selectedGrid }) => {
               <div
                 style={{
                   position: "absolute",
-                  transform: `rotate(${grid.rotation}deg)`,
+                  transform: `rotate(${grid.rotation + azimuth}deg)`,
                 }}
               >
                 <div

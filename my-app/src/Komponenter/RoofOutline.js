@@ -4,6 +4,8 @@ import "../css/SetScale.css";
 import UnitPlacer from "./UnitPlacer";
 import PVgrids from "./PVgrids";
 import html2canvas from "html2canvas";
+import RoofOutlineOptions from "./RoofOutlineOptions";
+import { Switch } from "@navikt/ds-react";
 import { Stage, Layer, Image, Line, Circle, Text, Rect } from "react-konva";
 import { Button, Table, TextField } from "@navikt/ds-react";
 import { WrenchIcon, ArrowRightIcon } from "@navikt/aksel-icons";
@@ -167,7 +169,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
               zIndex={9}
               stroke="red"
               fill="#00D2FF"
-              opacity={0.55}
+              opacity={0.4}
               strokeWidth={4}
               closed={true}
             />
@@ -199,7 +201,7 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
                   zIndex={9}
                   stroke="red"
                   fill="#00D2FF"
-                  opacity={0.4}
+                  opacity={0.25}
                   strokeWidth={3}
                   closed={true}
                 />
@@ -235,104 +237,16 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
       </div>
 
       {!showUnitPlacer ? (
-        <div classname="Fargeboks">
-          <div className="Line">
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <br></br>
-              <br></br>
-              <h4>
-                Outline roof/PV module section <br /> Click to add points, drag
-                to adjust.
-              </h4>
-              <div>
-                <Button
-                  variant="primary"
-                  onClick={toggleAddingPoints}
-                  style={{
-                    marginRight: "1rem",
-                    marginBottom: "1rem",
-                    marginTop: "1rem",
-                  }}
-                >
-                  {addPoints ? "Save section" : "New Section"}
-                </Button>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={showDims}
-                    onChange={() => setShowDims((prev) => !prev)}
-                  />
-                  Show dimensions
-                </label>
-              </div>
-              <div>
-                <Button
-                  variant="secondary"
-                  onClick={undo}
-                  style={{ marginRight: "1rem" }}
-                >
-                  Undo
-                </Button>
-                <Button variant="secondary" onClick={deleteLine}>
-                  Delete
-                </Button>
-              </div>
-              {lines.length > 0 && (
-                <div>
-                  <br></br>
-                  <br></br>
-                  <Table style={{ margin: "5px" }}>
-                    <Table.Header>
-                      <Table.Row>
-                        <Table.HeaderCell scope="col">Section</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Height</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Edit</Table.HeaderCell>
-                      </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                      {lines.map((l, i) => (
-                        <Table.Row key={i}>
-                          <Table.DataCell>
-                            <TextField
-                              label="Section name"
-                              hideLabel
-                              defaultValue={`Section ${i + 1}`}
-                              size="xsmall"
-                              htmlSize={10}
-                            />
-                          </Table.DataCell>
-                          <Table.DataCell>
-                            <TextField
-                              label="Height"
-                              hideLabel
-                              defaultValue={` m`}
-                              size="xsmall"
-                              htmlSize={10}
-                            />
-                          </Table.DataCell>
-                          <Table.DataCell>
-                            <Button
-                              variant="tertiary"
-                              icon={<WrenchIcon aria-hidden />}
-                              onClick={() => editSection(i)}
-                              size="xsmall"
-                            ></Button>
-                          </Table.DataCell>
-                        </Table.Row>
-                      ))}
-                    </Table.Body>
-                  </Table>
-                </div>
-              )}
-            </div>
-            <div style={{ height: "40%" }}></div>
-          </div>
-        </div>
+        <RoofOutlineOptions
+          lines={lines}
+          toggleAddingPoints={toggleAddingPoints}
+          addPoints={addPoints}
+          setShowDims={setShowDims}
+          showDims={showDims}
+          undo={undo}
+          deleteLine={deleteLine}
+          editSection={editSection}
+        />
       ) : (
         <UnitPlacer
           grids={grids}
@@ -341,13 +255,13 @@ const RoofOutline = ({ img, imageHeight, imageWidth, scale, opacity }) => {
           setSelectedGrid={setSelectedGrid}
         />
       )}
-      <div style={{ marginTop: "auto" }}>
+      <div style={{ position: "relative", marginTop: "auto", right: "10%" }}>
         <Button
           variant="primary"
           onClick={() => setShowUnitPlacer(!showUnitPlacer)}
           style={{ marginRight: "1rem" }}
         >
-          {showUnitPlacer ? "Change sections" : "Place units"}
+          {showUnitPlacer ? "Roof Segmentation" : "PV Unit Arrangement"}
         </Button>
         {showUnitPlacer && (
           <Button variant="primary" onClick={handleSaveCont}>

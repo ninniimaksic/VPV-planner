@@ -148,7 +148,7 @@ const PVgrid = ({ l, w, ncol, nrow, layoutid, array }) => {
             <div
               key={item.i}
               style={{
-                background: item.selected ? "pink" : "white",
+                background: item.selected ? "yellow" : "transparent",
                 border: "1px solid gray",
                 boxSizing: "border-box",
                 justifyContent: "center",

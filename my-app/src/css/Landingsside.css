@@ -1,13 +1,23 @@
 .center {
-  margin: 50;
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  margin-bottom: 4vh;
+  position: relative;
   -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 300px;
+}
+
+.ProjectList {
+  gap: 300px;
+}
+
+.Home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-around;
+  height: 100vh;
 }
 
 .btn-new {
@@ -39,6 +49,7 @@
   transition: transform 0.2s ease;
   background-repeat: no-repeat;
   background-size: cover;
+  margin: 2vh 0;
 }
 
 .Prosjekter:hover {
