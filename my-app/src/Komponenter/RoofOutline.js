@@ -262,7 +262,14 @@ const RoofOutline = ({
           setSelectedGrid={setSelectedGrid}
         />
       )}
-      <div style={{ position: "absolute", right: "70px", bottom: "200px" }}>
+      <div
+        style={{
+          position: "absolute",
+          marginTop: "auto",
+          top: "80vh",
+          right: "20vh",
+        }}
+      >
         <Button
           variant="primary"
           onClick={() => setShowUnitPlacer(!showUnitPlacer)}
