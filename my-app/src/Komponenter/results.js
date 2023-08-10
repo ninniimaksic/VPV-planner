@@ -65,7 +65,7 @@ export default function Results() {
 
     const tl =
       !get(grid, i - 1, j) && !get(grid, i, j - 1) && !get(grid, i - 1, j - 1);
-    const tr = !get(grid, i - 1, j);
+    const tr = !get(grid, i - 1, j) && !get(grid, i - 1, j + 1);
     const bl = !get(grid, i, j - 1);
 
     return tl + tr + bl + 1;
@@ -240,7 +240,7 @@ export default function Results() {
             <Table size="small">
               <Table.Header>
                 <Table.Row>
-                  <Table.HeaderCell>Layout</Table.HeaderCell>
+                  <Table.HeaderCell>Array</Table.HeaderCell>
                   <Table.HeaderCell>Main Orientation</Table.HeaderCell>
                   <Table.HeaderCell>Type</Table.HeaderCell>
                   <Table.HeaderCell>Units</Table.HeaderCell>
@@ -251,7 +251,7 @@ export default function Results() {
               <Table.Body>
                 {layouts.map((layout, i) => (
                   <Table.Row key={i}>
-                    <Table.DataCell>Layout {i}</Table.DataCell>
+                    <Table.DataCell>Array {i}</Table.DataCell>
                     <Table.DataCell>
                       {grids[i].rotation + azimuth}
                     </Table.DataCell>{" "}
