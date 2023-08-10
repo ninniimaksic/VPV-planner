@@ -262,11 +262,11 @@ const RoofOutline = ({
           setSelectedGrid={setSelectedGrid}
         />
       )}
-      <div style={{ position: "relative", marginTop: "auto", right: "10%" }}>
+      <div style={{ position: "absolute", right: "70px", bottom: "200px" }}>
         <Button
           variant="primary"
           onClick={() => setShowUnitPlacer(!showUnitPlacer)}
-          style={{ position: "absolute", right: "70px", bottom: "200px" }}
+          style={{ marginRight: "3rem" }}
         >
           {showUnitPlacer ? "Roof Segmentation" : "PV Unit Arrangement"}
         </Button>
