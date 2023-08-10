@@ -185,7 +185,7 @@ export default function Results() {
             <h1>Results</h1>
             <div className="tables-container">
               <div className="table-container">
-                <Table>
+                <Table size="small">
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell>Project Information</Table.HeaderCell>
@@ -206,7 +206,7 @@ export default function Results() {
                 </Table>
               </div>
               <div className="table-container">
-                <Table>
+                <Table size="small">
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell>Location</Table.HeaderCell>
@@ -229,7 +229,7 @@ export default function Results() {
               </div>
             </div>
             <div className="subheader">
-              <h2>Energy yield estimation</h2>
+              <h2>Energy Yield Estimation</h2>
             </div>
             {true ? (
               <Table size="small">
@@ -241,24 +241,22 @@ export default function Results() {
                       Installed Capacity [kWp]
                     </Table.HeaderCell>
                     <Table.HeaderCell>
-                      Specific yield [kWh/kWp]
+                      Specific Yield [kWh/kWp]
                     </Table.HeaderCell>
-                    <Table.HeaderCell>Yearly yield [kWh]</Table.HeaderCell>
+                    <Table.HeaderCell>Yearly Yield [kWh]</Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
                   {layouts.map((layout, i) => (
                     <Table.Row key={i}>
-                      <Table.DataCell>{i}</Table.DataCell>
+                      <Table.DataCell>{i + 1}</Table.DataCell>
                       <Table.DataCell>{layoutCounts[i]}</Table.DataCell>
                       <Table.DataCell>
-                        {(apiData * layoutCounts[i]).toFixed(2)}
+                        {(0.2 * layoutCounts[i]).toFixed(1)}
                       </Table.DataCell>
+                      <Table.DataCell>{apiData.toFixed(1)}</Table.DataCell>
                       <Table.DataCell>
-                        {(apiData * 0.2).toFixed(2)}
-                      </Table.DataCell>
-                      <Table.DataCell>
-                        {(apiData * 0.2 * layoutCounts[i]).toFixed(2)}
+                        {(apiData * 0.2 * layoutCounts[i]).toFixed(1)}
                       </Table.DataCell>
                     </Table.Row>
                   ))}
@@ -297,7 +295,7 @@ export default function Results() {
               <Table.Body>
                 {layouts.map((layout, i) => (
                   <Table.Row key={i}>
-                    <Table.DataCell>Array {i}</Table.DataCell>
+                    <Table.DataCell>{i + 1}</Table.DataCell>
                     <Table.DataCell>{arrayOrient}</Table.DataCell>{" "}
                     {/* Assuming azimuth is the main orientation */}
                     <Table.DataCell>VPV Unit model</Table.DataCell>{" "}
