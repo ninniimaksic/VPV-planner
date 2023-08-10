@@ -228,20 +228,28 @@ export default function Results() {
                       <Table.DataCell>{i}</Table.DataCell>
                       <Table.DataCell>{layoutCounts[i]}</Table.DataCell>
                       <Table.DataCell>
-                        {apiData * layoutCounts[i]}
+                        {(apiData * layoutCounts[i]).toFixed(2)}
                       </Table.DataCell>
-                      <Table.DataCell>{apiData * 0.2}</Table.DataCell>
                       <Table.DataCell>
-                        {apiData * 0.2 * layoutCounts[i]}
+                        {(apiData * 0.2).toFixed(2)}
+                      </Table.DataCell>
+                      <Table.DataCell>
+                        {(apiData * 0.2 * layoutCounts[i]).toFixed(2)}
                       </Table.DataCell>
                     </Table.Row>
                   ))}
                   <Table.Row>
                     <Table.DataCell>Total</Table.DataCell>
                     <Table.DataCell>{nUnits}</Table.DataCell>
-                    <Table.DataCell>{apiData * nUnits}</Table.DataCell>
-                    <Table.DataCell>{apiData * 0.2}</Table.DataCell>
-                    <Table.DataCell>{apiData * 0.2 * nUnits}</Table.DataCell>
+                    <Table.DataCell>
+                      {(apiData * nUnits).toFixed(2)}
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      {(apiData * 0.2).toFixed(2)}
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      {(apiData * 0.2 * nUnits).toFixed(2)}
+                    </Table.DataCell>
                   </Table.Row>
                 </Table.Body>
               </Table>
