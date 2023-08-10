@@ -70,6 +70,7 @@ export const getUnitCount = (layouts) => {
 };
 
 export const fetchEnergyYield = async (lat, lon, azimuth, kWp, loss) => {
+  // Fetch both sides, azimuth and azimuth - 180
   try {
     const response = await fetch(
       `https://vpv-planner.vercel.app/api/pvcalc.js?lat=${lat}&lon=${lon}&peakpower=${kWp}&loss=${loss}&azimuth=${azimuth}`

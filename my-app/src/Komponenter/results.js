@@ -37,14 +37,38 @@ export default function Results() {
 
   const nUnits = getUnitCount(layouts);
   const layoutCounts = layouts.map((layout) => getUnitCount([layout]));
+  const gridRot = grids[0].rotation || 0;
+  const calcMainOrient = () => {
+    const tmp = (gridRot + azimuth) % 360;
+    if (tmp > 270) {
+      return tmp - 180;
+    }
+    if (tmp < 90) {
+      return tmp + 180;
+    }
+  };
+  const arrayOrient = calcMainOrient();
 
   useEffect(() => {
     const fetchData = async () => {
-      const apiData = await fetchEnergyYield(lat, lon, azimuth, kWp, loss);
-      setApiData(parseFloat(apiData));
+      const apiDataMain = await fetchEnergyYield(
+        lat,
+        lon,
+        arrayOrient,
+        kWp,
+        loss
+      );
+      const apiDataBack = await fetchEnergyYield(
+        lat,
+        lon,
+        arrayOrient - 180,
+        kWp,
+        loss
+      );
+      setApiData(parseFloat(apiDataMain + apiDataBack * 0.95));
     };
     fetchData();
-  }, [azimuth, kWp, lat, lon, loss]);
+  }, [arrayOrient, azimuth, kWp, lat, lon, loss]);
 
   function get(grid, i, j) {
     // Return value of (i, j) if it exists, else 0
@@ -274,9 +298,7 @@ export default function Results() {
                 {layouts.map((layout, i) => (
                   <Table.Row key={i}>
                     <Table.DataCell>Array {i}</Table.DataCell>
-                    <Table.DataCell>
-                      {grids[i].rotation + azimuth}
-                    </Table.DataCell>{" "}
+                    <Table.DataCell>{arrayOrient}</Table.DataCell>{" "}
                     {/* Assuming azimuth is the main orientation */}
                     <Table.DataCell>VPV Unit model</Table.DataCell>{" "}
                     {/* Replace with the actual type */}
