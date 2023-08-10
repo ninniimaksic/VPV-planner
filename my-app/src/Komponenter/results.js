@@ -82,6 +82,20 @@ export default function Results() {
     return totalFeet;
   }
 
+  function cableCount(grid) {
+    // Return the total number of cables needed for the grid
+    let totalCables = 0;
+    for (let i = 0; i < grid.length; i++) {
+      for (let j = 0; j < grid[0].length; j++) {
+        if (grid[i][j]) {
+          totalCables += 2;
+          break;
+        }
+      }
+    }
+    return totalCables;
+  }
+
   function handleDownload() {
     const link1 = document.createElement("a");
     link1.href = screenshotTransparent;
@@ -256,11 +270,11 @@ export default function Results() {
                       {grids[i].rotation + azimuth}
                     </Table.DataCell>{" "}
                     {/* Assuming azimuth is the main orientation */}
-                    <Table.DataCell>Type Value</Table.DataCell>{" "}
+                    <Table.DataCell>VPV Unit model</Table.DataCell>{" "}
                     {/* Replace with the actual type */}
                     <Table.DataCell>{layoutCounts[i]}</Table.DataCell>
                     <Table.DataCell>{totCount(layout)}</Table.DataCell>
-                    <Table.DataCell>{layout.length * 2}</Table.DataCell>
+                    <Table.DataCell>{cableCount(layout)}</Table.DataCell>
                   </Table.Row>
                 ))}
                 <Table.Row>
@@ -269,9 +283,15 @@ export default function Results() {
                   <Table.DataCell></Table.DataCell>
                   <Table.DataCell>{nUnits}</Table.DataCell>
                   <Table.DataCell>
-                    {/* Total feet calculation */}
+                    {layouts.reduce((acc, layout) => {
+                      return acc + totCount(layout);
+                    }, 0)}
                   </Table.DataCell>
-                  <Table.DataCell>{nUnits * 2 * layouts.length}</Table.DataCell>
+                  <Table.DataCell>
+                    {layouts.reduce((acc, layout) => {
+                      return acc + cableCount(layout);
+                    }, 0)}
+                  </Table.DataCell>
                 </Table.Row>
               </Table.Body>
             </Table>
