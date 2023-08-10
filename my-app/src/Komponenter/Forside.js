@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
@@ -23,6 +23,12 @@ const Forside = () => {
     }
     session = _session;
   });
+
+  useEffect(() => {
+    if (session) {
+      navigate("/Home");
+    }
+  }, [session, navigate]);
 
   return (
     <>
