@@ -266,7 +266,7 @@ const RoofOutline = ({
         <Button
           variant="primary"
           onClick={() => setShowUnitPlacer(!showUnitPlacer)}
-          style={{ marginRight: "1rem" }}
+          style={{ position: "absolute", right: "70px", bottom: "200px" }}
         >
           {showUnitPlacer ? "Roof Segmentation" : "PV Unit Arrangement"}
         </Button>
