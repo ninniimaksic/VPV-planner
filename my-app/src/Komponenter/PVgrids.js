@@ -47,7 +47,7 @@ const PVgrids = ({ grids, scale, selectGrid, selectedGrid }) => {
                     borderTop: i === selectedGrid ? "2px solid black" : "none",
                     backgroundImage:
                       i === selectedGrid
-                        ? "repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0px, rgba(0, 0, 0, 0.5) 10px, transparent 10px, transparent 20px)"
+                        ? "repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0px, rgba(0, 0, 0, 0.5) 10px, transparent 10px, transparent 20px)"
                         : "none",
                   }}
                 >
