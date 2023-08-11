@@ -39,16 +39,18 @@ export default function Results() {
   const nUnits = getUnitCount(layouts);
   const [emailPrefix, setEmailPrefix] = useState("");
   const layoutCounts = layouts.map((layout) => getUnitCount([layout]));
-  const gridRot = grids[0].rotation || 0;
+  const gridRot = grids[0].rotation + 90 || 0;
   const calcMainOrient = () => {
-    const tmp = (gridRot + azimuth) % 360;
-    if (tmp > 270) {
+    const tmp = (gridRot - azimuth) % 360;
+    if (tmp > 180) {
       return tmp - 180;
     }
-    if (tmp < 90) {
-      return tmp + 180;
+    if (tmp < 180) {
+      return 180 - tmp;
     }
   };
+  const arrayOrient = calcMainOrient();
+  console.log("Main Orient", arrayOrient);
 
   //Layoyt by
   async function getEmailPrefix() {
@@ -61,7 +63,6 @@ export default function Results() {
     getEmailPrefix();
   }, []);
 
-  const arrayOrient = calcMainOrient();
 
   useEffect(() => {
     const fetchData = async () => {

@@ -8,13 +8,13 @@ import "rc-slider/assets/index.css";
 const UnitPlacer = ({ grids, setGrids, selectedGrid, setSelectedGrid }) => {
   const [ncol, setNcol] = useState(0);
   const [nrow, setNrow] = useState(0);
-  const [sliderValue, setSliderValue] = useState(0); //
+  const [sliderValue, setSliderValue] = useState(90); //
 
   const addGrid = (ncol, nrow, angle) => {
     if (ncol <= 0 || nrow <= 0) {
       return;
     }
-    setGrids([...grids, { ncol, nrow, rotation: angle + 90 }]);
+    setGrids([...grids, { ncol, nrow, rotation: angle }]);
     console.log("Added grid:", { ncol, nrow });
   };
 
@@ -31,7 +31,7 @@ const UnitPlacer = ({ grids, setGrids, selectedGrid, setSelectedGrid }) => {
       const newGrids = [...grids];
       newGrids[selectedGrid].rotation = value;
       setGrids(newGrids);
-      setSliderValue(value); // Oppdater sliderValue når slider-verdien endres
+      setSliderValue(value + 90); // Oppdater sliderValue når slider-verdien endres
     }
   };
 

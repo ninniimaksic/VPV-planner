@@ -40,15 +40,14 @@ const PVgrids = ({ grids, scale, selectGrid, selectedGrid }) => {
                 <div
                   style={{
                     position: "absolute",
-                    borderRight: i === selectedGrid ? "4px solid red" : "none",
+                    borderRight: true ? "4px solid red" : "none",
                     borderBottom:
                       i === selectedGrid ? "2px solid black" : "none",
-                    borderLeft: i === selectedGrid ? "4px solid blue" : "none",
+                    borderLeft: true ? "4px solid blue" : "none",
                     borderTop: i === selectedGrid ? "2px solid black" : "none",
-                    backgroundImage:
-                      i === selectedGrid
-                        ? "repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0px, rgba(0, 0, 0, 0.5) 10px, transparent 10px, transparent 20px)"
-                        : "none",
+                    backgroundImage: false
+                      ? "repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0px, rgba(0, 0, 0, 0.2) 10px, transparent 10px, transparent 20px)"
+                      : "none",
                   }}
                 >
                   <PVgrid
@@ -59,7 +58,7 @@ const PVgrids = ({ grids, scale, selectGrid, selectedGrid }) => {
                     layoutid={i}
                     array={arrays[i] || null}
                   />
-                  {i === selectedGrid && (
+                  {true && (
                     <div
                       className="arrow-up"
                       style={{
