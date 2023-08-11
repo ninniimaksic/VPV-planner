@@ -37,6 +37,7 @@ export default function Results() {
   } = getSessionStorageAll();
 
   const nUnits = getUnitCount(layouts);
+  const [emailPrefix, setEmailPrefix] = useState("");
   const layoutCounts = layouts.map((layout) => getUnitCount([layout]));
   const gridRot = grids[0].rotation || 0;
   const calcMainOrient = () => {
@@ -49,7 +50,16 @@ export default function Results() {
     }
   };
 
-  const email = getUserEmail();
+  //Layoyt by
+  async function getEmailPrefix() {
+    const fullEmail = await getUserEmail();
+    const emailPrefixValue =
+      typeof fullEmail === "string" ? fullEmail.split("@")[0] : "";
+    setEmailPrefix(emailPrefixValue);
+  }
+  useEffect(() => {
+    getEmailPrefix();
+  }, []);
 
   const arrayOrient = calcMainOrient();
 
@@ -205,8 +215,10 @@ export default function Results() {
                       "End Customer": EndCostumer,
                       "Project Number EC": projectNumberEC,
                       Date: new Date().toLocaleDateString(),
+                      "Layout by": emailPrefix,
                     })}
                   </Table.Body>
+                  <Table.Body></Table.Body>
                 </Table>
               </div>
               <div className="table-container">
