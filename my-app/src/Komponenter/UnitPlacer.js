@@ -14,7 +14,7 @@ const UnitPlacer = ({ grids, setGrids, selectedGrid, setSelectedGrid }) => {
     if (ncol <= 0 || nrow <= 0) {
       return;
     }
-    setGrids([...grids, { ncol, nrow, rotation: angle }]);
+    setGrids([...grids, { ncol, nrow, rotation: angle + 90 }]);
     console.log("Added grid:", { ncol, nrow });
   };
 
@@ -69,12 +69,12 @@ const UnitPlacer = ({ grids, setGrids, selectedGrid, setSelectedGrid }) => {
             onChange={handleNrowChange}
           />
           <div style={{ textAlign: "center", marginTop: "10px" }}>
-            Rotation: {sliderValue} degrees
+            Main side orientation: {sliderValue} deg
           </div>
 
           <Slider
             label="Rotate"
-            value={selectedGrid !== null ? grids[selectedGrid].rotation : 0}
+            value={selectedGrid !== null ? grids[selectedGrid].rotation : 90}
             onChange={handleSliderChange}
             min={-180}
             max={180}

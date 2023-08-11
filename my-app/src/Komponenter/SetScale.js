@@ -6,6 +6,7 @@ import { Stage, Layer, Image, Line, Circle } from "react-konva";
 import { TextField, HelpText, Button } from "@navikt/ds-react";
 import "@navikt/ds-css";
 import Compass from "../Komponenter/Compass";
+import CompassImg from "../img/Compass.png";
 import { MapInteractionCSS } from "react-map-interaction";
 import Geocode from "./Geocode";
 import StepperInd from "./Stepper";
@@ -26,6 +27,9 @@ const SetScale = ({ selectedPhoto, opacity }) => {
   const [wimage] = useImage(selectedPhoto);
   const [showNextButton, setShowNextButton] = useState(false);
   const [showRoofOutline, setShowRoofOutline] = useState(false);
+  const [angle, setAngle] = useState(
+    parseFloat(sessionStorage.getItem("azimuth")) || 0
+  );
 
   const getImgLen = (line) => {
     const [x1, y1, x2, y2] = line;
@@ -40,6 +44,7 @@ const SetScale = ({ selectedPhoto, opacity }) => {
       setLine([]);
       sessionStorage.setItem("scaleLine", JSON.stringify(lines));
     }
+    setAngle(parseFloat(sessionStorage.getItem("azimuth")) || 0);
   }, [line, lines, imgScale, getImgLen]);
 
   const handleInputChange = (e) => {
@@ -86,8 +91,27 @@ const SetScale = ({ selectedPhoto, opacity }) => {
     setLines(newLines);
   };
 
+  const compassStyle = {
+    position: "absolute",
+    zIndex: "1000",
+    left: "57%",
+    transform: `rotate(${angle}deg)`,
+    transition: "transform 0.5s ease-in-out",
+    transformOrigin: "center",
+    width: "80px", // modify to make image smaller
+    height: "80px", // modify to make image smaller
+  };
+
   return (
     <>
+      <div className="compass-container">
+        <img
+          id="thecompas"
+          src={CompassImg}
+          alt="Compass"
+          style={compassStyle}
+        />
+      </div>
       {!showRoofOutline ? (
         <div className="lenScale">
           <div className="drawStage">
@@ -206,6 +230,9 @@ const SetScale = ({ selectedPhoto, opacity }) => {
                     onClick={() => {
                       setShowNextButton(true);
                       setShowRoofOutline(true);
+                      setAngle(
+                        parseFloat(sessionStorage.getItem("azimuth")) || 0
+                      );
                     }}
                   >
                     Next
