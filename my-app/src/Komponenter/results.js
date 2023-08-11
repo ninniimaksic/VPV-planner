@@ -214,8 +214,8 @@ export default function Results() {
                       "PN Installer": PNinstaller,
                       "End Customer": EndCostumer,
                       "Project Number EC": projectNumberEC,
-                      Date: new Date().toLocaleDateString(),
                       "Layout by": emailPrefix,
+                      Date: new Date().toLocaleDateString(),
                     })}
                   </Table.Body>
                   <Table.Body></Table.Body>
