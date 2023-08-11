@@ -7,10 +7,11 @@ import {
   getSessionStorageAll,
   getUnitCount,
   fetchEnergyYield,
+  getUserEmail,
 } from "./storageUtils";
 
 export default function Results() {
-  const [apiData, setApiData] = useState(null);
+  const [apiData, setApiData] = useState(0);
 
   const {
     projectName,
@@ -47,6 +48,9 @@ export default function Results() {
       return tmp + 180;
     }
   };
+
+  const email = getUserEmail();
+
   const arrayOrient = calcMainOrient();
 
   useEffect(() => {
