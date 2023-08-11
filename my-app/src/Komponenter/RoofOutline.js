@@ -93,7 +93,6 @@ const RoofOutline = ({
       const y2 = p[i + 3];
       sideLens.push(Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) * (scale / 100));
     }
-    console.log("Scale: ", scale);
     return sideLens;
   };
 

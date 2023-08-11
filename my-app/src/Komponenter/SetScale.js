@@ -15,8 +15,12 @@ const SetScale = ({ selectedPhoto, opacity }) => {
     JSON.parse(sessionStorage.getItem("scaleLine")) || []
   );
   const [line, setLine] = useState([]);
-  const [imgScale, setImgScale] = useState(0.2);
-  const [length, setLength] = useState(0);
+  const [imgScale, setImgScale] = useState(
+    parseFloat(sessionStorage.getItem("scale")) || 0
+  );
+  const [length, setLength] = useState(
+    sessionStorage.getItem("lineLength") || 0
+  );
   const lineRef = useRef();
   const circleLayerRef = useRef();
   const [wimage] = useImage(selectedPhoto);
@@ -43,7 +47,11 @@ const SetScale = ({ selectedPhoto, opacity }) => {
     sessionStorage.setItem("scaleLine", JSON.stringify(lines));
     setLength(e.target.value);
     sessionStorage.setItem("lineLength", e.target.value);
-    setImgScale(e.target.value / getImgLen(lines[0][0]));
+    setImgScale((parseFloat(e.target.value) / getImgLen(lines[0][0])) * 100);
+    sessionStorage.setItem(
+      "scale",
+      (parseFloat(e.target.value) / getImgLen(lines[0][0])) * 100
+    );
     setShowNextButton(true);
   };
 
@@ -198,10 +206,6 @@ const SetScale = ({ selectedPhoto, opacity }) => {
                     onClick={() => {
                       setShowNextButton(true);
                       setShowRoofOutline(true);
-                      setImgScale(
-                        (parseFloat(lines[0][1]) * 100) / getImgLen(lines[0][0])
-                      );
-                      sessionStorage.setItem(scale, imgScale);
                     }}
                   >
                     Next
