@@ -233,6 +233,7 @@ const SetScale = ({ selectedPhoto, opacity }) => {
                       setAngle(
                         parseFloat(sessionStorage.getItem("azimuth")) || 0
                       );
+                      sessionStorage.setItem("azimuth", 0 + angle);
                     }}
                   >
                     Next
